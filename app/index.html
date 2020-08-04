@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>makeSQL</title>
+<meta name="description" content="makeSQLは、ブラウザ上でSQLを作成するサイトです。">
+<meta name="keywords" content="SQL, ツール, 自動作成, 変換">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="icon" href="favicon.ico">
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<script src="js/jqueryhashchangeevent.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42802736-1', 'lv9.org');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+<div id="container">
+
+<header id="page-header" class="hero-unit">
+	<h1>makeSQL</h1>
+	<p id="lead">makeSQLは、ブラウザ上でSQLを作成するサイトです。</p>
+</header>
+
+<nav id="page-nav" class="navbar">
+	<div class="navbar-inner">
+		<ul class="nav">
+			<li><a href="#text">テキストから作成</a></li>
+			<li><a href="#file">ファイルから作成</a></li>
+			<li><a href="#config">設定情報</a></li>
+			<li><a href="#help">使い方</a></li>
+		</ul>
+		<ul class="nav pull-right">
+			<li><a href="#about" class="about">このサイトについて</a></li>
+		</ul>
+	</div>
+</nav>
+
+<div id="page-body">
+	<div id="text-area" class="area-panel">
+		<h2>テキストからSQLを作成</h2>
+		<p class="summary">csvファイルのテキストデータやexcelの表からSQLを作成します。</p>
+		<div class="area-button">
+			<ul class="btn-group">
+				<li id="select1" class="btn">Select</li>
+				<li id="insert1" class="btn">Insert</li>
+				<li id="delete1" class="btn">Delete</li>
+				<li id="update1" class="btn">Update</li>
+			</ul>
+		</div>
+
+		<div class="row-fluid">
+			<div id="befor" class="span6">
+				<dl>
+					<dt>テーブル名</dt>
+					<dd><input type="text" id="tableName" value=""></dd>
+				</dl>
+				<dl>
+					<dt>更新情報</dt>
+					<dd><textarea cols="40" rows="2" id="updatetext"></textarea></dd>
+				</dl>
+				<dl>
+					<dt>テーブル情報</dt>
+					<dd><textarea cols="40" rows="5" id="beforetext"></textarea></dd>
+				</dl>
+			</div>
+
+			<p class="arrow-right">&rarr; </p>
+
+			<div id="after" class="span6">
+				<dl>
+					<dt>SQL</dt>
+					<dd><textarea cols="40" rows="13" id="aftertext"></textarea></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+
+	<div id="file-area" class="area-panel">
+		<h2>ファイルからSQLを作成</h2>
+		<p class="summary">csvファイルからSQLを作成します。</p>
+
+		<div class="area-button">
+			<ul class="btn-group">
+				<li id="select2" class="btn">Select</li>
+				<li id="insert2" class="btn">Insert</li>
+				<li id="delete2" class="btn">Delete</li>
+				<li id="update2" class="btn">Update</li>
+			</ul>
+		</div>
+
+		<div id="select-file">
+			<p><input type="file" id="files" multiple></p>
+			<p><button id="dummy" class="btn">ファイル選択</button><span id="noticeFileCount"></span></p>
+		</div>
+
+		<form id="makefile" method="post" action="php/makefile.php">
+			<p><input id="download" class="btn" type="submit" value="Download"></p>
+			<div id="output"></div>
+		</form>
+	</div>
+
+	<div id="config-area" class="area-panel">
+		<h2>設定情報</h2>
+		<p class="summary">SQL作成時に使用する情報を設定します。</p>
+		<table>
+			<colgroup id="set-content"></colgroup>
+			<colgroup id="set-data"></colgroup>
+			<colgroup id="set-detail"></colgroup>
+			<tr>
+				<th>設定項目</th><th>設定値</th><th>説明</th>
+			</tr>
+			<tr>
+				<td>区切り文字</td>
+				<td>
+					<select id="delimiter">
+						<option value="1" selected>カンマ</option>
+						<option value="2">タブ</option>
+						<option value="3">スペース</option>
+					</select>
+				</td>
+				<td>テキストデータやcsvファイルの区切り文字を設定します。</td>
+			</tr>
+			<tr>
+				<td>文字コード</td>
+				<td>
+					<select id="characterCode">
+						<option selected>Shift_JIS</option>
+						<option>UTF-8</option>
+						<option>EUC-JP</option>
+					</select>
+				</td>
+				<td>csvファイルの文字コードを設定します。</td>
+			</tr>
+			<tr>
+				<td>SQL文字列</td>
+				<td>
+					<ul>
+						<li>
+							<select id="strSelect">
+								<option selected>SELECT</option>
+								<option>Select</option>
+								<option>select</option>
+							</select>
+						</li>
+						<li>
+							<select id="strInsert">
+								<option selected>INSERT</option>
+								<option>Insert</option>
+								<option>insert</option>
+							</select>
+						</li>
+						<li>
+							<select id="strDelete">
+								<option selected>DELETE</option>
+								<option>Delete</option>
+								<option>delete</option>
+							</select>
+						</li>
+						<li>
+							<select id="strUpdate">
+								<option selected>UPDATE</option>
+								<option>Update</option>
+								<option>update</option>
+							</select>
+						</li>
+						<li>
+							<select id="strFrom">
+								<option selected>FROM</option>
+								<option>From</option>
+								<option>from</option>
+							</select>
+						</li>
+						<li>
+							<select id="strWhere">
+								<option selected>WHERE</option>
+								<option>Where</option>
+								<option>where</option>
+							</select>
+						</li>
+						<li>
+							<select id="strInto">
+								<option selected>INTO</option>
+								<option>Into</option>
+								<option>into</option>
+							</select>
+						</li>
+						<li>
+							<select id="strValues">
+								<option selected>VALUES</option>
+								<option>Values</option>
+								<option>values</option>
+							</select>
+						</li>
+						<li>
+							<select id="strSet">
+								<option selected>SET</option>
+								<option>Set</option>
+								<option>set</option>
+							</select>
+						</li>
+						<li>
+							<select id="strAnd">
+								<option selected>AND</option>
+								<option>And</option>
+								<option>and</option>
+							</select>
+						</li>
+						<li>
+							<select id="strOr">
+								<option selected>OR</option>
+								<option>Or</option>
+								<option>or</option>
+							</select>
+						</li>
+					</ul>
+				</td>
+				<td>SQLの大文字小文字を設定します。</td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="help-area" class="area-panel">
+		<h2>使い方</h2>
+		<p class="summary">使い方や説明です。</p>
+		<div class="box-detail">
+			<h3>テキストデータからSQLを作成する</h3>
+			<div class="box-text">
+				<ol>
+					<li>[設定情報]で、区切り文字や文字コードを設定します。</li>
+					<li>[テーブル名]に、テーブル名を入力します。</li>
+					<li>[更新情報]・[テーブル情報]に、カンマやタブ区切りのテキストデータを入力します。<br>csvファイルのテキストデータやExcelの表データをコピー&amp;ペーストしたり、csvファイルをドラッグ&amp;ドロップしてデータを入力できます。</li>
+					<li>SQLのボタンをクリックし、SQLを作成します。</li>
+				</ol>
+				<p>[更新情報]は、UPDATE文を作成時にSET句として使用します。</p>
+				<p>[テーブル情報]は、SELECT文・DELETE文・UPDATE文を作成時にWHERE句として、INSERT文を作成時にVALUES句として使用します。</p>
+				<p>[更新情報]・[テーブル情報]の先頭行をフィールド名として使用します。</p>
+			</div>
+		</div>
+		<div class="box-detail">
+			<h3>ファイルからSQLを作成する</h3>
+			<div class="box-text">
+				<ol>
+					<li>[設定情報]で、区切り文字や文字コードを設定します。</li>
+					<li>[ファイル選択]からcsvファイルを選択します(複数選択可)。</li>
+					<li>SQLのボタンをクリックし、SQLを作成します。</li>
+					<li>ファイル選択ボタンをクリックし、ファイルを作成します。</li>
+				</ol>
+				<p>ファイル名には、半角英字（a-z A-Z）、半角数字（0-9）、ダッシュ（-）、アンダースコア（_）を使用できます。</p>
+				<p>テーブル名には、拡張子を除いたファイル名を使用します。</p>
+				<p>フィールド名には、ファイルの先頭行を使用します。</p>
+				<p>SET句には、ファイルの2行目を使用します（Update文作成時）。</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="about-area" class="area-panel">
+		<h2>このサイトについて</h2>
+		<p class="summary">makeSQLは、ブラウザ上でSQLを作成するサイトです。</p>
+		<div class="box-detail">
+			<h3>推奨動作環境について</h3>
+			<div class="box-text">
+				<p>当サイトは以下の環境での動作を確認しています。</p>
+				<dl>
+					<dt>OS</dt>
+					<dd>
+						<ul>
+							<li>Windows Vista</li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+					<dt>ブラウザ</dt>
+					<dd>
+						<ul>
+							<li>Google Chrome</li>
+							<li>Firefox</li>
+						</ul>
+					</dd>
+				</dl>
+				<p>いずれもブラウザの設定でCSSとJavaScriptが有効な状態になっているものとします。</p>
+			</div>
+		</div>
+		<div class="box-detail">
+			<h3>ご利用について</h3>
+			<div class="box-text">
+				<p>当サイトのご利用については自己責任でお願いします。</p>
+			</div>
+		</div>
+		<div class="box-detail">
+			<h3>お問い合わせ</h3>
+			<div class="box-text">
+				<address>
+					<p>下記メールアドレスよりお問い合わせください。</p>
+					<p id="mail"></p>
+				</address>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<footer id="page-footer">
+	<p><small>Copyright &copy; <script>document.write(new Date().getFullYear());</script> <span id="mail">makesql</span> All Rights Reserved.</small></p>
+</footer>
+
+</div>
+<script src="js/makesql.js"></script>
+</body>
+</html>

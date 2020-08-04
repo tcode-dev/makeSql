@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+/*
+reset
+--------------------------------------*/
+html, body, div, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, address, ul, ol, li, dl, dt, dd,
+table, th, td, form, fieldset, figure {
+	color: #000000;
+	font-family: "メイリオ", sans-serif;
+}
+dl {
+	margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+}
+html {
+	overflow: scroll;
+}
+img, input, select, textarea {
+	vertical-align: middle;
+}
+ul {
+	list-style: none;
+}
+
+/*
+common
+--------------------------------------*/
+.btn-group {
+	margin-left: 0;
+	margin-bottom: 10px;
+}
+.btn {
+	width: 80px;
+}
+.area-button {
+	margin: 0 0 16px 0;
+}
+.alert-error {
+	margin-top: 20px;
+}
+
+/*
+container
+--------------------------------------*/
+#container {
+	width: 960px;
+	margin: 0 auto;
+}
+
+/*
+header
+--------------------------------------*/
+#page-header.hero-unit {
+	margin: 0;
+	padding: 60px 0 20px;
+	background-color: #ffffff;
+}
+#lead {
+	margin: 10px 10px 0 0;
+	text-align: right;
+	font-size: 14px;
+}
+.about {
+	font-size: 12px;
+}
+
+/*
+page-body
+--------------------------------------*/
+#page-body {
+	margin: 0;
+	padding-bottom: 16px;
+	min-height: 600px;
+	border-bottom: 1px solid #b1b1b1;
+}
+.area-panel h2 {
+	margin: 0;
+	padding: 0 0 5px 10px;
+	font-weight: bold;
+	border-bottom: 1px solid #b1b1b1;
+	font-size: 1.5em;
+}
+p.summary {
+	margin: 0 0 16px 0;
+	padding: 10px 0 0 10px;
+	line-height: 1.4;
+}
+
+
+/* #text-area */
+#text-area {
+	position: relative;
+}
+#befor h3,
+#after h3 {
+	margin-top: 10px;
+	text-align: center;
+	font-weight: normal;
+	font-size: 16px;
+}
+#befor dl,
+#after dl {
+	margin-bottom: 10px;
+}
+#after dl {
+	margin-left: 50px;
+}
+input#tableName {
+	width: 388px;
+}
+textarea#updatetext {
+	width: 388px;
+	height: 50px;
+}
+textarea#beforetext {
+	width: 388px;
+	height: 230px;
+}
+textarea#aftertext {
+	width: 388px;
+	height: 400px;
+}
+.arrow-right {
+	position: absolute;
+	top: 320px;
+	left: 450px;
+	font-size: 64px;
+	font-weight:900;
+	color: #b6b6b6;
+	text-shadow: 0 -1px 1px #666666, 0 1px 1px #ffffff;
+}
+
+/* #file-area */
+#select-file {
+	margin: 0 0 26px 0;
+}
+#select-file .btn {
+	width: 100px;
+}
+#select-file #dummy {
+	width: 105px;
+	height: 30px;
+	margin-right: 10px;
+	font-size: 13px;
+}
+#files {
+	display: none;
+}
+#makefile p {
+	margin: 0;
+}
+#download {
+	width: 105px;
+	height: 30px;
+	margin-bottom: 16px;
+}
+#output div {
+	margin: 0 0 6px 0;
+}
+#output div textarea {
+	width: 926px;
+	height: 100px;
+	margin-top: 10px;
+	margin-left: 10px;
+	cursor: default;
+}
+#output div .btn {
+	width: 935px;;
+	text-align: left;
+}
+
+#dummy:focus,
+#download:focus {
+	outline:none;
+}
+
+/* #config-area */
+#config-area table {
+	width: 940px;
+	margin: 0 0 16px 10px;
+}
+#config-area table th {
+	padding: 5px 10px;
+	text-align: left;
+	font-weight: normal;
+	background-color: rgba(0,0,0,0.1);
+	border: 1px solid #969696;
+}
+#config-area table td {
+	padding: 5px 10px;
+	border: 1px solid #969696;
+	vertical-align: top;
+}
+#config-area table td select {
+	width: 125px;
+	outline:none;
+}
+#config-area table td ul {
+	margin-left: 0;
+}
+#config-area table td ul li {
+	margin-bottom: 10px;
+}
+colgroup#set-content {
+	width: 150px;
+}
+colgroup#set-data {
+	width: 150px;
+}
+
+/* #help-area */
+.box-detail {
+	margin: 0 0 24px 10px;
+}
+.box-detail ol {
+	margin-bottom: 20px;
+}
+.box-detail ol li,
+.box-detail p {
+	margin-bottom: 5px;
+}
+.box-detail h3 {
+	font-size: 1.2em;
+}
+.box-text {
+	margin: 0 0 16px 10px;
+}
+
+/*
+footer
+--------------------------------------*/
+#page-footer {
+	margin: 0 0 16px 0;
+	padding-top: 10px;
+	border-top: 1px solid #e7e7e7;
+}
+#page-footer p {
+	text-align: right;
+	font-size: medium;
+}
+#page-footer p a span#mail {
+	text-decoration: underline;
+	color: #000000;
+}
