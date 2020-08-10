@@ -6,7 +6,7 @@
 export default {
     methods: {
         click() {
-            this.$store.commit('updateSql', `${this.$store.state.tableName} delete!!!`);
+            this.$store.commit('updateSql', `delete ${this.$store.state.tableName} ${this.$store.state.tableValue}`);
         }
     }
 };

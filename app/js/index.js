@@ -7,6 +7,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         tableName: '',
+        updateValue: '',
         tableValue: '',
         sql: '',
     },
@@ -16,6 +17,9 @@ const store = new Vuex.Store({
         },
         updateTableValue(state, value) {
             state.tableValue = value;
+        },
+        setUpdateValue(state, value) {
+            state.updateValue = value;
         },
         updateSql(state, value) {
             state.sql = value;
