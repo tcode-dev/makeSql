@@ -6,7 +6,7 @@
 export default {
     methods: {
         click() {
-            this.$emit('make-sql', 'delete!!!');
+            this.$emit('make-sql', `${this.$store.state.tableName} delete!!!`);
         }
     }
 };
