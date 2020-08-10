@@ -29,19 +29,6 @@ const store = new Vuex.Store({
 
 class Index {
     init() {
-        // const fileSql = new Vue({
-        //     el: '#output',
-        //     data: {
-        //         list: [
-        //             {
-        //                 title: 'title',
-        //                 fileName: 'sql1',
-        //                 sql: 'text',
-        //             }
-        //         ]
-        //     }
-        // });
-
         new Vue(Object.assign({}, TextPage, {store}));
     }
 }
