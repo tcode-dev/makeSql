@@ -3,10 +3,14 @@
 </template>
 
 <script>
+import MakeSelect from '../../sql/MakeSelect';
+
 export default {
     methods: {
         click() {
-            this.$store.commit('updateSql', `select ${this.$store.state.tableName} ${this.$store.state.tableValue}`);
+            const makeSelect = new MakeSelect({tableName: this.$store.state.tableName, tableValue: this.$store.state.tableValue, config: {}});
+
+            this.$store.commit('updateSql', makeSelect.make());
         }
     }
 };
