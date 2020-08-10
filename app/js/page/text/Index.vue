@@ -4,6 +4,7 @@ import InsertSql from './InsertSql.vue';
 import DeleteSql from './DeleteSql.vue';
 import UpdateSql from './UpdateSql.vue';
 import TableNameInput from './TableNameInput.vue';
+import TableValueTextarea from './TableValueTextarea.vue';
 import Result from './Result.vue';
 
 export default {
@@ -19,6 +20,7 @@ export default {
         'delete-sql': DeleteSql,
         'update-sql': UpdateSql,
         'table-name-input': TableNameInput,
+        'table-value-textarea': TableValueTextarea,
         'result': Result,
     },
     methods: {

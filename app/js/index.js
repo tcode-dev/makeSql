@@ -7,11 +7,15 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         tableName: '',
+        tableValue: '',
         sql: '',
     },
     mutations: {
         updateTableName(state, value) {
             state.tableName = value;
+        },
+        updateTableValue(state, value) {
+            state.tableValue = value;
         },
         updateSql(state, value) {
             state.sql = value;

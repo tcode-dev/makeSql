@@ -37,10 +37,10 @@
 		<p class="summary">csvファイルのテキストデータやexcelの表からSQLを作成します。</p>
 		<div class="area-button">
 			<ul class="btn-group">
-				<select-sql v-on:make-sql="receiveSql"></select-sql>
-				<insert-sql v-on:make-sql="receiveSql"></insert-sql>
-				<delete-sql v-on:make-sql="receiveSql"></delete-sql>
-				<update-sql v-on:make-sql="receiveSql"></update-sql>
+				<select-sql></select-sql>
+				<insert-sql></insert-sql>
+				<delete-sql></delete-sql>
+				<update-sql></update-sql>
 			</ul>
 		</div>
 
@@ -56,7 +56,7 @@
 				</dl>
 				<dl>
 					<dt>テーブル情報</dt>
-					<dd><textarea cols="40" rows="5" id="beforetext"></textarea></dd>
+					<dd><table-value-textarea></table-value-textarea></dd>
 				</dl>
 			</div>
 
