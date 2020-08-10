@@ -4,6 +4,12 @@
 
 <script>
 export default {
-    props: ['sql'],
+    computed: {
+        sql: {
+            get() {
+                return this.$store.state.sql
+            },
+        }
+    }
 };
 </script>
