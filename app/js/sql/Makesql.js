@@ -14,11 +14,6 @@ export default class Makesql {
         this.tableValue = tableValue;
         this.config = config;
         this.config.delimiter = ',';
-        this.config.select = 'select';
-        this.config.from = 'from';
-        this.config.where = 'where';
-        this.config.and = 'and';
-        this.config.or = 'or';
         this.config.bulk = false;
     }
 

@@ -6,10 +6,11 @@ import UpdateSql from './UpdateSql.vue';
 import TableNameInput from './TableNameInput.vue';
 import TableUpdateValueTextarea from './TableUpdateValueTextarea.vue';
 import TableValueTextarea from './TableValueTextarea.vue';
+import Setting from './Setting.vue';
 import Result from './Result.vue';
 
 export default {
-    el: '#text-area',
+    el: '#page-body',
     data() {
         return {
             sql: '',
@@ -23,6 +24,7 @@ export default {
         'table-name-input': TableNameInput,
         'table-update-value-textarea': TableUpdateValueTextarea,
         'table-value-textarea': TableValueTextarea,
+        'setting': Setting,
         'result': Result,
     },
     methods: {

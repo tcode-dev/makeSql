@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         tableName: '',
         updateValue: '',
         tableValue: '',
+        phrase: 'uppercase',
         sql: '',
     },
     mutations: {
@@ -24,6 +25,9 @@ const store = new Vuex.Store({
         updateSql(state, value) {
             state.sql = value;
         },
+        setPhrase(state, phrase) {
+            state.phrase = phrase;
+        }
     }
 });
 
