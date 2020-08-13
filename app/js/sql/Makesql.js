@@ -19,28 +19,47 @@ export default class Makesql {
         this.config.where = 'where';
         this.config.and = 'and';
         this.config.or = 'or';
+        this.config.bulk = false;
     }
 
     /**
-     * where
+     * getData
      */
-    where() {
+    getData() {
         const values = this.tableValue.split("\n");
         const fields = values.shift().split(this.config.delimiter);
-        const result = values.map((rowValue) => {
+
+        return {fields, values};
+    }
+
+    /**
+     * combine
+     * 列名と値を結合する
+     * @param {array} fields
+     * @param {array} values
+     */
+    combine(fields, values) {
+        return values.map((rowValue) => {
             return rowValue.split(this.config.delimiter).map((colValue, colIndex) => {
                 return `${fields[colIndex]} = ${colValue}`;
             })
             .join(` ${this.config.and} `);
         });
-        const lineCount = result.length;
+    }
+
+    /**
+     * bulk
+     * @param {array} combined 
+     */
+    bulk(combined) {
+        const lineCount = combined.length;
 
         if (lineCount >= 2) {
-            return '(' + result.join(`)\n${this.config.or} (`) + ')';
+            return '(' + combined.join(`)\n${this.config.or} (`) + ')';
         } else if (lineCount === 1) {
-            return result[0];
+            return combined[0];
         } else {
             return '';
         }
-    };
+    }
 }
