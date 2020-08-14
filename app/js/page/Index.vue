@@ -1,13 +1,13 @@
 <script>
-import SelectSql from './SelectSql.vue';
-import InsertSql from './InsertSql.vue';
-import DeleteSql from './DeleteSql.vue';
-import UpdateSql from './UpdateSql.vue';
-import TableNameInput from './TableNameInput.vue';
-import TableUpdateValueTextarea from './TableUpdateValueTextarea.vue';
-import TableValueTextarea from './TableValueTextarea.vue';
-import Setting from './Setting.vue';
-import Result from './Result.vue';
+import SelectSql from './text/SelectSql.vue';
+import InsertSql from './text/InsertSql.vue';
+import DeleteSql from './text/DeleteSql.vue';
+import UpdateSql from './text/UpdateSql.vue';
+import TableNameInput from './text/TableNameInput.vue';
+import TableUpdateValueTextarea from './text/TableUpdateValueTextarea.vue';
+import TableValueTextarea from './text/TableValueTextarea.vue';
+import Setting from './setting/Index.vue';
+import Result from './text/Result.vue';
 
 export default {
     el: '#page-body',

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
-import TextPage from './page/text/Index.vue';
+import TextPage from './page/Index.vue';
 
 Vue.use(Vuex)
 
