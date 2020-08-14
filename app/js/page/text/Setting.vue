@@ -1,24 +1,34 @@
 <template>
-    <div>
-        <div>
-            <input type="radio" id="delimiterComma" name="delimiter" value="comma" v-model="delimiter"><label for="delimiterComma">comma</label>
-            <input type="radio" id="delimiterTab" name="delimiter" value="tab" v-model="delimiter"><label for="delimiterTab">tab</label>
-            <input type="radio" id="delimiterSpace" name="delimiter" value="space" v-model="delimiter"><label for="delimiterSpace">space</label>
-        </div>
-        <div>
-            <input type="radio" id="lettercaseUppercase" name="lettercase" value="uppercase" v-model="lettercase"><label for="lettercaseUppercase">UPPERCASE</label>
-            <input type="radio" id="lettercaseCamelcase" name="lettercase" value="camelcase" v-model="lettercase"><label for="lettercaseCamelcase">Camelcase</label>
-            <input type="radio" id="lettercaseLowercase" name="lettercase" value="lowercase" v-model="lettercase"><label for="lettercaseLowercase">lowercase</label>
-        </div>
-        <div>
-            <input type="radio" id="characterCodeShiftJis" name="characterCode" value="shiftJis" v-model="characterCode"><label for="characterCodeShiftJis">Shift_JIS</label>
-            <input type="radio" id="characterCodeUtf8" name="characterCode" value="utf8" v-model="characterCode"><label for="characterCodeUtf8">UTF-8</label>
-            <input type="radio" id="characterCodeEucJp" name="characterCode" value="eucJp" v-model="characterCode"><label for="characterCodeEucJp">EUC-JP</label>
-        </div>
-        <div>
+    <dl>
+        <dt>区切り文字</dt>
+        <dd>
+            <ul>
+                <li><input type="radio" id="delimiterComma" name="delimiter" value="comma" v-model="delimiter"><label for="delimiterComma">comma</label></li>
+                <li><input type="radio" id="delimiterTab" name="delimiter" value="tab" v-model="delimiter"><label for="delimiterTab">tab</label></li>
+                <li><input type="radio" id="delimiterSpace" name="delimiter" value="space" v-model="delimiter"><label for="delimiterSpace">space</label></li>
+            </ul>
+        </dd>
+        <dt>大文字、小文字</dt>
+        <dd>
+            <ul>
+                <li><input type="radio" id="lettercaseUppercase" name="lettercase" value="uppercase" v-model="lettercase"><label for="lettercaseUppercase">UPPERCASE</label></li>
+                <li><input type="radio" id="lettercaseCamelcase" name="lettercase" value="camelcase" v-model="lettercase"><label for="lettercaseCamelcase">Camelcase</label></li>
+                <li><input type="radio" id="lettercaseLowercase" name="lettercase" value="lowercase" v-model="lettercase"><label for="lettercaseLowercase">lowercase</label></li>
+            </ul>
+        </dd>
+        <dt>文字コード</dt>
+        <dd>
+            <ul>
+                <li><input type="radio" id="characterCodeShiftJis" name="characterCode" value="shiftJis" v-model="characterCode"><label for="characterCodeShiftJis">Shift_JIS</label></li>
+                <li><input type="radio" id="characterCodeUtf8" name="characterCode" value="utf8" v-model="characterCode"><label for="characterCodeUtf8">UTF-8</label></li>
+                <li><input type="radio" id="characterCodeEucJp" name="characterCode" value="eucJp" v-model="characterCode"><label for="characterCodeEucJp">EUC-JP</label></li>
+            </ul>
+        </dd>
+        <dt>bulk</dt>
+        <dd>
             <input type="checkbox" id="bulk" name="bulk" v-model="bulk"><label for="bulk">bulk</label>
-        </div>
-    </div>
+        </dd>
+    </dl>
 </template>
 
 <script>

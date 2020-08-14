@@ -5,7 +5,7 @@ reset
 --------------------------------------*/
 html, body, div, h1, h2, h3, h4, h5, h6,
 p, blockquote, pre, address, ul, ol, li, dl, dt, dd,
-table, th, td, form, fieldset, figure {
+form, fieldset, figure {
 	color: #000000;
 	font-family: "メイリオ", sans-serif;
 }
@@ -179,38 +179,7 @@ textarea#aftertext {
 }
 
 /* #config-area */
-#config-area table {
-	width: 940px;
-	margin: 0 0 16px 10px;
-}
-#config-area table th {
-	padding: 5px 10px;
-	text-align: left;
-	font-weight: normal;
-	background-color: rgba(0,0,0,0.1);
-	border: 1px solid #969696;
-}
-#config-area table td {
-	padding: 5px 10px;
-	border: 1px solid #969696;
-	vertical-align: top;
-}
-#config-area table td select {
-	width: 125px;
-	outline:none;
-}
-#config-area table td ul {
-	margin-left: 0;
-}
-#config-area table td ul li {
-	margin-bottom: 10px;
-}
-colgroup#set-content {
-	width: 150px;
-}
-colgroup#set-data {
-	width: 150px;
-}
+
 
 /* #help-area */
 .box-detail {
