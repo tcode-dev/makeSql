@@ -4,6 +4,11 @@ const Const = {
         "tab": /\t/,
         "space": /\s/,
     },
+    "characterCode": {
+        "shiftJis":"Shift_JIS",
+        "utf8": "UTF-8",
+        "eucJp": "EUC-JP",
+    },
     "lettercase": {
         "uppercase": {
             "select": "SELECT",

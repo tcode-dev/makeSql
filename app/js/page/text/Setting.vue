@@ -11,6 +11,11 @@
             <input type="radio" id="lettercaseLowercase" name="lettercase" value="lowercase" v-model="lettercase"><label for="lettercaseLowercase">lowercase</label>
         </div>
         <div>
+            <input type="radio" id="characterCodeShiftJis" name="characterCode" value="shiftJis" v-model="characterCode"><label for="characterCodeShiftJis">Shift_JIS</label>
+            <input type="radio" id="characterCodeUtf8" name="characterCode" value="utf8" v-model="characterCode"><label for="characterCodeUtf8">UTF-8</label>
+            <input type="radio" id="characterCodeEucJp" name="characterCode" value="eucJp" v-model="characterCode"><label for="characterCodeEucJp">EUC-JP</label>
+        </div>
+        <div>
             <input type="checkbox" id="bulk" name="bulk" v-model="bulk"><label for="bulk">bulk</label>
         </div>
     </div>
@@ -35,6 +40,14 @@ export default {
                 this.$store.commit('setLettercase', value)
             }
         },
+        characterCode: {
+            get() {
+                return this.$store.state.characterCode
+            },
+            set(value) {
+                this.$store.commit('setCharacterCode', value)
+            }
+        },
         bulk: {
             get() {
                 return this.$store.state.bulk
@@ -43,6 +56,6 @@ export default {
                 this.$store.commit('setBulk', value)
             }
         },
-}
+    }
 };
 </script>

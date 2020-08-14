@@ -11,6 +11,8 @@ const store = new Vuex.Store({
         tableValue: `col1,col2\ndata1,data2\ndata3,data4`,
         delimiter: 'comma',
         lettercase: 'uppercase',
+        characterCode: 'eucJp',
+        bulk: false,
         sql: '',
     },
     mutations: {
@@ -31,6 +33,9 @@ const store = new Vuex.Store({
         },
         setLettercase(state, lettercase) {
             state.lettercase = lettercase;
+        },
+        setCharacterCode(state, characterCode) {
+            state.characterCode = characterCode;
         },
         setBulk(state, bulk) {
             state.bulk = bulk;
