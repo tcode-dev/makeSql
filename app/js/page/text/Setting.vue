@@ -10,6 +10,9 @@
             <input type="radio" id="lettercaseCamelcase" name="lettercase" value="camelcase" v-model="lettercase"><label for="lettercaseCamelcase">Camelcase</label>
             <input type="radio" id="lettercaseLowercase" name="lettercase" value="lowercase" v-model="lettercase"><label for="lettercaseLowercase">lowercase</label>
         </div>
+        <div>
+            <input type="checkbox" id="bulk" name="bulk" v-model="bulk"><label for="bulk">bulk</label>
+        </div>
     </div>
 </template>
 
@@ -32,6 +35,14 @@ export default {
                 this.$store.commit('setLettercase', value)
             }
         },
-    }
+        bulk: {
+            get() {
+                return this.$store.state.bulk
+            },
+            set(value) {
+                this.$store.commit('setBulk', value)
+            }
+        },
+}
 };
 </script>

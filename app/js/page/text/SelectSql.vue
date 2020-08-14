@@ -12,6 +12,7 @@ export default {
             const config = {
                 delimiter: Const.delimiter[this.$store.state.delimiter],
                 ...Const.lettercase[this.$store.state.lettercase],
+                bulk: this.$store.state.bulk,
             };
             const makeSelect = new MakeSelect({tableName: this.$store.state.tableName, tableValue: this.$store.state.tableValue, config});
 

@@ -31,7 +31,10 @@ const store = new Vuex.Store({
         },
         setLettercase(state, lettercase) {
             state.lettercase = lettercase;
-        }
+        },
+        setBulk(state, bulk) {
+            state.bulk = bulk;
+        },
     }
 });
 
