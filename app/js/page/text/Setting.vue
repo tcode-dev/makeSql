@@ -1,20 +1,35 @@
 <template>
     <div>
-        <input type="radio" id="phraseUppercase" name="phrase" value="uppercase" v-model="phrase"><label for="phraseUppercase">UPPERCASE</label>
-        <input type="radio" id="phraseCamelcase" name="phrase" value="camelcase" v-model="phrase"><label for="phraseCamelcase">Camelcase</label>
-        <input type="radio" id="phraseLowercase" name="phrase" value="lowercase" v-model="phrase"><label for="phraseLowercase">lowercase</label>
+        <div>
+            <input type="radio" id="delimiterComma" name="delimiter" value="comma" v-model="delimiter"><label for="delimiterComma">comma</label>
+            <input type="radio" id="delimiterTab" name="delimiter" value="tab" v-model="delimiter"><label for="delimiterTab">tab</label>
+            <input type="radio" id="delimiterSpace" name="delimiter" value="space" v-model="delimiter"><label for="delimiterSpace">space</label>
+        </div>
+        <div>
+            <input type="radio" id="lettercaseUppercase" name="lettercase" value="uppercase" v-model="lettercase"><label for="lettercaseUppercase">UPPERCASE</label>
+            <input type="radio" id="lettercaseCamelcase" name="lettercase" value="camelcase" v-model="lettercase"><label for="lettercaseCamelcase">Camelcase</label>
+            <input type="radio" id="lettercaseLowercase" name="lettercase" value="lowercase" v-model="lettercase"><label for="lettercaseLowercase">lowercase</label>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     computed: {
-        phrase: {
+        delimiter: {
             get() {
-                return this.$store.state.phrase
+                return this.$store.state.delimiter
             },
             set(value) {
-                this.$store.commit('setPhrase', value)
+                this.$store.commit('setDelimiter', value)
+            }
+        },
+        lettercase: {
+            get() {
+                return this.$store.state.lettercase
+            },
+            set(value) {
+                this.$store.commit('setLettercase', value)
             }
         },
     }

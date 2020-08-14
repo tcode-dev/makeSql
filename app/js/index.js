@@ -6,10 +6,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        tableName: '',
+        tableName: 'tableName',
         updateValue: '',
-        tableValue: '',
-        phrase: 'uppercase',
+        tableValue: `col1,col2\ndata1,data2\ndata3,data4`,
+        delimiter: 'comma',
+        lettercase: 'uppercase',
         sql: '',
     },
     mutations: {
@@ -25,8 +26,11 @@ const store = new Vuex.Store({
         updateSql(state, value) {
             state.sql = value;
         },
-        setPhrase(state, phrase) {
-            state.phrase = phrase;
+        setDelimiter(state, delimiter) {
+            state.delimiter = delimiter;
+        },
+        setLettercase(state, lettercase) {
+            state.lettercase = lettercase;
         }
     }
 });

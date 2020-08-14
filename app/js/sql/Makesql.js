@@ -13,7 +13,6 @@ export default class Makesql {
         this.tableName = tableName;
         this.tableValue = tableValue;
         this.config = config;
-        this.config.delimiter = ',';
         this.config.bulk = false;
     }
 
