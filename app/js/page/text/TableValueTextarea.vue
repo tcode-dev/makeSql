@@ -1,5 +1,8 @@
 <template>
-    <textarea cols="40" rows="5" id="beforetext" v-model="tableValue"></textarea>
+    <dl>
+        <dt>テーブル情報</dt>
+        <dd><textarea cols="40" rows="5" id="beforetext" v-model="tableValue"></textarea></dd>
+    </dl>
 </template>
 
 <script>

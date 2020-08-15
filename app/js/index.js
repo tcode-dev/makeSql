@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
-import TextPage from './page/Index.vue';
+import Page from './page/Index.vue';
 
 Vue.use(Vuex)
 
@@ -45,7 +45,7 @@ const store = new Vuex.Store({
 
 class Index {
     init() {
-        new Vue(Object.assign({}, TextPage, {store}));
+        new Vue(Object.assign({}, Page, {store}));
     }
 }
 

@@ -35,40 +35,7 @@
 	<div id="text-area" class="area-panel">
 		<h2>テキストからSQLを作成</h2>
 		<p class="summary">csvファイルのテキストデータやexcelの表からSQLを作成します。</p>
-		<div class="area-button">
-			<ul class="btn-group">
-				<select-sql></select-sql>
-				<insert-sql></insert-sql>
-				<delete-sql></delete-sql>
-				<update-sql></update-sql>
-			</ul>
-		</div>
-
-		<div class="row-fluid">
-			<div id="befor" class="span6">
-				<dl>
-					<dt>テーブル名</dt>
-					<dd><table-name-input></table-name-input></dd>
-				</dl>
-				<dl>
-					<dt>更新情報</dt>
-					<dd><table-update-value-textarea></table-update-value-textarea></dd>
-				</dl>
-				<dl>
-					<dt>テーブル情報</dt>
-					<dd><table-value-textarea></table-value-textarea></dd>
-				</dl>
-			</div>
-
-			<p class="arrow-right">&rarr; </p>
-
-			<div id="after" class="span6">
-				<dl>
-					<dt>SQL</dt>
-					<dd><result v-bind:sql="sql"></result></dd>
-				</dl>
-			</div>
-		</div>
+		<text-page></text-page>
 	</div>
 
 	<div id="file-area" class="area-panel">
@@ -98,7 +65,7 @@
 	<div id="config-area" class="area-panel">
 		<h2>設定情報</h2>
 		<p class="summary">SQL作成時に使用する情報を設定します。</p>
-		<setting></setting>
+		<setting-page></setting-page>
 	</div>
 
 	<div id="help-area" class="area-panel">

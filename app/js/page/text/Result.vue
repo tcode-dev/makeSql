@@ -1,5 +1,8 @@
 <template>
-    <textarea cols="40" rows="13" id="aftertext" v-model="sql"></textarea>
+    <dl>
+        <dt>SQL</dt>
+        <dd><textarea cols="40" rows="13" id="aftertext" v-model="sql" v-bind:sql="sql"></textarea></dd>
+    </dl>
 </template>
 
 <script>

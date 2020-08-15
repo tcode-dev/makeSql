@@ -1,5 +1,8 @@
 <template>
-    <textarea cols="40" rows="2" id="updatetext" v-model="updateValue"></textarea>
+    <dl>
+        <dt>更新情報</dt>
+        <dd><textarea cols="40" rows="2" id="updatetext" v-model="updateValue"></textarea></dd>
+    </dl>
 </template>
 
 <script>
