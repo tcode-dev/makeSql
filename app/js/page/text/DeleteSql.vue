@@ -3,10 +3,20 @@
 </template>
 
 <script>
+import { Const } from '../../Const.js';
+import MakeDelete from '../../sql/MakeDelete';
+
 export default {
     methods: {
         click() {
-            this.$store.commit('setSql', `delete ${this.$store.state.tableName} ${this.$store.state.tableValue}`);
+            const config = {
+                delimiter: Const.delimiter[this.$store.state.delimiter],
+                ...Const.lettercase[this.$store.state.lettercase],
+                bulk: this.$store.state.bulk,
+            };
+            const makeDelete = new MakeDelete({tableName: this.$store.state.tableName, tableValue: this.$store.state.tableValue, config});
+
+            this.$store.commit('setSql', makeDelete.make());
         }
     }
 };
