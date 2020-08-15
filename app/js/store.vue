@@ -16,10 +16,10 @@ const store = new Vuex.Store({
         sql: '',
     },
     mutations: {
-        setTableValue(state, value) {
+        setTableName(state, value) {
             state.tableName = value;
         },
-        sealeValue(state, value) {
+        setTableValue(state, value) {
             state.tableValue = value;
         },
         setUpdateValue(state, value) {
