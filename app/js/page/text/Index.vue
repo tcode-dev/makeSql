@@ -1,25 +1,26 @@
 <template>
-    <div>
-        <div class="area-button">
-            <ul class="btn-group">
-                <select-sql></select-sql>
-                <insert-sql></insert-sql>
-                <delete-sql></delete-sql>
-                <update-sql></update-sql>
-            </ul>
-        </div>
-
-        <div class="row-fluid">
-            <div id="befor" class="span6">
-                <table-name-input></table-name-input>
-                <table-update-value-textarea></table-update-value-textarea>
-                <table-value-textarea></table-value-textarea>
+    <div id="text-area" class="area-panel">
+        <h2>テキストからSQLを作成</h2>
+        <p class="summary">csvファイルのテキストデータやexcelの表からSQLを作成します。</p>
+        <div>
+            <div class="area-button">
+                <ul class="btn-group">
+                    <select-sql></select-sql>
+                    <insert-sql></insert-sql>
+                    <delete-sql></delete-sql>
+                    <update-sql></update-sql>
+                </ul>
             </div>
-
-            <p class="arrow-right">&rarr; </p>
-
-            <div id="after" class="span6">
-                <result></result>
+            <div class="row-fluid">
+                <div id="befor" class="span6">
+                    <table-name-input></table-name-input>
+                    <table-update-value-textarea></table-update-value-textarea>
+                    <table-value-textarea></table-value-textarea>
+                </div>
+                <p class="arrow-right">&rarr; </p>
+                <div id="after" class="span6">
+                    <result></result>
+                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,13 @@
 <template>
-    <div>
-        <delimiter></delimiter>
-        <lettercase></lettercase>
-        <character-code></character-code>
-        <bulk></bulk>
+    <div id="config-area" class="area-panel">
+        <h2>設定情報</h2>
+        <p class="summary">SQL作成時に使用する情報を設定します。</p>
+        <div>
+            <delimiter></delimiter>
+            <lettercase></lettercase>
+            <character-code></character-code>
+            <bulk></bulk>
+        </div>
     </div>
 </template>
 
