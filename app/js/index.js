@@ -3,6 +3,9 @@ import router from './router.vue';
 import store from './store.vue';
 
 class Index {
+    /**
+     * init
+     */
     init() {
         new Vue(Object.assign({}, {router}, {store})).$mount('#page-content');
     }

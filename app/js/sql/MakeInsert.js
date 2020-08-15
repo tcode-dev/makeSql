@@ -6,6 +6,7 @@ import MakeSql from './MakeSql';
 export default class MakeInsert extends MakeSql {
     /**
      * sql文を生成する
+     * @return {string}
      */
     make() {
         if (this.config.bulk) {
@@ -17,6 +18,7 @@ export default class MakeInsert extends MakeSql {
 
     /**
      * 全体で1つのsql文を生成する
+     * @return {string}
      */
     bulkSql() {
         const {fields, values} = this.getValue();
@@ -30,6 +32,7 @@ export default class MakeInsert extends MakeSql {
 
     /**
      * 1行ごとに1つのsql文を生成する
+     * @return {string}
      */
     splitSql() {
         const {fields, values} = this.getValue();

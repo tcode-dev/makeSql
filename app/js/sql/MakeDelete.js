@@ -6,6 +6,7 @@ import MakeSql from './MakeSql';
 export default class MakeDelete extends MakeSql {
     /**
      * sql文を生成する
+     * @return {string}
      */
     make() {
         if (this.config.bulk) {
@@ -17,6 +18,7 @@ export default class MakeDelete extends MakeSql {
 
     /**
      * 全体で1つのsql文を生成する
+     * @return {string}
      */
     bulkSql() {
         const where = this.bulk(this.where());
@@ -26,6 +28,7 @@ export default class MakeDelete extends MakeSql {
 
     /**
      * 1行ごとに1つのsql文を生成する
+     * @return {string}
      */
     splitSql() {
         return this.where().map((where) => {

@@ -20,6 +20,7 @@ export default class MakeSql {
     /**
      * getUpdateValue
      * 更新情報を取得する
+     * @return {object}
      */
     getUpdateValue() {
         return this.getData(this.updateValue);
@@ -28,6 +29,7 @@ export default class MakeSql {
     /**
      * getValue
      * テーブル情報を取得する
+     * @return {object}
      */
     getValue() {
         return this.getData(this.tableValue);
