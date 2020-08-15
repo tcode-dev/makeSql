@@ -48,6 +48,6 @@ export default class MakeUpdate extends MakeSql {
     set() {
         const {fields, values} = this.getUpdateValue();
 
-        return this.combine(fields, values.slice(0, 2), ', ');
+        return this.combine(fields, values.slice(0, 1), ', ');
     }
 }
