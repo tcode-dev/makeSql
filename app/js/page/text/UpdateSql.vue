@@ -13,6 +13,7 @@ export default {
                 delimiter: Const.delimiter[this.$store.state.delimiter],
                 ...Const.lettercase[this.$store.state.lettercase],
                 bulk: this.$store.state.bulk,
+                quotation: this.$store.state.quotation ? "'" : '',
             };
             const makeUpdate = new MakeUpdate({tableName: this.$store.state.tableName, updateValue: this.$store.state.updateValue, tableValue: this.$store.state.tableValue, config});
 

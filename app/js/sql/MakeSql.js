@@ -70,7 +70,7 @@ export default class MakeSql {
     combine(fields, values, delimiter) {
         return values.map((rowValue) => {
             return rowValue.split(this.config.delimiter).map((colValue, colIndex) => {
-                return `${fields[colIndex]} = ${colValue}`;
+                return `${fields[colIndex]} = ${this.config.quotation}${colValue}${this.config.quotation}`;
             })
             .join(delimiter);
         });

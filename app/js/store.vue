@@ -12,7 +12,8 @@ const store = new Vuex.Store({
         delimiter: 'comma',
         lettercase: 'uppercase',
         characterCode: 'eucJp',
-        bulk: false,
+        bulk: true,
+        quotation: false,
         sql: '',
     },
     mutations: {
@@ -28,18 +29,22 @@ const store = new Vuex.Store({
         setSql(state, value) {
             state.sql = value;
         },
-        setDelimiter(state, delimiter) {
-            state.delimiter = delimiter;
+        setDelimiter(state, value) {
+            state.delimiter = value;
         },
-        setLettercase(state, lettercase) {
-            state.lettercase = lettercase;
+        setLettercase(state, value) {
+            state.lettercase = value;
         },
-        setCharacterCode(state, characterCode) {
-            state.characterCode = characterCode;
+        setCharacterCode(state, value) {
+            state.characterCode = value;
         },
-        setBulk(state, bulk) {
-            state.bulk = bulk;
+        setBulk(state, value) {
+            state.bulk = value;
         },
+        setQuotation(state, value) {
+            state.quotation = value;
+        },
+        
     }
 });
 

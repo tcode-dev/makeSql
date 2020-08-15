@@ -7,6 +7,7 @@
             <lettercase></lettercase>
             <character-code></character-code>
             <bulk></bulk>
+            <quotation></quotation>
         </div>
     </div>
 </template>
@@ -16,6 +17,7 @@ import Delimiter from './Delimiter.vue';
 import Lettercase from './Lettercase.vue';
 import CharacterCode from './CharacterCode.vue';
 import Bulk from './Bulk.vue';
+import Quotation from './Quotation.vue';
 
 export default {
     components: {
@@ -23,6 +25,7 @@ export default {
         'lettercase': Lettercase,
         'character-code': CharacterCode,
         'bulk': Bulk,
+        'quotation': Quotation,
     },
 };
 </script>
