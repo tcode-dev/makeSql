@@ -1,27 +1,18 @@
-import Makesql from './Makesql';
+import MakeSql from './MakeSql';
 
 /**
  * MakeInsert
  */
-export default class MakeInsert extends Makesql {
+export default class MakeInsert extends MakeSql {
+    /**
+     * sql文を生成する
+     */
     make() {
         if (this.config.bulk) {
             return this.bulkSql();
         } else {
             return this.splitSql();
         }
-    }
-
-    /**
-     * 1行ごとに1つのsqlを生成する
-     */
-    splitSql() {
-        const {fields, values} = this.getValue();
-        const fieldPhrase = `(${fields.join(', ')})`;
-
-        return values.map((row) => {
-            return `${this.config.insert} ${this.config.into} ${this.tableName} ${fieldPhrase} ${this.config.values} (${row.split(', ')});`;
-        }).join('\n');
     }
 
     /**
@@ -35,5 +26,17 @@ export default class MakeInsert extends Makesql {
         }).join('\n,');
 
         return `${this.config.insert} ${this.config.into} ${this.tableName}\n${fieldPhrase}\n${this.config.values}\n${valuePhrase}\n;`;
+    }
+
+    /**
+     * 1行ごとに1つのsql文を生成する
+     */
+    splitSql() {
+        const {fields, values} = this.getValue();
+        const fieldPhrase = `(${fields.join(', ')})`;
+
+        return values.map((row) => {
+            return `${this.config.insert} ${this.config.into} ${this.tableName} ${fieldPhrase} ${this.config.values} (${row.split(', ')});`;
+        }).join('\n');
     }
 }

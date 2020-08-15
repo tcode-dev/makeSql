@@ -1,7 +1,7 @@
 /**
- * Makesql
+ * MakeSql
  */
-export default class Makesql {
+export default class MakeSql {
     /**
      * @constructor
      * @param {object}
@@ -53,6 +53,7 @@ export default class Makesql {
      */
     where() {
         const {fields, values} = this.getValue();
+
         return this.combine(fields, values, ` ${this.config.and} `);
     }
 

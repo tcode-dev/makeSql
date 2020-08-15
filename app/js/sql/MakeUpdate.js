@@ -1,26 +1,18 @@
-import Makesql from './Makesql';
+import MakeSql from './MakeSql';
 
 /**
  * MakeUpdate
  */
-export default class MakeUpdate extends Makesql {
+export default class MakeUpdate extends MakeSql {
+    /**
+     * sql文を生成する
+     */
     make() {
         if (this.config.bulk) {
             return this.bulkSql();
         } else {
             return this.splitSql();
         }
-    }
-
-    /**
-     * 1行ごとに1つのsqlを生成する
-     */
-    splitSql() {
-        const set = this.set();
-
-        return this.where().map((where) => {
-            return `${this.config.update} ${this.config.set} ${set} ${this.config.from} ${this.tableName} ${this.config.where} ${where};`;
-        }).join('\n');
     }
 
     /**
@@ -34,6 +26,17 @@ export default class MakeUpdate extends Makesql {
     }
 
     /**
+     * 1行ごとに1つのsql文を生成する
+     */
+    splitSql() {
+        const set = this.set();
+
+        return this.where().map((where) => {
+            return `${this.config.update} ${this.config.set} ${set} ${this.config.from} ${this.tableName} ${this.config.where} ${where};`;
+        }).join('\n');
+    }
+
+    /**
      * set
      * @param {array} fields
      * @param {array} values
@@ -41,6 +44,7 @@ export default class MakeUpdate extends Makesql {
      */
     set() {
         const {fields, values} = this.getUpdateValue();
+
         return this.combine(fields, values.slice(0, 2), ', ');
     }
 }
