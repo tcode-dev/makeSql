@@ -3,10 +3,20 @@
 </template>
 
 <script>
+import { Const } from '../../Const.js';
+import MakeUpdate from '../../sql/MakeUpdate';
+
 export default {
     methods: {
         click() {
-            this.$store.commit('setSql', `update ${this.$store.state.tableName} ${this.$store.state.updateValue} ${this.$store.state.tableValue}`);
+            const config = {
+                delimiter: Const.delimiter[this.$store.state.delimiter],
+                ...Const.lettercase[this.$store.state.lettercase],
+                bulk: this.$store.state.bulk,
+            };
+            const makeUpdate = new MakeUpdate({tableName: this.$store.state.tableName, updateValue: this.$store.state.updateValue, tableValue: this.$store.state.tableValue, config});
+
+            this.$store.commit('setSql', makeUpdate.make());
         }
     }
 };

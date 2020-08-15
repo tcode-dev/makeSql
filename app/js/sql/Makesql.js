@@ -6,23 +6,54 @@ export default class Makesql {
      * @constructor
      * @param {object}
      * @property {string} tableName
+     * @property {string} updateValue
      * @property {string} tableValue
      * @property {object} config
      */
-    constructor({tableName, tableValue, config}) {
+    constructor({tableName, updateValue, tableValue, config}) {
         this.tableName = tableName;
+        this.updateValue = updateValue;
         this.tableValue = tableValue;
         this.config = config;
     }
 
     /**
-     * getData
+     * getUpdateValue
+     * 更新情報を取得する
      */
-    getData() {
-        const values = this.tableValue.split("\n");
+    getUpdateValue() {
+        return this.getData(this.updateValue);
+    }
+
+    /**
+     * getValue
+     * テーブル情報を取得する
+     */
+    getValue() {
+        return this.getData(this.tableValue);
+    }
+
+    /**
+     * getData
+     * @param {string} data
+     * @return {object}
+     */
+    getData(data) {
+        const values = data.split("\n");
         const fields = values.shift().split(this.config.delimiter);
 
         return {fields, values};
+    }
+
+    /**
+     * where
+     * @param {array} fields
+     * @param {array} values
+     * @return {array}
+     */
+    where() {
+        const {fields, values} = this.getValue();
+        return this.combine(fields, values, ` ${this.config.and} `);
     }
 
     /**
@@ -30,19 +61,22 @@ export default class Makesql {
      * 列名と値を結合する
      * @param {array} fields
      * @param {array} values
+     * @param {string} delimiter
+     * @return {array}
      */
-    combine(fields, values) {
+    combine(fields, values, delimiter) {
         return values.map((rowValue) => {
             return rowValue.split(this.config.delimiter).map((colValue, colIndex) => {
                 return `${fields[colIndex]} = ${colValue}`;
             })
-            .join(` ${this.config.and} `);
+            .join(delimiter);
         });
     }
 
     /**
      * bulk
      * @param {array} combined 
+     * @return {string}
      */
     bulk(combined) {
         const lineCount = combined.length;

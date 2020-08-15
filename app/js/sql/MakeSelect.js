@@ -16,10 +16,7 @@ export default class MakeSelect extends Makesql {
      * 1行ごとに1つのsqlを生成する
      */
     splitSql() {
-        const {fields, values} = this.getData();
-        const combined = this.combine(fields, values);
-
-        return combined.map((where) => {
+        return this.where().map((where) => {
             return `${this.config.select} * ${this.config.from} ${this.tableName} ${this.config.where} ${where};`;
         }).join('\n');
     }
@@ -28,9 +25,7 @@ export default class MakeSelect extends Makesql {
      * 全体で1つのsql文を生成する
      */
     bulkSql() {
-        const {fields, values} = this.getData();
-        const combined = this.combine(fields, values);
-        const where = this.bulk(combined);
+        const where = this.bulk(this.where());
 
         return `${this.config.select} *\n${this.config.from} ${this.tableName}\n${this.config.where}\n${where}\n;`;
     }
