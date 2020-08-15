@@ -13,7 +13,7 @@ export default {
                 return this.$store.state.tableValue
             },
             set(value) {
-                this.$store.commit('updateTableValue', value)
+                this.$store.commit('setTableValue', value)
             }
         }
     }

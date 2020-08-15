@@ -16,16 +16,16 @@ const store = new Vuex.Store({
         sql: '',
     },
     mutations: {
-        updateTableName(state, value) {
+        setTableValue(state, value) {
             state.tableName = value;
         },
-        updateTableValue(state, value) {
+        sealeValue(state, value) {
             state.tableValue = value;
         },
         setUpdateValue(state, value) {
             state.updateValue = value;
         },
-        updateSql(state, value) {
+        setSql(state, value) {
             state.sql = value;
         },
         setDelimiter(state, delimiter) {

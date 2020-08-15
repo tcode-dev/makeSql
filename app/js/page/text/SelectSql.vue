@@ -16,7 +16,7 @@ export default {
             };
             const makeSelect = new MakeSelect({tableName: this.$store.state.tableName, tableValue: this.$store.state.tableValue, config});
 
-            this.$store.commit('updateSql', makeSelect.make());
+            this.$store.commit('setSql', makeSelect.make());
         }
     }
 };
