@@ -15,7 +15,6 @@ export default class FileExtractor {
                 const tableName = filename.split(".")[0];
                 const text = event.target.result.replace(/[\n\r][\n\r]?/g, "\n");
                 const data = {
-                    filename,
                     tableName,
                     text,
                 };

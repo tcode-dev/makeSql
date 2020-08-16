@@ -17,7 +17,6 @@ export default {
                     const makeSelect = new MakeSelect({tableName: data.tableName, tableValue: data.text, config: this.$store.getters.config});
                     const item = {
                         title: data.tableName,
-                        filename: data.filename,
                         sql: makeSelect.make(),
                     };
                     this.$store.commit('addList', item);

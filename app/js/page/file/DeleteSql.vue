@@ -17,7 +17,6 @@ export default {
                     const makeDelete = new MakeDelete({tableName: data.tableName, tableValue: data.text, config: this.$store.getters.config});
                     const item = {
                         title: data.tableName,
-                        filename: data.filename,
                         sql: makeDelete.make(),
                     };
                     this.$store.commit('addList', item);

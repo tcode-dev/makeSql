@@ -20,7 +20,6 @@ export default {
                     const makeUpdate = new MakeUpdate({tableName: data.tableName, updateValue, tableValue, config: this.$store.getters.config});
                     const item = {
                         title: data.tableName,
-                        filename: data.filename,
                         sql: makeUpdate.make(),
                     };
                     this.$store.commit('addList', item);
