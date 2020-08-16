@@ -18,7 +18,7 @@
         </div>
 
         <form id="makefile" method="post" action="php/makefile.php">
-            <p><input id="download" class="btn" type="submit" value="Download"></p>
+            <p><download></download></p>
             <div id="output">
                 <div v-for="item in list" v-bind:key="item.id">
                     <h3 class="btn">{{ item.title }}</h3>
@@ -35,6 +35,7 @@ import SelectSql from './SelectSql.vue';
 import InsertSql from './InsertSql.vue';
 import DeleteSql from './DeleteSql.vue';
 import UpdateSql from './UpdateSql.vue';
+import Download from './Download.vue';
 
 export default {
     components: {
@@ -42,6 +43,7 @@ export default {
         'insert-sql': InsertSql,
         'delete-sql': DeleteSql,
         'update-sql': UpdateSql,
+        'download': Download,
     },
     computed: {
         fileNumber: {
