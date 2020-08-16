@@ -8,7 +8,7 @@
                 <select-sql></select-sql>
                 <insert-sql></insert-sql>
                 <delete-sql></delete-sql>
-                <li id="update2" class="btn">Update</li>
+                <update-sql></update-sql>
             </ul>
         </div>
 
@@ -34,12 +34,14 @@
 import SelectSql from './SelectSql.vue';
 import InsertSql from './InsertSql.vue';
 import DeleteSql from './DeleteSql.vue';
+import UpdateSql from './UpdateSql.vue';
 
 export default {
     components: {
         'select-sql': SelectSql,
         'insert-sql': InsertSql,
         'delete-sql': DeleteSql,
+        'update-sql': UpdateSql,
     },
     computed: {
         fileNumber: {
