@@ -7,7 +7,7 @@
             <ul class="btn-group">
                 <select-sql></select-sql>
                 <li id="insert2" class="btn">Insert</li>
-                <li id="delete2" class="btn">Delete</li>
+                <delete-sql></delete-sql>
                 <li id="update2" class="btn">Update</li>
             </ul>
         </div>
@@ -32,10 +32,12 @@
 
 <script>
 import SelectSql from './SelectSql.vue';
+import DeleteSql from './DeleteSql.vue';
 
 export default {
     components: {
         'select-sql': SelectSql,
+        'delete-sql': DeleteSql,
     },
     computed: {
         fileNumber: {
