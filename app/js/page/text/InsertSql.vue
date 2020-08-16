@@ -3,17 +3,16 @@
 </template>
 
 <script>
-import { Const } from '../../Const.js';
 import MakeInsert from '../../sql/MakeInsert';
 
 export default {
     methods: {
         click() {
             const config = {
-                delimiter: Const.delimiter[this.$store.state.delimiter],
-                ...Const.lettercase[this.$store.state.lettercase],
+                ...this.$store.state.lettercase,
+                delimiter: this.$store.state.delimiter,
                 bulk: this.$store.state.bulk,
-                quotation: this.$store.state.quotation ? "'" : '',
+                quotation: this.$store.state.quotation,
             };
             const makeInsert = new MakeInsert({tableName: this.$store.state.tableName, tableValue: this.$store.state.tableValue, config});
 

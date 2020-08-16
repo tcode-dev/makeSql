@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { Const } from '../../Const.js';
 import MakeSelect from '../../sql/MakeSelect';
 import FileExtractor from '../../sql/FileExtractor';
 
@@ -13,10 +12,10 @@ export default {
             this.$store.commit('removeList');
 
             const config = {
-                delimiter: Const.delimiter[this.$store.state.delimiter],
-                ...Const.lettercase[this.$store.state.lettercase],
+                ...this.$store.state.lettercase,
+                delimiter: this.$store.state.delimiter,
                 bulk: this.$store.state.bulk,
-                quotation: this.$store.state.quotation ? "'" : '',
+                quotation: this.$store.state.quotation,
             };
             const fileExtractor = new FileExtractor();
             this.$store.state.files.forEach(file => {

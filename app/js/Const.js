@@ -52,4 +52,4 @@ const Const = {
     }
 }
 
-export { Const} ;
+export default Const;
