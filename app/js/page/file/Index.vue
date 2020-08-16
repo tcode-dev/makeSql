@@ -20,12 +20,12 @@
         <form id="makefile" method="post" action="php/makefile.php">
             <p><input id="download" class="btn" type="submit" value="Download"></p>
             <div id="output">
-				<div v-for="item in list">
+                <div v-for="item in list" v-bind:key="item.id">
                     <h3 class="btn">{{ item.title }}</h3>
-                    <p><textarea cols="45" rows="5" name="text[]" readonly>{{ item.sql }}</textarea></p>
-                    <p><input type="hidden" name="file[]" v-bind:value="item.filename"></p>
-				</div>
-			</div>
+                    <p><textarea cols="45" rows="5" name="text[]" readonly v-model="item.sql"></textarea></p>
+                    <p><input type="hidden" name="file[]" v-model="item.filename"></p>
+                </div>
+            </div>
         </form>
     </div>
 </template>
