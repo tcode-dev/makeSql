@@ -5,7 +5,7 @@
 
         <div class="area-button">
             <ul class="btn-group">
-                <li id="select2" class="btn">Select</li>
+                <select-sql></select-sql>
                 <li id="insert2" class="btn">Insert</li>
                 <li id="delete2" class="btn">Delete</li>
                 <li id="update2" class="btn">Update</li>
@@ -19,18 +19,33 @@
 
         <form id="makefile" method="post" action="php/makefile.php">
             <p><input id="download" class="btn" type="submit" value="Download"></p>
-            <div id="output"></div>
+            <div id="output">
+				<div v-for="item in list">
+                    <h3 class="btn">{{ item.title }}</h3>
+                    <p><textarea cols="45" rows="5" name="text[]" readonly>{{ item.sql }}</textarea></p>
+                    <p><input type="hidden" name="file[]" v-bind:value="item.filename"></p>
+				</div>
+			</div>
         </form>
     </div>
 </template>
 
 <script>
+import SelectSql from './SelectSql.vue';
 
 export default {
+    components: {
+        'select-sql': SelectSql,
+    },
     computed: {
         fileNumber: {
             get() {
                 return this.$store.state.fileNumber
+            },
+        },
+        list: {
+            get() {
+                return this.$store.state.list
             },
         },
     },

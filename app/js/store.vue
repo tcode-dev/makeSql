@@ -15,8 +15,9 @@ const store = new Vuex.Store({
         bulk: true,
         quotation: false,
         sql: '',
-        files: null,
+        files: [],
         fileNumber: 0,
+        list: [],
     },
     mutations: {
         setTableName(state, value) {
@@ -49,6 +50,12 @@ const store = new Vuex.Store({
         setFiles(state, value) {
             state.files = value;
             state.fileNumber = value.length;
+        },
+        addList(state, value) {
+            state.list.push(value);
+        },
+        removeList(state) {
+            state.list = [];
         },
     }
 });
