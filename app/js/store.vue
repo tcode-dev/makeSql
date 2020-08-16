@@ -15,16 +15,18 @@ const store = new Vuex.Store({
         bulk: true,
         quotation: false,
         sql: '',
+        files: null,
+        fileNumber: 0,
     },
     mutations: {
         setTableName(state, value) {
             state.tableName = value;
         },
-        setTableValue(state, value) {
-            state.tableValue = value;
-        },
         setUpdateValue(state, value) {
             state.updateValue = value;
+        },
+        setTableValue(state, value) {
+            state.tableValue = value;
         },
         setSql(state, value) {
             state.sql = value;
@@ -44,7 +46,10 @@ const store = new Vuex.Store({
         setQuotation(state, value) {
             state.quotation = value;
         },
-        
+        setFiles(state, value) {
+            state.files = value;
+            state.fileNumber = value.length;
+        },
     }
 });
 
