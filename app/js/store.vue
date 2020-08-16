@@ -10,11 +10,11 @@ const store = new Vuex.Store({
         tableName: 'tableName',
         updateValue: '',
         tableValue: `col1,col2\ndata1,data2\ndata3,data4`,
-        delimiter: Const.delimiter['comma'],
-        lettercase: Const.lettercase['uppercase'],
-        characterCode: Const.characterCode['eucJp'],
+        delimiter: 'comma',
+        lettercase: 'uppercase',
+        characterCode: 'eucJp',
         bulk: true,
-        quotation: '',
+        quotation: true,
         sql: '',
         files: [],
         fileNumber: 0,
@@ -34,19 +34,19 @@ const store = new Vuex.Store({
             state.sql = value;
         },
         setDelimiter(state, value) {
-            state.delimiter = Const.delimiter[value];
+            state.delimiter = value;
         },
         setLettercase(state, value) {
-            state.lettercase = Const.lettercase[value];
+            state.lettercase = value;
         },
         setCharacterCode(state, value) {
-            state.characterCode = Const.characterCode[value];
+            state.characterCode = value;
         },
         setBulk(state, value) {
             state.bulk = value;
         },
         setQuotation(state, value) {
-            state.quotation = value ? "'" : '';
+            state.quotation = value;
         },
         setFiles(state, value) {
             state.files = value;
@@ -58,6 +58,19 @@ const store = new Vuex.Store({
         removeList(state) {
             state.list = [];
         },
+    },
+    getters: {
+        config(state) {
+            return {
+                ...Const.lettercase[state.lettercase],
+                delimiter: Const.delimiter[state.delimiter],
+                bulk: state.bulk,
+                quotation: state.quotation ? "'" : '',
+            };
+        },
+        characterCode(state) {
+            return Const.characterCode[state.characterCode];
+        }
     }
 });
 
