@@ -4,7 +4,7 @@
 
 <script>
 import MakeInsert from '../../sql/MakeInsert';
-import FileExtractor from '../../sql/FileExtractor';
+import FileExtractor from '../../util/FileExtractor';
 
 export default {
     methods: {

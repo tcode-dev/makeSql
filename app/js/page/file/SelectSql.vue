@@ -4,7 +4,7 @@
 
 <script>
 import MakeSelect from '../../sql/MakeSelect';
-import FileExtractor from '../../sql/FileExtractor';
+import FileExtractor from '../../util/FileExtractor';
 
 export default {
     methods: {

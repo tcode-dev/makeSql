@@ -5,7 +5,7 @@
 <script>
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import DateTime from '../../DateTime';
+import DateTime from '../../util/DateTime';
 
 export default {
     methods: {

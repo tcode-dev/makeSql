@@ -4,7 +4,7 @@
 
 <script>
 import MakeDelete from '../../sql/MakeDelete';
-import FileExtractor from '../../sql/FileExtractor';
+import FileExtractor from '../../util/FileExtractor';
 
 export default {
     methods: {
