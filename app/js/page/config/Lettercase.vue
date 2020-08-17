@@ -1,5 +1,5 @@
 <template>
-    <dl>
+    <dl class="config">
         <dt>大文字、小文字</dt>
         <dd>
             <ul>

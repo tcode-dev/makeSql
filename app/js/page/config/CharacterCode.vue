@@ -1,5 +1,5 @@
 <template>
-    <dl>
+    <dl class="config">
         <dt>文字コード</dt>
         <dd>
             <ul>

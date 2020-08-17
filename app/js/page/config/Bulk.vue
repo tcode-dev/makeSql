@@ -1,8 +1,8 @@
 <template>
-    <dl>
+    <dl class="config">
         <dt>bulk</dt>
         <dd>
-            <input type="checkbox" id="bulk" name="bulk" v-model="bulk"><label for="bulk">bulk</label>
+            <input type="checkbox" id="bulk" name="bulk" v-model="bulk">
         </dd>
     </dl>
 </template>

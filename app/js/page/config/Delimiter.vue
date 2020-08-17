@@ -1,5 +1,5 @@
 <template>
-    <dl>
+    <dl class="config">
         <dt>区切り文字</dt>
         <dd>
             <ul>
