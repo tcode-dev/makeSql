@@ -5,18 +5,22 @@
 <script>
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
+import DateTime from '../../DateTime';
 
 export default {
     methods: {
         click() {
-            const zip = new JSZip();
-
-            this.$store.state.list.forEach(item => {
+            const zip = this.$store.state.list.reduce((zip, item) => {
                 zip.file(`${item.title}.sql`, item.sql);
-            });
+
+                return zip;
+            }, new JSZip());
+
             zip.generateAsync({type: 'blob'})
-                .then(function(content){
-                    saveAs(content, 'sql.zip');
+                .then((content) => {
+                    const dateTime = new DateTime();
+
+                    saveAs(content, `sql_${dateTime.now()}.zip`);
                 });
         }
     }
