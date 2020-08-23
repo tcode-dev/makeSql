@@ -90,18 +90,11 @@ page-body
     border-bottom: 1px solid #b1b1b1;
 }
 .area-panel h2 {
-    margin: 0;
-    padding: 0 0 5px 10px;
+    margin: 0 0 20px 5px;
+    padding: 0;
     font-weight: bold;
-    border-bottom: 1px solid #b1b1b1;
     font-size: 1.5em;
 }
-p.summary {
-    margin: 0 0 16px 0;
-    padding: 10px 0 0 10px;
-    line-height: 1.4;
-}
-
 
 /* #text-area */
 #text-area {
@@ -193,10 +186,12 @@ textarea#aftertext {
 /* #config-area */
 .config {
     display: flex;
-    margin-left: 10px;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #b1b1b1;
 }
-.config + .config {
-    margin-top: 20px;
+.config:first-child {
+    border-top: 1px solid #b1b1b1;
 }
 .config dt {
     min-width: 100px;
@@ -213,6 +208,7 @@ textarea#aftertext {
 }
 .config label {
     display: inline-block;
+    line-height: 1;
 }
 .config input {
     margin: 0 10px 0 0;

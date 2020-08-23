@@ -1,7 +1,6 @@
 <template>
     <div id="text-area" class="area-panel">
         <h2>テキストからSQLを作成</h2>
-        <p class="summary">csvファイルのテキストデータやexcelの表からSQLを作成します。</p>
         <div>
             <div class="area-button">
                 <ul class="btn-group">

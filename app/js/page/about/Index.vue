@@ -1,7 +1,6 @@
 <template>
     <div id="about-area" class="area-panel">
         <h2>このサイトについて</h2>
-        <p class="summary">makeSQLは、ブラウザ上でSQLを作成するサイトです。</p>
         <div class="box-detail">
             <h3>推奨動作環境について</h3>
             <div class="box-text">

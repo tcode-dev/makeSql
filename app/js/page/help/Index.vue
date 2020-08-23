@@ -1,7 +1,6 @@
 <template>
     <div id="help-area" class="area-panel">
         <h2>使い方</h2>
-        <p class="summary">使い方や説明です。</p>
         <div class="box-detail">
             <h3>テキストデータからSQLを作成する</h3>
             <div class="box-text">

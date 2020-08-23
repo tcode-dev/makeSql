@@ -1,8 +1,6 @@
 <template>
     <div id="file-area" class="area-panel">
         <h2>ファイルからSQLを作成</h2>
-        <p class="summary">csvファイルからSQLを作成します。</p>
-
         <div class="area-button">
             <ul class="btn-group">
                 <select-sql></select-sql>
@@ -11,12 +9,10 @@
                 <update-sql></update-sql>
             </ul>
         </div>
-
         <div id="select-file">
             <p><input type="file" id="files" multiple ref="fileSelectionButton" v-on:change="change"></p>
             <p><button id="dummy" class="btn" v-on:click="click">ファイル選択</button><span v-if="fileNumber">{{ fileNumber }}件のファイルを選択しました。</span></p>
         </div>
-
         <form id="makefile" method="post" action="php/makefile.php">
             <p><download></download></p>
             <div id="output">
