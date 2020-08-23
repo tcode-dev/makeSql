@@ -3,9 +3,9 @@
         <dt>文字コード</dt>
         <dd>
             <ul>
-                <li><input type="radio" id="characterCodeShiftJis" name="characterCode" value="shiftJis" v-model="characterCode"><label for="characterCodeShiftJis">Shift_JIS</label></li>
-                <li><input type="radio" id="characterCodeUtf8" name="characterCode" value="utf8" v-model="characterCode"><label for="characterCodeUtf8">UTF-8</label></li>
-                <li><input type="radio" id="characterCodeEucJp" name="characterCode" value="eucJp" v-model="characterCode"><label for="characterCodeEucJp">EUC-JP</label></li>
+                <li><label><input type="radio" name="characterCode" value="shiftJis" v-model="characterCode">Shift_JIS</label></li>
+                <li><label><input type="radio" name="characterCode" value="utf8" v-model="characterCode">UTF-8</label></li>
+                <li><label><input type="radio" name="characterCode" value="eucJp" v-model="characterCode">EUC-JP</label></li>
             </ul>
         </dd>
     </dl>

@@ -2,7 +2,7 @@
     <dl class="config">
         <dt>quotation</dt>
         <dd>
-            <input type="checkbox" id="quotation" name="quotation" v-model="quotation">
+            <input type="checkbox" name="quotation" v-model="quotation">
         </dd>
     </dl>
 </template>

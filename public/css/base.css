@@ -218,10 +218,16 @@ textarea#aftertext {
 .box-detail {
     margin: 0 0 24px 10px;
 }
-.box-detail ol {
-    margin-bottom: 20px;
+.box-detail dl {
+    display: flex;
+    margin-top: 15px;
 }
-.box-detail ol li,
+.box-detail dl + dl {
+    margin-bottom: 15px;
+}
+.box-detail dt {
+    min-width: 5em;
+}
 .box-detail p {
     margin-bottom: 5px;
 }

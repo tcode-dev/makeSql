@@ -2,7 +2,7 @@
     <dl class="config">
         <dt>bulk</dt>
         <dd>
-            <input type="checkbox" id="bulk" name="bulk" v-model="bulk">
+            <input type="checkbox" name="bulk" v-model="bulk">
         </dd>
     </dl>
 </template>

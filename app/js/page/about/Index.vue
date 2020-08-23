@@ -7,19 +7,11 @@
                 <p>当サイトは以下の環境での動作を確認しています。</p>
                 <dl>
                     <dt>OS</dt>
-                    <dd>
-                        <ul>
-                            <li>Mac</li>
-                        </ul>
-                    </dd>
+                    <dd>Mac</dd>
                 </dl>
                 <dl>
                     <dt>ブラウザ</dt>
-                    <dd>
-                        <ul>
-                            <li>Google Chrome</li>
-                        </ul>
-                    </dd>
+                    <dd>Google Chrome</dd>
                 </dl>
                 <p>いずれもブラウザの設定でCSSとJavaScriptが有効な状態になっているものとします。</p>
             </div>
