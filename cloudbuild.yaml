@@ -1,0 +1,11 @@
+steps:
+- name: 'node:14.7.0'
+  entrypoint: 'npm'
+  args: [ 'install' ]
+- name: 'node:14.7.0'
+  entrypoint: 'npm'
+  args: [ 'build' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/make-sql-image', '.' ]
+images:
+- 'gcr.io/$PROJECT_ID/make-sql-image'

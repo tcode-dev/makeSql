@@ -1,0 +1,15 @@
+.DS_Store
+.eslintignore
+.eslintrc.json
+.gcloudignore
+.git
+.gitignore
+.prettierignore
+.prettierrc.json
+app
+docker-compose
+docker-compose.yml
+Dockerfile.local
+node_modules
+README.md
+webpack.dev.js
