@@ -8,5 +8,5 @@ services:
     ports:
       - 80:80
     volumes:
-      - ./public:/usr/local/apache2/htdocs/
+      - ./dist:/usr/local/apache2/htdocs/
     tty: true

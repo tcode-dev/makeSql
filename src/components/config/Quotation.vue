@@ -1,0 +1,23 @@
+<template>
+  <dl class="config">
+    <dt>quotation</dt>
+    <dd>
+      <input type="checkbox" name="quotation" v-model="quotation">
+    </dd>
+  </dl>
+</template>
+
+<script>
+export default {
+  computed: {
+    quotation: {
+      get() {
+        return this.$store.state.quotation
+      },
+      set(value) {
+        this.$store.commit('setQuotation', value)
+      }
+    },
+  }
+};
+</script>

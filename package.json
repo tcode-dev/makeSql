@@ -1,35 +1,46 @@
 {
-  "name": "html",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "make-sql",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build:watch": "webpack --config webpack.dev.js --env.watch --mode development"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tkwtokyo/makeSql.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tkwtokyo/makeSql/issues"
-  },
-  "homepage": "https://github.com/tkwtokyo/makeSql#readme",
   "dependencies": {
-    "@babel/core": "^7.11.1",
-    "@babel/preset-env": "^7.11.0",
-    "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.2",
     "jszip": "^3.5.0",
     "vue": "^2.6.11",
-    "vue-loader": "^15.9.3",
     "vue-router": "^3.4.3",
-    "vue-template-compiler": "^2.6.11",
-    "vuex": "^3.5.1",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12",
-    "webpack-merge": "^5.1.1"
-  }
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }
