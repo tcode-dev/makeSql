@@ -15,7 +15,7 @@
     </div>
     <download></download>
     <div id="output">
-      <div v-for="item in list" v-bind:key="item.id">
+      <div class ="sql-entry" v-for="item in list" v-bind:key="item.id">
         <list-item v-bind:item="item"></list-item>
       </div>
     </div>
@@ -61,3 +61,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.sql-entry + .sql-entry {
+  margin-top: 20px;
+}
+</style>
