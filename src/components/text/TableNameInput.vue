@@ -1,7 +1,7 @@
 <template>
   <dl>
-    <dt>テーブル名</dt>
-    <dd><input type="text" id="tableName" v-model="tableName"></dd>
+    <dt class="mb-2">テーブル名</dt>
+    <dd><input type="text" class="form-control" v-model="tableName"></dd>
   </dl>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <dl>
-    <dt>SQL</dt>
-    <dd><textarea cols="40" rows="13" id="aftertext" v-model="sql" v-bind:sql="sql"></textarea></dd>
+    <dt class="mb-2">SQL</dt>
+    <dd><textarea class="form-control" v-model="sql" v-bind:sql="sql"></textarea></dd>
   </dl>
 </template>
 
@@ -16,3 +16,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+dl {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+dd {
+  flex-grow: 2;
+}
+textarea {
+  height: 100%;
+}
+</style>

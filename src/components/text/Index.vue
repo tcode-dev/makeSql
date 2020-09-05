@@ -1,25 +1,22 @@
 <template>
-  <div id="text-area" class="area-panel">
-    <h2>テキストからSQLを作成</h2>
-    <div>
-      <div class="area-button">
-        <ul class="btn-group">
+  <div class="vue--fragment">
+    <h2 class="h5 mb-4">テキストからSQLを作成</h2>
+      <div class="row">
+        <div class="col-6 btn-group d-flex mb-4">
           <select-sql></select-sql>
           <insert-sql></insert-sql>
           <delete-sql></delete-sql>
           <update-sql></update-sql>
-        </ul>
+        </div>
+        </div>
+    <div class="row">
+      <div class="col">
+        <table-name-input></table-name-input>
+        <table-update-value-textarea></table-update-value-textarea>
+        <table-value-textarea></table-value-textarea>
       </div>
-      <div class="row-fluid">
-        <div id="befor" class="span6">
-          <table-name-input></table-name-input>
-          <table-update-value-textarea></table-update-value-textarea>
-          <table-value-textarea></table-value-textarea>
-        </div>
-        <p class="arrow-right">&rarr; </p>
-        <div id="after" class="span6">
-          <result></result>
-        </div>
+      <div class="col">
+        <result></result>
       </div>
     </div>
   </div>
@@ -48,3 +45,9 @@ export default {
   },
 };
 </script>
+
+<style>
+dl {
+  margin-bottom: 0;
+}
+</style>

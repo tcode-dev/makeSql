@@ -1,7 +1,7 @@
 <template>
   <dl>
-    <dt>テーブル情報</dt>
-    <dd><textarea cols="40" rows="5" id="beforetext" v-model="tableValue"></textarea></dd>
+    <dt class="mb-2">テーブル情報</dt>
+    <dd><textarea rows="5" class="form-control" v-model="tableValue"></textarea></dd>
   </dl>
 </template>
 
