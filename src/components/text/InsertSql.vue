@@ -1,5 +1,5 @@
 <template>
-  <li id="insert1" class="btn" v-on:click="click">Insert</li>
+  <li class="btn" v-on:click="click">Insert</li>
 </template>
 
 <script>
