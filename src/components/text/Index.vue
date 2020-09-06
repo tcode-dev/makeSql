@@ -1,8 +1,8 @@
 <template>
   <div class="vue--fragment">
     <h2 class="h5 mb-4">テキストからSQLを作成</h2>
-    <div class="row">
-      <div class="col-6 btn-group d-flex mb-4">
+    <div class="row mb-4">
+      <div class="col-6 btn-group d-flex">
         <select-sql></select-sql>
         <insert-sql></insert-sql>
         <delete-sql></delete-sql>

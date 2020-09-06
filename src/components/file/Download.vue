@@ -1,5 +1,5 @@
 <template>
-  <p><input id="download" class="btn" type="button" value="Download" v-on:click="click"></p>
+  <button class="btn btn-outline-secondary" type="button" v-on:click="click">Download</button>
 </template>
 
 <script>

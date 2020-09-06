@@ -22,3 +22,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#page-body {
+  min-height: 620px;
+}
+</style>

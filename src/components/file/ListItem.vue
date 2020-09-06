@@ -1,9 +1,9 @@
 <template>
-  <div class="fragment">
-    <button class="btn btnToggle" @click="toggle">{{ item.title }}</button>
+  <div class="fragment d-flex stack mb-4">
+    <button class="btn btn-outline-secondary text-left mb-3" @click="toggle">{{ item.title }}</button>
     <transition @before-enter="beforeEnter" @after-enter="afterEnter" @before-leave="beforeLeave" @leave="leave">
       <div class="sql-accordion" v-if="show" :class="{ 'is-open': show }" ref="accordion">
-        <textarea cols="45" rows="5" readonly v-model="item.sql" ref="textarea" v-bind:style="{height: height}"></textarea>
+        <textarea class="form-control w-100" rows="5" v-model="item.sql" ref="textarea" v-bind:style="{height: height}"></textarea>
       </div>
     </transition>
   </div>
@@ -45,32 +45,17 @@ export default {
 </script>
 
 <style scoped>
-.btnToggle {
-  margin-bottom: 10px;
-}
-.sql-accordion {
-  overflow: hidden;
-}
 .v-enter-active,
 .v-leave-active {
   transition: height .4s ease-in-out;
 }
 .v-enter {
-    height: 0 !important;
+  height: 0 !important;
 }
-textarea {
-  width: 926px;
-  height: 100px;
-  margin: 0;
-  cursor: default;
-  box-sizing: border-box;
+.sql-accordion {
+  overflow: hidden;
 }
-.btn {
-  width: 935px;;
-  text-align: left;
-}
-#dummy:focus,
-#download:focus {
-  outline:none;
+.stack {
+  flex-direction: column;
 }
 </style>
