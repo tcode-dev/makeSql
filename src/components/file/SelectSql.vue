@@ -1,5 +1,5 @@
 <template>
-  <button class="btn btn-outline-secondary" v-on:click="click">Select</button>
+  <button class="btn btn-outline-secondary" v-on:click="click" v-bind:disabled="isButtonDisabled">Select</button>
 </template>
 
 <script>
@@ -7,6 +7,13 @@ import MakeSelect from '../../sql/MakeSelect';
 import FileExtractor from '../../util/FileExtractor';
 
 export default {
+  computed: {
+    isButtonDisabled: {
+      get() {
+        return this.$store.state.fileNumber === 0;
+      },
+    }
+  },
   methods: {
     click() {
       this.$store.commit('removeList');
