@@ -1,13 +1,15 @@
 <template>
-  <div id="config-area" class="area-panel">
-    <h2>設定情報</h2>
-    <div>
-      <delimiter></delimiter>
-      <lettercase></lettercase>
-      <character-code></character-code>
-      <bulk></bulk>
-      <quotation></quotation>
-    </div>
+  <div class="vue--fragment">
+    <h2 class="h5 mb-4">設定情報</h2>
+    <table class="table w-auto">
+      <tbody>
+        <delimiter></delimiter>
+        <lettercase></lettercase>
+        <character-code></character-code>
+        <bulk></bulk>
+        <quotation></quotation>
+      </tbody>
+    </table>
   </div>
 </template>
 

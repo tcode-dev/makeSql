@@ -1,14 +1,25 @@
 <template>
-  <dl class="config">
-    <dt>大文字、小文字</dt>
-    <dd>
-      <ul>
-        <li><label><input type="radio" name="lettercase" value="uppercase" v-model="lettercase">UPPERCASE</label></li>
-        <li><label><input type="radio" name="lettercase" value="camelcase" v-model="lettercase">Camelcase</label></li>
-        <li><label><input type="radio" name="lettercase" value="lowercase" v-model="lettercase">lowercase</label></li>
-      </ul>
-    </dd>
-  </dl>
+  <tr>
+    <th scope="row">lettercase</th>
+    <td>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="lettercase" id="uppercase" value="uppercase" v-model="lettercase">
+        <label class="form-check-label" for="uppercase">UPPERCASE</label>
+      </div>
+    </td>
+    <td>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="lettercase" id="camelcase" value="camelcase" v-model="lettercase">
+        <label class="form-check-label" for="camelcase">Camelcase</label>
+      </div>
+    </td>
+    <td>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="lettercase" id="lowercase" value="lowercase" v-model="lettercase">
+        <label class="form-check-label" for="lowercase">lowercase</label>
+      </div>
+    </td>
+  </tr>
 </template>
 
 <script>

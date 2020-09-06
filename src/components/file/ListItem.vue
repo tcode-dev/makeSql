@@ -1,5 +1,5 @@
 <template>
-  <div class="fragment d-flex stack mb-4">
+  <div class="vue--fragment d-flex stack mb-4">
     <button class="btn btn-outline-secondary text-left mb-3" @click="toggle">{{ item.title }}</button>
     <transition @before-enter="beforeEnter" @after-enter="afterEnter" @before-leave="beforeLeave" @leave="leave">
       <div class="sql-accordion" v-if="show" :class="{ 'is-open': show }" ref="accordion">
@@ -47,7 +47,7 @@ export default {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-  transition: height .4s ease-in-out;
+  transition: height .3s ease-in-out;
 }
 .v-enter {
   height: 0 !important;

@@ -1,10 +1,12 @@
 <template>
-  <dl class="config">
-    <dt>quotation</dt>
-    <dd>
-      <input type="checkbox" name="quotation" v-model="quotation">
-    </dd>
-  </dl>
+  <tr>
+    <th scope="row">quotation</th>
+    <td colspan="3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox"  name="quotation" v-model="quotation">
+      </div>
+    </td>
+  </tr>
 </template>
 
 <script>

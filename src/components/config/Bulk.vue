@@ -1,10 +1,12 @@
 <template>
-  <dl class="config">
-    <dt>bulk</dt>
-    <dd>
-      <input type="checkbox" name="bulk" v-model="bulk">
-    </dd>
-  </dl>
+  <tr>
+    <th scope="row">bulk</th>
+    <td colspan="3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox"  name="bulk" v-model="bulk">
+      </div>
+    </td>
+  </tr>
 </template>
 
 <script>

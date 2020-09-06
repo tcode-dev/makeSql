@@ -1,5 +1,5 @@
 <template>
-  <div class="fragment">
+  <div class="vue--fragment">
     <div class="sql" v-for="item in list" v-bind:key="item.id">
       <list-item v-bind:item="item"></list-item>
     </div>

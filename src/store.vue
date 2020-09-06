@@ -14,7 +14,7 @@ const store = new Vuex.Store({
     lettercase: 'uppercase',
     characterCode: 'shiftJis',
     bulk: true,
-    quotation: false,
+    quotation: true,
     sql: '',
     files: [],
     fileNumber: 0,
