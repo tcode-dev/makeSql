@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav d-flex mb-5 border-bottom">
+  <nav class="nav d-flex mb-4 border-bottom">
     <router-link class="nav-link text-secondary" to="/text">テキストから作成</router-link>
     <router-link class="nav-link text-secondary" to="/file">ファイルから作成</router-link>
     <router-link class="nav-link text-secondary" to="/config">設定情報</router-link>

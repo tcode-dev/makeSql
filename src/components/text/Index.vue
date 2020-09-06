@@ -1,16 +1,16 @@
 <template>
   <div class="vue--fragment">
     <h2 class="h5 mb-4">テキストからSQLを作成</h2>
-      <div class="row">
-        <div class="col-6 btn-group d-flex mb-4">
-          <select-sql></select-sql>
-          <insert-sql></insert-sql>
-          <delete-sql></delete-sql>
-          <update-sql></update-sql>
-        </div>
-        </div>
     <div class="row">
-      <div class="col">
+      <div class="col-6 btn-group d-flex mb-4">
+        <select-sql></select-sql>
+        <insert-sql></insert-sql>
+        <delete-sql></delete-sql>
+        <update-sql></update-sql>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col d-flex stack">
         <table-name-input></table-name-input>
         <table-update-value-textarea></table-update-value-textarea>
         <table-value-textarea></table-value-textarea>
@@ -49,5 +49,8 @@ export default {
 <style>
 dl {
   margin-bottom: 0;
+}
+.stack {
+  flex-direction: column;
 }
 </style>
