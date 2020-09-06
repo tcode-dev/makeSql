@@ -3,7 +3,7 @@
     <input type="file" class="form-file-input" id="fileSelection" ref="fileSelection" v-on:change="change" multiple>
     <label class="form-file-label" for="fileSelection">
       <span class="form-file-text">{{ fileSelect }}</span>
-      <span class="form-file-button">Browse</span>
+      <span class="form-file-button">ファイル選択</span>
     </label>
   </div>
 </template>

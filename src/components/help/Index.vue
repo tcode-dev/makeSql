@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="h5 mb-4">使い方</h2>
-    <div class="mb-4">
+    <section class="mb-4">
       <h3 class="h5 font-weight-bold">テキストからSQLを作成する</h3>
       <ol>
         <li>[設定情報]で、区切り文字や文字コードを設定します。</li>
@@ -14,8 +14,8 @@
         [テーブル情報]は、SELECT文・DELETE文・UPDATE文を作成時にWHERE句として、INSERT文を作成時にVALUES句として使用します。<br>
         [更新情報]・[テーブル情報]の先頭行をフィールド名として使用します。
       </p>
-    </div>
-    <div>
+    </section>
+    <section>
       <h3 class="h5 font-weight-bold">ファイルからSQLを作成する</h3>
       <ol>
         <li>[設定情報]で、区切り文字や文字コードを設定します。</li>
@@ -29,6 +29,6 @@
         フィールド名には、ファイルの先頭行を使用します。<br>
         SET句には、ファイルの2行目を使用します（Update文作成時）。
       </p>
-    </div>
+    </section>
   </div>
 </template>
