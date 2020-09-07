@@ -7,9 +7,9 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    tableName: 'tableName',
+    tableName: '',
     updateValue: '',
-    tableValue: `col1,col2\ndata1,data2\ndata3,data4`,
+    tableValue: '',
     delimiter: 'comma',
     lettercase: 'uppercase',
     characterCode: 'shiftJis',

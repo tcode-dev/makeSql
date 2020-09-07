@@ -10,7 +10,7 @@
     <td>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="delimiter" id="tab" value="tab" v-model="delimiter">
-        <label class="form-check-label" for="tab">UPPERCASE</label>
+        <label class="form-check-label" for="tab">tab</label>
       </div>
     </td>
     <td>
