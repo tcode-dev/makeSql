@@ -8,7 +8,7 @@ Make sure to install the dependencies:
 
 ```bash
 # yarn
-yarn install
+docker run --rm -it -p 3000:3000 -v $(pwd):/app -w /app node:20.0.0-slim yarn install
 ```
 
 ## Development Server
@@ -16,8 +16,7 @@ yarn install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# yarn
-yarn dev
+docker run --rm -it -p 3000:3000 -v $(pwd):/app -w /app node:20.0.0-slim yarn dev
 ```
 
 ## Production
@@ -25,15 +24,13 @@ yarn dev
 Build the application for production:
 
 ```bash
-# yarn
-yarn build
+docker run --rm -it -p 3000:3000 -v $(pwd):/app -w /app node:20.0.0-slim yarn build
 ```
 
 Locally preview production build:
 
 ```bash
-# yarn
-yarn preview
+docker run --rm -it -p 3000:3000 -v $(pwd):/app -w /app node:20.0.0-slim yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
