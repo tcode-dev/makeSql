@@ -1,5 +1,8 @@
+<script setup lang="ts">
+import Text from '../components/page/text/Index.vue'
+</script>
+
 <template>
-  <div>
-    <h2 class="h5 mb-4">TextView</h2>
-  </div>
+  <Text />
 </template>
+
