@@ -1,15 +1,11 @@
 <template>
-  <div class="mt-4 py-2 border-top">
+  <footer>
     <p class="text-right"><small>Copyright &copy; {{ year }}<span>makesql</span> All Rights Reserved.</small></p>
-  </div>
+  </footer>
 </template>
 
-<script>
-export default {
-  computed: {
-    year() {
-      return new Date().getFullYear()
-    },
-  }
-};
+<script setup lang="ts">
+import { computed } from 'vue';
+
+const year = computed(() => new Date().getFullYear());
 </script>
