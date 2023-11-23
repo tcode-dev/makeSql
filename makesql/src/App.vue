@@ -7,7 +7,7 @@ import Footer from './components/footer/Index.vue'
 </script>
 
 <template>
-  <div class="container">
+  <div>
     <Header />
     <Nav />
     <RouterView />
