@@ -1,19 +1,34 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { type Lettercase, type Delimiter, type CharacterCode, ConfigConst } from '@/const/ConfigConst'
 
-type Config = {
-  lettercase: string,
-  delimiter: string,
+interface State {
+  characterCode: CharacterCode,
+  lettercase: Lettercase,
+  delimiter: Delimiter,
   bulk: boolean,
-  quotation: string,
+  quotation: boolean,
 };
 
 export const useConfigStore = defineStore('config', () => {
-  const count = ref({})
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const state = ref<State>({
+    characterCode: 'utf8',
+    delimiter: 'comma',
+    lettercase: 'lowercase',
+    bulk: false,
+    quotation: true
+  })
+  const setState = (value: State) => {
+    state.value = value;
   }
 
-  return { count, doubleCount, increment }
+  const config = {
+    characterCode: ConfigConst['characterCode'][state.value.characterCode],
+    delimiter: ConfigConst['delimiter'][state.value.delimiter],
+    lettercase: ConfigConst['lettercase'][state.value.lettercase],
+    bulk: state.value.bulk,
+    quotation: state.value.quotation
+  }
+
+  return { config, setState }
 })
