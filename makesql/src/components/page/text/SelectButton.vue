@@ -6,13 +6,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import MakeSelect from '../../../sql/MakeSelect'
-import {useTextStore} from '@/stores/textStore';
+import { useTextStore } from '@/stores/textStore'
 const text = ref('test1')
-const {state} = useTextStore();
+const { state } = useTextStore();
 const click = () => {
   const makeSelect = new MakeSelect({
     tableName: state.tableName,
-    tableValue: 'col1,col2\ndata1, data2',
+    tableValue: state.table,
     config: {
       select: 'SELECT',
       insert: 'INSERT',
@@ -30,7 +30,7 @@ const click = () => {
       quotation: "'",
     }
   });
-  text.value = makeSelect.make();
+  text.value = makeSelect.make()
 }
 
 </script>

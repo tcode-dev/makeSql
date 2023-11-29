@@ -1,7 +1,7 @@
 <template>
   <dl>
-    <dt class="mb-2">テーブル名</dt>
-    <dd><input type="text" v-model="state.tableName"></dd>
+    <dt>テーブル情報</dt>
+    <dd><textarea rows="10" v-model="state.table"></textarea></dd>
   </dl>
 </template>
   

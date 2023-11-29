@@ -5,6 +5,7 @@
       <div>
         <SelectButton />
         <TableName />
+        <Table />
       </div>
     </div>
   </div>
@@ -13,4 +14,5 @@
 <script setup lang="ts">
 import SelectButton from '../components/page/text/SelectButton.vue'
 import TableName from '../components/page/text/TableName.vue'
+import Table from '../components/page/text/Table.vue'
 </script>

@@ -3,17 +3,14 @@ import { defineStore } from 'pinia'
 
 interface State {
   tableName: string,
-  value: string,
+  table: string,
 };
 
 export const useTextStore = defineStore('text', () => {
   const state = ref<State>({
     tableName: 'testTableName',
-    value: '',
+    table: 'col1,col2\ndata1, data2',
   })
-  const setTableName = (value: string) => {
-    state.value = {...state.value, tableName: value};
-  }
 
-  return { state: state, ...state.value, setTableName }
+  return { state }
 })
