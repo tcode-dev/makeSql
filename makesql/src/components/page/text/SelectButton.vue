@@ -6,10 +6,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import MakeSelect from '../../../sql/MakeSelect'
+import {useTextStore} from '@/stores/textStore';
 const text = ref('test1')
+const {state} = useTextStore();
 const click = () => {
   const makeSelect = new MakeSelect({
-    tableName: 'testtable', tableValue: 'col1,col2\ndata1, data2', config: {
+    tableName: state.tableName,
+    tableValue: 'col1,col2\ndata1, data2',
+    config: {
       select: 'SELECT',
       insert: 'INSERT',
       delete: 'DELETE',

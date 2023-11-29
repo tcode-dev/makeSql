@@ -21,14 +21,20 @@ export const useConfigStore = defineStore('config', () => {
   const setState = (value: State) => {
     state.value = value;
   }
-
-  const config = {
-    characterCode: ConfigConst['characterCode'][state.value.characterCode],
-    delimiter: ConfigConst['delimiter'][state.value.delimiter],
-    lettercase: ConfigConst['lettercase'][state.value.lettercase],
+  const setting = {
+    characterCode: state.value.characterCode,
+    delimiter: state.value.delimiter,
+    lettercase: state.value.lettercase,
     bulk: state.value.bulk,
     quotation: state.value.quotation
   }
+  const config = {
+    ...ConfigConst['lettercase'][state.value.lettercase],
+    characterCode: ConfigConst['characterCode'][state.value.characterCode],
+    delimiter: ConfigConst['delimiter'][state.value.delimiter],
+    bulk: state.value.bulk,
+    quotation: state.value.quotation ? "'" : ""
+  }
 
-  return { config, setState }
+  return { config, setting, setState }
 })
