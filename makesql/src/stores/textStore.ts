@@ -12,5 +12,5 @@ export const useTextStore = defineStore('text', () => {
     table: 'col1,col2\ndata1, data2',
   })
 
-  return { state }
+  return { textState: state }
 })

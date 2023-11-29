@@ -1,18 +1,20 @@
-type Config = {
-  select: string,
-  insert: string,
-  delete: string,
-  update: string,
-  from: string,
-  where: string,
-  into: string,
-  values: string,
-  set: string,
+import type { CharacterCode } from "@/const/ConfigConst";
+
+export type Config = {
   and: string,
-  or: string,
-  delimiter: string,
   bulk: boolean,
+  delete: string,
+  delimiter: string,
+  from: string,
+  insert: string,
+  into: string,
+  or: string,
   quotation: string,
+  select: string,
+  set: string,
+  update: string,
+  values: string,
+  where: string,
 };
 
 export default class MakeSql {

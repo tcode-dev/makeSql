@@ -7,28 +7,17 @@
 import { ref } from 'vue'
 import MakeSelect from '../../../sql/MakeSelect'
 import { useTextStore } from '@/stores/textStore'
+import { useConfigStore } from '@/stores/configStore'
+import type { Config } from '@/const/ConfigConst';
 const text = ref('test1')
-const { state } = useTextStore();
+const { textState } = useTextStore();
+const { config } = useConfigStore();
 const click = () => {
+  console.log(config);
   const makeSelect = new MakeSelect({
-    tableName: state.tableName,
-    tableValue: state.table,
-    config: {
-      select: 'SELECT',
-      insert: 'INSERT',
-      delete: 'DELETE',
-      update: 'UPDATE',
-      from: 'FROM',
-      where: 'WHERE',
-      into: 'INTO',
-      values: 'VALUES',
-      set: 'SET',
-      and: 'AND',
-      or: 'OR',
-      delimiter: ',',
-      bulk: true,
-      quotation: "'",
-    }
+    tableName: textState.tableName,
+    tableValue: textState.table,
+    config
   });
   text.value = makeSelect.make()
 }
