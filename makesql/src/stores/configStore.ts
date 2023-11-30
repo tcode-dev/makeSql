@@ -36,5 +36,5 @@ export const useConfigStore = defineStore('config', () => {
     quotation: state.value.quotation ? "'" : ""
   } as Config
 
-  return { configState: state, config, setting, setState }
+  return { state, config, setting, setState }
 })

@@ -6,6 +6,7 @@
         <SelectButton />
         <TableName />
         <Table />
+        <Result />
       </div>
     </div>
   </div>
@@ -15,4 +16,5 @@
 import SelectButton from '../components/page/text/SelectButton.vue'
 import TableName from '../components/page/text/TableName.vue'
 import Table from '../components/page/text/Table.vue'
+import Result from '../components/page/text/Result.vue'
 </script>
