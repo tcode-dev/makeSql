@@ -23,3 +23,9 @@ docker run --rm -it -v $(pwd):/app -w /app node:20.0.0-slim npm run build
 ```sh
 docker run --rm -it -v $(pwd):/app -w /app node:20.0.0-slim npm run lint
 ```
+
+### Format
+
+```sh
+docker run --rm -it -v $(pwd):/app -w /app node:20.0.0-slim npm run format
+```
