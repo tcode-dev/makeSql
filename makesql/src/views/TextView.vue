@@ -6,6 +6,7 @@
         <div class="flex-auto flex space-x-4">
           <SelectButton />
           <InsertButton />
+          <DeleteButton />
         </div>
         <div>
           <TableName />
@@ -22,6 +23,7 @@
 <script setup lang="ts">
 import SelectButton from '../components/page/text/SelectButton.vue'
 import InsertButton from '../components/page/text/InsertButton.vue'
+import DeleteButton from '../components/page/text/DeleteButton.vue'
 import TableName from '../components/page/text/TableName.vue'
 import Contents from '../components/page/text/Contents.vue'
 import Result from '../components/page/text/Result.vue'
