@@ -1,11 +1,18 @@
 <template>
   <div>
     <h2>テキストからSQLを作成</h2>
-    <div>
+    <div class="flex">
       <div>
-        <SelectButton />
-        <TableName />
-        <Table />
+        <div class="flex-auto flex space-x-4">
+          <SelectButton />
+          <InsertButton />
+        </div>
+        <div>
+          <TableName />
+          <Contents />
+        </div>
+      </div>
+      <div>
         <Result />
       </div>
     </div>
@@ -14,7 +21,8 @@
 
 <script setup lang="ts">
 import SelectButton from '../components/page/text/SelectButton.vue'
+import InsertButton from '../components/page/text/InsertButton.vue'
 import TableName from '../components/page/text/TableName.vue'
-import Table from '../components/page/text/Table.vue'
+import Contents from '../components/page/text/Contents.vue'
 import Result from '../components/page/text/Result.vue'
 </script>

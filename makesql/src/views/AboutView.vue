@@ -3,16 +3,16 @@
     <h2>このサイトについて</h2>
     <section>
       <h3>動作環境について</h3>
-        <p>当サイトは以下の環境での動作を確認しています。</p>
-        <dl>
-          <dt>OS</dt>
-          <dd>Mac</dd>
-        </dl>
-        <dl>
-          <dt>ブラウザ</dt>
-          <dd>Google Chrome</dd>
-        </dl>
-        <p>いずれもブラウザの設定でCSSとJavaScriptが有効な状態になっているものとします。</p>
+      <p>当サイトは以下の環境での動作を確認しています。</p>
+      <dl>
+        <dt>OS</dt>
+        <dd>Mac</dd>
+      </dl>
+      <dl>
+        <dt>ブラウザ</dt>
+        <dd>Google Chrome</dd>
+      </dl>
+      <p>いずれもブラウザの設定でCSSとJavaScriptが有効な状態になっているものとします。</p>
     </section>
     <section>
       <h3>ご利用について</h3>

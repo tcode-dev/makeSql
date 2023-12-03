@@ -1,21 +1,21 @@
-<template>
-  <button class="btn" @click="click">Insert</button>
-</template>
-
 <script setup lang="ts">
-import MakeInsert from '../../../sql/MakeInsert'
-import { useTextStore } from '@/stores/textStore'
 import { useConfigStore } from '@/stores/configStore'
+import { useTextStore } from '@/stores/textStore'
+import Button from '@/components/button/Button.vue'
+import MakeInsert from '@/sql/MakeInsert'
 
 const textStore = useTextStore()
 const configStore = useConfigStore()
-const click = () => {
+const handleClick = () => {
   const makeInsert = new MakeInsert({
     tableName: textStore.state.tableName,
     contents: textStore.state.contents,
     config: configStore.config
-  });
+  })
   textStore.setSql(makeInsert.make())
 }
-
 </script>
+
+<template>
+  <Button label="Insert" @click="handleClick" />
+</template>
