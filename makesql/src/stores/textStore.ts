@@ -12,7 +12,7 @@ export const useTextStore = defineStore('text', () => {
   const state = ref<State>({
     tableName: 'testTableName',
     updates: 'col1,col3\nupdate1,update3',
-    contents: 'col1,col2,col3\ndata1,data2,data3',
+    contents: 'col1,col2,col3\ndata1,data2,data3\ndata4,data5,data6',
     sql: ''
   })
   const setSql = (sql: string) => {

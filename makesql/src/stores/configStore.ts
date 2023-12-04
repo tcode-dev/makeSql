@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { type Lettercase, type Delimiter, type CharacterCode, ConfigConst } from '@/const/ConfigConst'
 import type { Config } from '@/sql/MakeSql'
@@ -16,7 +16,7 @@ export const useConfigStore = defineStore('config', () => {
     characterCode: 'utf8',
     delimiter: 'comma',
     lettercase: 'lowercase',
-    bulk: false,
+    bulk: true,
     quotation: true
   })
   const setState = (value: State) => {
@@ -29,12 +29,12 @@ export const useConfigStore = defineStore('config', () => {
     bulk: state.value.bulk,
     quotation: state.value.quotation
   }
-  const config = {
+  const config = computed(() => ({
     ...ConfigConst['lettercase'][state.value.lettercase],
     delimiter: ConfigConst['delimiter'][state.value.delimiter],
     bulk: state.value.bulk,
     quotation: state.value.quotation ? "'" : ''
-  } as Config
+  } as Config))
 
   return { state, config, setting, setState }
 })
