@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { useConfigStore } from '@/stores/configStore';
-import { useTextStore } from '@/stores/textStore';
+import { useConfigStore } from '@/stores/configStore'
+import { useTextStore } from '@/stores/textStore'
 import Button from '@/components/button/Button.vue'
-import MakeSelect from '@/sql/MakeSelect';
+import MakeSelect from '@/sql/MakeSelect'
 
 const textStore = useTextStore()
 const configStore = useConfigStore()
 const handleClick = () => {
-  const makeSelect = new MakeSelect({
-    tableName: textStore.state.tableName,
-    contents: textStore.state.contents,
-    config: configStore.config
-  })
+  const makeSelect = new MakeSelect(textStore.state.tableName, textStore.state.contents, configStore.config)
+
   textStore.setSql(makeSelect.make())
 }
 </script>

@@ -22,15 +22,7 @@ export default class MakeSql {
   protected contents: string
   protected config: Config
 
-  constructor({
-    tableName,
-    contents,
-    config
-  }: {
-    tableName: string
-    contents: string
-    config: Config
-  }) {
+  constructor(tableName: string, contents: string, config: Config) {
     this.tableName = tableName
     this.contents = contents
     this.config = config

@@ -1,7 +1,9 @@
 <template>
-  <dl>
+  <dl class="flex flex-col gap-2">
     <dt>SQL</dt>
-    <dd><textarea v-model="store.state.sql"></textarea></dd>
+    <dd class="grid self-stretch grow">
+      <textarea class="rounded-md border w-full p-2" v-model="store.state.sql"></textarea>
+    </dd>
   </dl>
 </template>
 

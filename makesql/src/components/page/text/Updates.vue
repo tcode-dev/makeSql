@@ -1,8 +1,8 @@
 <template>
-  <dl>
+  <dl class="flex flex-col gap-2">
     <dt>更新情報</dt>
     <dd>
-      <textarea class="rounded-md border w-full" rows="2" v-model="store.state.updates"></textarea>
+      <textarea class="rounded-md border w-full p-2" rows="2" v-model="store.state.updates"></textarea>
     </dd>
   </dl>
 </template>

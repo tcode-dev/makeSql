@@ -1,11 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import {
-  type Lettercase,
-  type Delimiter,
-  type CharacterCode,
-  ConfigConst
-} from '@/const/ConfigConst'
+import { type Lettercase, type Delimiter, type CharacterCode, ConfigConst } from '@/const/ConfigConst'
 import type { Config } from '@/sql/MakeSql'
 
 interface State {

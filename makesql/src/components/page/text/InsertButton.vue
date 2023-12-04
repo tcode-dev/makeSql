@@ -7,11 +7,8 @@ import MakeInsert from '@/sql/MakeInsert'
 const textStore = useTextStore()
 const configStore = useConfigStore()
 const handleClick = () => {
-  const makeInsert = new MakeInsert({
-    tableName: textStore.state.tableName,
-    contents: textStore.state.contents,
-    config: configStore.config
-  })
+  const makeInsert = new MakeInsert(textStore.state.tableName, textStore.state.contents, configStore.config)
+
   textStore.setSql(makeInsert.make())
 }
 </script>
