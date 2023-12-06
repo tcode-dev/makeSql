@@ -10,6 +10,11 @@ const router = createRouter({
       component: TextView
     },
     {
+      path: '/file',
+      name: 'file',
+      component: () => import('../views/FileView.vue')
+    },
+    {
       path: '/config',
       name: 'config',
       component: () => import('../views/ConfigView.vue')
