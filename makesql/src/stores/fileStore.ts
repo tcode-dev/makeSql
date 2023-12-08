@@ -22,7 +22,6 @@ export const useFileStore = defineStore('file', () => {
   })
   const addSql = (sql: Sql) => {
     state.value.sqlList.push(sql)
-    console.log(sql)
   }
   const setFileList = (fileList: File[]) => {
     state.value.fileList = fileList

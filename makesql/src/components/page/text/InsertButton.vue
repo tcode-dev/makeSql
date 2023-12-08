@@ -8,7 +8,7 @@ const textStore = useTextStore()
 const configStore = useConfigStore()
 const handleClick = () => {
   const makeInsert = new MakeInsert(textStore.state.tableName, textStore.state.contents, configStore.config)
-  console.log(configStore.config)
+
   textStore.setSql(makeInsert.make())
 }
 </script>
