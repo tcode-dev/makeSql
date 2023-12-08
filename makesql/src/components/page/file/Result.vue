@@ -11,5 +11,4 @@ import { useFileStore } from '@/stores/fileStore'
 import Accordion from '@/components/page/file/Accordion.vue'
 
 const store = useFileStore()
-
 </script>

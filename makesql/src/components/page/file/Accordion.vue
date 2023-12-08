@@ -8,6 +8,6 @@ defineProps({
 <template>
   <div>
     <button>{{ title }}</button>
-        <textarea rows="5">{{ sql }}</textarea>
+    <textarea rows="5">{{ sql }}</textarea>
   </div>
 </template>

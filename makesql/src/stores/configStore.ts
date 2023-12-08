@@ -29,12 +29,15 @@ export const useConfigStore = defineStore('config', () => {
     bulk: state.value.bulk,
     quotation: state.value.quotation
   }
-  const config = computed(() => ({
-    ...ConfigConst['lettercase'][state.value.lettercase],
-    delimiter: ConfigConst['delimiter'][state.value.delimiter],
-    bulk: state.value.bulk,
-    quotation: state.value.quotation ? "'" : ''
-  } as Config))
+  const config = computed(
+    () =>
+      ({
+        ...ConfigConst['lettercase'][state.value.lettercase],
+        delimiter: ConfigConst['delimiter'][state.value.delimiter],
+        bulk: state.value.bulk,
+        quotation: state.value.quotation ? "'" : ''
+      }) as Config
+  )
 
   return { state, config, setting, setState }
 })
