@@ -27,6 +27,9 @@ export const useFileStore = defineStore('file', () => {
   const setFileList = (fileList: File[]) => {
     state.value.fileList = fileList
   }
+  const $reset = () => {
+    state.value.sqlList = []
+  }
 
-  return { state, fileSelect, addSql, setFileList }
+  return { state, fileSelect, addSql, setFileList, $reset }
 })
