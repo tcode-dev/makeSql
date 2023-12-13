@@ -6,7 +6,7 @@ import Footer from './components/footer/Index.vue'
 </script>
 
 <template>
-  <div class="container mx-auto grid grid-flow-col justify-stretch">
+  <div>
     <div>
       <Header />
       <Nav />

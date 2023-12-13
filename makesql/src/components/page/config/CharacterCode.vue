@@ -14,13 +14,13 @@ const store = useConfigStore()
       </div>
     </td>
     <td>
-      <div class="form-check">
+      <div>
         <input type="radio" name="characterCode" id="utf8" value="utf8" v-model="store.state.characterCode" />
         <label for="utf8">UTF-8</label>
       </div>
     </td>
     <td>
-      <div class="form-check">
+      <div>
         <input type="radio" name="characterCode" id="eucJp" value="eucJp" v-model="store.state.characterCode" />
         <label for="eucJp">EUC-JP</label>
       </div>

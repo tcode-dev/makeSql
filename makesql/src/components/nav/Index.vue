@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex space-x-4 mt-5 border-b">
+  <nav>
     <NavItem path="/" label="Text" />
     <NavItem path="/file" label="File" />
     <NavItem path="/config" label="Config" />

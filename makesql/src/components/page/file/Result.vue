@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="sql" v-for="item in store.state.sqlList">
+    <div v-for="item in store.state.sqlList">
       <Accordion :title="item.name" :sql="item.sql" />
     </div>
   </div>

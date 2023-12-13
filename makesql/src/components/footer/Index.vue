@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <p class="text-right">
+    <p>
       <small>Copyright &copy; {{ year }}<span>makesql</span> All Rights Reserved.</small>
     </p>
   </footer>

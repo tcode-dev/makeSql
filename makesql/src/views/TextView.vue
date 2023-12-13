@@ -1,19 +1,19 @@
 <template>
   <div>
-    <h2 class="mt-5">テキストからSQLを作成</h2>
-    <div class="flex-auto flex space-x-4 mt-5">
+    <h2>テキストからSQLを作成</h2>
+    <div>
       <SelectButton />
       <InsertButton />
       <DeleteButton />
       <UpdateButton />
     </div>
-    <div class="grid grid-cols-2 gap-8 mt-5">
-      <div class="flex flex-col gap-4">
+    <div>
+      <div>
         <TableName />
         <Updates />
         <Contents />
       </div>
-      <div class="grid">
+      <div>
         <Result />
       </div>
     </div>
