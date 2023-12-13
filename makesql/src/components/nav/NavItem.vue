@@ -1,11 +1,9 @@
 <template>
-  <div class="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900" :class="{ isActive }">
-    <RouterLink v-bind:to="{ path }">{{ label }}</RouterLink>
-  </div>
+  <RouterLink v-bind:to="{ path }" class="font-medium px-3 py-2 text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900" active-class="isActive">{{ label }}</RouterLink>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue'
+import { defineProps } from 'vue'
 import { RouterLink } from 'vue-router'
 
 interface Props {
@@ -13,6 +11,5 @@ interface Props {
   label: string
 }
 
-const props = defineProps<Props>()
-const isActive = ref(props.path === location.pathname)
+defineProps<Props>()
 </script>
