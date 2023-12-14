@@ -1,5 +1,5 @@
 <template>
-  <RouterLink v-bind:to="{ path }" active-class="isActive">{{ label }}</RouterLink>
+  <RouterLink v-bind:to="{ path }" class="item" active-class="active">{{ label }}</RouterLink>
 </template>
 
 <script setup lang="ts">

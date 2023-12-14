@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav class="ui secondary pointing menu">
     <NavItem path="/" label="Text" />
     <NavItem path="/file" label="File" />
     <NavItem path="/config" label="Config" />
