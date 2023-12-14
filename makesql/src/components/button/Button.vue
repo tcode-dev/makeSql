@@ -1,9 +1,3 @@
-<template>
-  <button>
-    {{ label }}
-  </button>
-</template>
-
 <script setup lang="ts">
 import { defineProps } from 'vue'
 
@@ -13,3 +7,9 @@ interface Props {
 
 defineProps<Props>()
 </script>
+
+<template>
+  <button type="button" class="ui basic button">
+    {{ label }}
+  </button>
+</template>
