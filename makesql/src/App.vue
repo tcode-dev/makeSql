@@ -6,12 +6,16 @@ import Footer from './components/footer/Index.vue'
 </script>
 
 <template>
-  <div>
-    <div>
-      <Header />
-      <Nav />
-      <RouterView />
-      <Footer />
-    </div>
+  <div class="ui container">
+    <Header />
+    <Nav />
+    <RouterView />
+    <Footer />
   </div>
 </template>
+
+<style scoped>
+.ui.container {
+  padding-top: 3em;
+}
+</style>
