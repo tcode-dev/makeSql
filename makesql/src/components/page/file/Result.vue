@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <div v-for="item in store.state.sqlList">
+  <form class="ui large form">
+    <div v-for="item in store.state.sqlList" class="field">
       <Accordion :title="item.name" :sql="item.sql" />
     </div>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
