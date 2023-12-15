@@ -1,20 +1,24 @@
 <template>
   <div>
-    <h2>テキストからSQLを作成</h2>
-    <div>
+    <Title>テキストからSQLを作成</Title>
+    <div class="buttonContainer">
       <SelectButton />
       <InsertButton />
       <DeleteButton />
       <UpdateButton />
     </div>
-    <div>
-      <div>
-        <TableName />
-        <Updates />
-        <Contents />
+    <div class="ui stackable equal width grid">
+      <div class="column">
+        <form class="ui large form">
+          <TableName />
+          <Updates />
+          <Contents />
+        </form>
       </div>
-      <div>
-        <Result />
+      <div class="column">
+        <form class="ui large form">
+          <Result />
+        </form>
       </div>
     </div>
   </div>
@@ -29,4 +33,11 @@ import TableName from '../components/page/text/TableName.vue'
 import Updates from '../components/page/text/Updates.vue'
 import Contents from '../components/page/text/Contents.vue'
 import Result from '../components/page/text/Result.vue'
+import Title from '../components/title/Title.vue'
 </script>
+
+<style scoped>
+.ui.grid  {
+  padding-top: 2em;
+}
+</style>

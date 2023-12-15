@@ -1,10 +1,8 @@
 <template>
-  <dl>
-    <dt>テーブル情報</dt>
-    <dd>
-      <textarea rows="15" v-model="store.state.contents"></textarea>
-    </dd>
-  </dl>
+  <div class="field">
+    <label>テーブル情報</label>
+    <textarea rows="15" v-model="store.state.contents"></textarea>
+  </div>
 </template>
 
 <script setup lang="ts">

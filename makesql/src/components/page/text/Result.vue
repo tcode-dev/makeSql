@@ -1,10 +1,8 @@
 <template>
-  <dl>
-    <dt>SQL</dt>
-    <dd>
-      <textarea v-model="store.state.sql"></textarea>
-    </dd>
-  </dl>
+  <div class="field">
+    <label>SQL</label>
+    <textarea v-model="store.state.sql"></textarea>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -1,8 +1,8 @@
 <template>
-  <dl>
-    <dt>テーブル名</dt>
-    <dd><input type="text" v-model="store.state.tableName" /></dd>
-  </dl>
+  <div class="field">
+    <label>テーブル名</label>
+    <input type="text" v-model="store.state.tableName" />
+  </div>
 </template>
 
 <script setup lang="ts">
