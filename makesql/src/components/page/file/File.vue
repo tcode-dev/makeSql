@@ -15,7 +15,7 @@ const handleChange = (e: Event) => {
 </script>
 
 <template>
-  <div>
+  <div class="fileContainer">
     <input id="fileInput" type="file" class="fileInput" v-on:change="handleChange" multiple />
     <label class="ui basic button fileLabel" for="fileInput">
       <span class="form-file-button">ファイル選択</span>
@@ -25,6 +25,9 @@ const handleChange = (e: Event) => {
 </template>
 
 <style scoped>
+.fileContainer {
+  margin: 2rem 0;
+}
 .fileInput {
   display: none;
 }
