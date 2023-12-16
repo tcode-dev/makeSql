@@ -5,11 +5,13 @@ import InsertButton from '../components/page/file/InsertButton.vue'
 import DeleteButton from '../components/page/file/DeleteButton.vue'
 import UpdateButton from '../components/page/file/UpdateButton.vue'
 import Result from '../components/page/file/Result.vue'
+import Title from '../components/title/Title.vue'
+import Download from '../components/page/file/Download.vue'
 </script>
 
 <template>
   <div>
-    <h2>ファイルからSQLを作成</h2>
+    <Title>ファイルからSQLを作成</Title>
     <div>
       <SelectButton />
       <InsertButton />
@@ -17,6 +19,7 @@ import Result from '../components/page/file/Result.vue'
       <UpdateButton />
     </div>
     <File />
+    <Download />
     <Result />
   </div>
 </template>

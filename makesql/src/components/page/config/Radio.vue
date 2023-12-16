@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ConfigConst } from '@/const/ConfigConst';
-import type { Config } from '@/const/ConfigConst';
+import { ConfigConst } from '@/const/ConfigConst'
+import type { MultipleConfig } from '@/const/ConfigConst'
 import { useConfigStore } from '@/stores/configStore'
 
 interface Props {
-  target: Config
+  target: MultipleConfig
 }
 
 defineProps<Props>()
@@ -15,7 +15,7 @@ const store = useConfigStore()
 <template>
   <tr>
     <td scope="row">{{ target }}</td>
-    <td v-for="item in Object.keys(ConfigConst[target])" class="field">
+    <td v-for="item in Object.keys(ConfigConst[target])">
       <div class="ui radio checkbox">
         <input type="radio" :name="item" :id="item" :value="item" v-model="store.state[target]" />
         <label :for="item">{{ item }}</label>

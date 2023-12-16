@@ -52,7 +52,10 @@ export const ConfigConst = {
   }
 }
 export type TypeOfConfigConst = typeof ConfigConst
-export type Config = keyof TypeOfConfigConst
+export type MultipleConfig = keyof TypeOfConfigConst
 export type CharacterCode = keyof TypeOfConfigConst['characterCode']
 export type Delimiter = keyof TypeOfConfigConst['delimiter']
 export type Lettercase = keyof TypeOfConfigConst['lettercase']
+export type Bulk = 'bulk'
+export type Quotation = 'quotation'
+export type SingleConfig = Bulk | Quotation

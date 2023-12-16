@@ -7,7 +7,7 @@ import { defineProps } from 'vue'
 import { RouterLink } from 'vue-router'
 
 interface Props {
-  path: string,
+  path: string
   label: string
 }
 

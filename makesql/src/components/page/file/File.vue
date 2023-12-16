@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref } from 'vue'
 import { useFileStore } from '@/stores/fileStore'
 
 const store = useFileStore()
-const text = ref("")
+const text = ref('')
 const handleChange = (e: Event) => {
   const fileList = Array.from((<HTMLInputElement>e.target).files || [])
 
   store.setFileList(fileList)
   const length = fileList.length
-  text.value = length > 0 ? `${length}件のファイルを選択中` : '';
+  text.value = length > 0 ? `${length}件のファイルを選択中` : ''
 }
-
 </script>
 
 <template>

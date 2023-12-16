@@ -14,7 +14,7 @@ const handleClick = () => {
 
   fileStore.state.fileList.forEach((file) => {
     fileExtractor.extract(file, configStore.state.characterCode).then((data) => {
-      const text = data.text.split('\n');
+      const text = data.text.split('\n')
       const column = text.shift()!
       const firstRow = text.shift()!
       const updates = `${column}\n${firstRow}`

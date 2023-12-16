@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { SingleConfig } from '@/const/ConfigConst';
 import { useConfigStore } from '@/stores/configStore'
 
 interface Props {
-  target: "bulk" | "quotation"
+  target: SingleConfig
 }
 
 defineProps<Props>()

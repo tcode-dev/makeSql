@@ -37,7 +37,7 @@ import Title from '../components/title/Title.vue'
 </script>
 
 <style scoped>
-.ui.grid  {
+.ui.grid {
   padding-top: 2em;
 }
 </style>
