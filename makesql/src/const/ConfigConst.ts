@@ -1,13 +1,13 @@
 export const ConfigConst = {
-  delimiter: {
-    comma: ',',
-    space: /\s/,
-    tab: /\t/
-  },
   characterCode: {
     utf8: 'UTF-8',
     shiftJis: 'Shift_JIS',
     eucJp: 'EUC-JP'
+  },
+  delimiter: {
+    comma: ',',
+    space: /\s/,
+    tab: /\t/
   },
   lettercase: {
     lowercase: {
@@ -51,11 +51,23 @@ export const ConfigConst = {
     }
   }
 }
+export const LabelConst = {
+  utf8: 'UTF-8',
+  shiftJis: 'Shift_JIS',
+  eucJp: 'EUC-JP',
+  comma: 'comma',
+  space: 'space',
+  tab: 'tab',
+  lowercase: 'lowercase',
+  camelcase: 'Camelcase',
+  uppercase: 'UPPERCASE'
+}
 export type TypeOfConfigConst = typeof ConfigConst
 export type MultipleConfig = keyof TypeOfConfigConst
 export type CharacterCode = keyof TypeOfConfigConst['characterCode']
 export type Delimiter = keyof TypeOfConfigConst['delimiter']
 export type Lettercase = keyof TypeOfConfigConst['lettercase']
+export type LabelGroup = CharacterCode[] | Delimiter[] | Lettercase[]
 export type Bulk = 'bulk'
 export type Quotation = 'quotation'
 export type SingleConfig = Bulk | Quotation

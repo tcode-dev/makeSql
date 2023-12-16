@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { SingleConfig } from '@/const/ConfigConst';
+import type { SingleConfig } from '@/const/ConfigConst'
 import { useConfigStore } from '@/stores/configStore'
 
 interface Props {
