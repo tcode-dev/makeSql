@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import Bulk from '../components/page/config/Bulk.vue'
-import CharacterCode from '../components/page/config/CharacterCode.vue'
-import Delimiter from '../components/page/config/Delimiter.vue'
-import Lettercase from '../components/page/config/Lettercase.vue'
-import Quotation from '../components/page/config/Quotation.vue'
+import Checkbox from '../components/page/config/Checkbox.vue'
+import Radio from '../components/page/config/Radio.vue'
+import Title from '../components/title/Title.vue'
 </script>
 
 <template>
   <div>
-    <h2>設定</h2>
-    <table>
+    <Title>設定</Title>
+    <table class="ui very basic table">
       <tbody>
-        <Delimiter />
-        <Lettercase />
-        <CharacterCode />
-        <Bulk />
-        <Quotation />
+        <Radio target="delimiter" />
+        <Radio target="lettercase" />
+        <Radio target="characterCode" />
+        <Checkbox target="bulk" />
+        <Checkbox target="quotation" />
       </tbody>
     </table>
   </div>

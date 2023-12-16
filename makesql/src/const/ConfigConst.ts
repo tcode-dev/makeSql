@@ -1,27 +1,27 @@
 export const ConfigConst = {
   delimiter: {
     comma: ',',
-    tab: /\t/,
-    space: /\s/
+    space: /\s/,
+    tab: /\t/
   },
   characterCode: {
-    shiftJis: 'Shift_JIS',
     utf8: 'UTF-8',
+    shiftJis: 'Shift_JIS',
     eucJp: 'EUC-JP'
   },
   lettercase: {
-    uppercase: {
-      select: 'SELECT',
-      insert: 'INSERT',
-      delete: 'DELETE',
-      update: 'UPDATE',
-      from: 'FROM',
-      where: 'WHERE',
-      into: 'INTO',
-      values: 'VALUES',
-      set: 'SET',
-      and: 'AND',
-      or: 'OR'
+    lowercase: {
+      select: 'select',
+      insert: 'insert',
+      delete: 'delete',
+      update: 'update',
+      from: 'from',
+      where: 'where',
+      into: 'into',
+      values: 'values',
+      set: 'set',
+      and: 'and',
+      or: 'or'
     },
     camelcase: {
       select: 'Select',
@@ -36,18 +36,18 @@ export const ConfigConst = {
       and: 'And',
       or: 'Or'
     },
-    lowercase: {
-      select: 'select',
-      insert: 'insert',
-      delete: 'delete',
-      update: 'update',
-      from: 'from',
-      where: 'where',
-      into: 'into',
-      values: 'values',
-      set: 'set',
-      and: 'and',
-      or: 'or'
+    uppercase: {
+      select: 'SELECT',
+      insert: 'INSERT',
+      delete: 'DELETE',
+      update: 'UPDATE',
+      from: 'FROM',
+      where: 'WHERE',
+      into: 'INTO',
+      values: 'VALUES',
+      set: 'SET',
+      and: 'AND',
+      or: 'OR'
     }
   }
 }
