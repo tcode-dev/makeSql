@@ -6,7 +6,7 @@ const store = useConfigStore()
 
 <template>
   <tr>
-    <th scope="row">delimiter</th>
+    <td scope="row">delimiter</td>
     <td>
       <div>
         <input type="radio" name="delimiter" id="comma" value="comma" v-model="store.state.delimiter" />

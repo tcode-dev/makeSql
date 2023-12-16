@@ -6,7 +6,7 @@ const store = useConfigStore()
 
 <template>
   <tr>
-    <th scope="row">character code</th>
+    <td scope="row">character code</td>
     <td>
       <div>
         <input type="radio" name="characterCode" id="shiftJis" value="shiftJis" v-model="store.state.characterCode" />

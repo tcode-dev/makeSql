@@ -6,7 +6,7 @@ const store = useConfigStore()
 
 <template>
   <tr>
-    <th scope="row">quotation</th>
+    <td scope="row">quotation</td>
     <td colspan="3">
       <div>
         <input type="checkbox" name="quotation" v-model="store.state.quotation" />

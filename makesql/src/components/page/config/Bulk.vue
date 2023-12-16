@@ -6,7 +6,7 @@ const store = useConfigStore()
 
 <template>
   <tr>
-    <th scope="row">bulk</th>
+    <td scope="row">bulk</td>
     <td colspan="3">
       <div>
         <input type="checkbox" v-model="store.state.bulk" />
