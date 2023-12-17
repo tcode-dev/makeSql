@@ -36,6 +36,6 @@ import Title from '../components/title/Title.vue'
 
 <style scoped>
 .ui.grid {
-  padding-top: 2em;
+  padding-top: 2rem;
 }
 </style>
