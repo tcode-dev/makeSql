@@ -1,7 +1,7 @@
 <template>
   <div class="field">
     <label>テーブル情報</label>
-    <textarea rows="15" v-model="store.state.contents"></textarea>
+    <textarea rows="12" v-model="store.state.contents"></textarea>
   </div>
 </template>
 
