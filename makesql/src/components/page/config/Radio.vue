@@ -23,3 +23,9 @@ const list = Object.keys(ConfigConst[props.target]) as LabelGroup
     </td>
   </tr>
 </template>
+
+<style scoped>
+.ui.checkbox label {
+  cursor: pointer;
+}
+</style>

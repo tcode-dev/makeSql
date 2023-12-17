@@ -16,6 +16,7 @@ import Footer from './components/footer/Index.vue'
 
 <style scoped>
 .ui.container {
+  height: 100%;
   padding-top: 3em;
 }
 </style>

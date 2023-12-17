@@ -16,9 +16,7 @@
         </form>
       </div>
       <div class="column">
-        <form class="ui large form">
-          <Result />
-        </form>
+        <Result />
       </div>
     </div>
   </div>
