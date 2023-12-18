@@ -20,7 +20,7 @@ export default class MakeUpdate extends MakeSql {
     const set = this.set()
     const where = this.bulk(this.where())
 
-    return `${this.config.update}\n${this.config.set} ${set}\n${this.config.from} ${this.tableName}\n${this.config.where}\n${where}\n;`
+    return `${this.config.update}\n${this.tableName}\n${this.config.set} ${set}\n${this.config.where}\n${where};`
   }
 
   getUpdateValue() {
@@ -32,7 +32,7 @@ export default class MakeUpdate extends MakeSql {
 
     return this.where()
       .map((where) => {
-        return `${this.config.update} ${this.config.set} ${set} ${this.config.from} ${this.tableName} ${this.config.where} ${where};`
+        return `${this.config.update} ${this.tableName} ${this.config.set} ${set} ${this.config.where} ${where};`
       })
       .join('\n')
   }
