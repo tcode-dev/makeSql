@@ -22,3 +22,9 @@ const store = useConfigStore()
     </td>
   </tr>
 </template>
+
+<style scoped>
+.ui.checkbox {
+  display: block;
+}
+</style>
