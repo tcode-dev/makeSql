@@ -14,6 +14,7 @@ import Title from '../components/title/Title.vue'
         <Radio target="characterCode" />
         <Checkbox target="bulk" />
         <Checkbox target="quotation" />
+        <Checkbox target="saveConfig" />
       </tbody>
     </table>
   </div>

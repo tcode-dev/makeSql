@@ -70,4 +70,5 @@ export type Lettercase = keyof TypeOfConfigConst['lettercase']
 export type LabelGroup = CharacterCode[] | Delimiter[] | Lettercase[]
 export type Bulk = 'bulk'
 export type Quotation = 'quotation'
-export type SingleConfig = Bulk | Quotation
+export type SaveConfig = 'saveConfig'
+export type SingleConfig = Bulk | Quotation | SaveConfig
