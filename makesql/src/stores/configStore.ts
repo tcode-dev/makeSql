@@ -19,9 +19,6 @@ export const useConfigStore = defineStore('config', () => {
     bulk: true,
     quotation: true
   })
-  const setState = (value: State) => {
-    state.value = value
-  }
   const setting = {
     characterCode: state.value.characterCode,
     delimiter: state.value.delimiter,
@@ -39,5 +36,5 @@ export const useConfigStore = defineStore('config', () => {
       }) as Config
   )
 
-  return { state, config, setting, setState }
+  return { state, config, setting }
 })
