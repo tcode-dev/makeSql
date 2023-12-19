@@ -1,25 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
 import { useFileStore } from '@/stores/fileStore'
 
 const store = useFileStore()
-const text = ref('')
+const selectionMessage = computed(() => {
+  return store.state.fileList.length > 0 ? `${store.state.fileList.length}件のファイルを選択中` : ''
+})
 const handleChange = (e: Event) => {
   const fileList = Array.from((<HTMLInputElement>e.target).files || [])
 
   store.setFileList(fileList)
-  const length = fileList.length
-  text.value = length > 0 ? `${length}件のファイルを選択中` : ''
 }
 </script>
 
 <template>
   <div class="fileContainer">
     <input id="fileInput" type="file" class="fileInput" v-on:change="handleChange" multiple />
-    <label class="ui basic button fileLabel" for="fileInput">
-      <span class="form-file-button">ファイル選択</span>
-    </label>
-    <span class="form-file-text">{{ text }}</span>
+    <label class="ui basic button fileLabel" for="fileInput">ファイル選択</label>
+    <span class="selection">{{ selectionMessage }}</span>
   </div>
 </template>
 
@@ -32,5 +30,8 @@ const handleChange = (e: Event) => {
 }
 .fileLabel {
   display: inline-block;
+}
+.selection {
+  margin-left: 1rem;
 }
 </style>
