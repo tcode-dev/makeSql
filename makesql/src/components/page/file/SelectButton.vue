@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useConfigStore } from '@/stores/configStore'
 import { useFileStore } from '@/stores/fileStore'
 import Button from '@/components/button/Button.vue'
@@ -7,6 +8,9 @@ import FileExtractor from '@/util/FileExtractor'
 
 const fileStore = useFileStore()
 const configStore = useConfigStore()
+const isDisabled = computed(() => {
+  return fileStore.state.fileList.length === 0
+})
 const handleClick = () => {
   fileStore.$reset()
 
@@ -26,5 +30,5 @@ const handleClick = () => {
 </script>
 
 <template>
-  <Button label="Select" @click="handleClick" />
+  <Button label="Select" :disabled="isDisabled" @click="handleClick" />
 </template>
