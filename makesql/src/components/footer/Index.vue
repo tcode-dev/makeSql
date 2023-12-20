@@ -1,15 +1,15 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+
+const year = computed(() => new Date().getFullYear())
+</script>
+
 <template>
   <footer class="footer">
     <div class="ui section divider"></div>
     <p>Copyright &copy; {{ year }}<span class="label">makesql</span>All Rights Reserved.</p>
   </footer>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-
-const year = computed(() => new Date().getFullYear())
-</script>
 
 <style scoped>
 .footer {

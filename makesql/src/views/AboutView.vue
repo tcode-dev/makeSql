@@ -14,8 +14,8 @@ import Title from '@/components/title/Title.vue'
         <li>SQLのボタンをクリックし、SQLを作成します。</li>
       </ol>
       <p>
-        [更新情報]は、UPDATE文を作成時にSET句として使用します。<br>
-        [テーブル情報]は、SELECT文・DELETE文・UPDATE文を作成時にWHERE句として、INSERT文を作成時にVALUES句として使用します。<br>
+        [更新情報]は、UPDATE文を作成時にSET句として使用します。<br />
+        [テーブル情報]は、SELECT文・DELETE文・UPDATE文を作成時にWHERE句として、INSERT文を作成時にVALUES句として使用します。<br />
         [更新情報]・[テーブル情報]の先頭行をフィールド名として使用します。
       </p>
     </section>
@@ -27,10 +27,10 @@ import Title from '@/components/title/Title.vue'
         <li>SQLのボタンをクリックし、SQLを作成します。</li>
       </ol>
       <p>
-        ファイル名には、半角英字（a-z A-Z）、半角数字（0-9）、ダッシュ（-）、アンダースコア（_）を使用できます。 <br>
-        テーブル名には、ファイル名を使用します。<br>
-        フィールド名には、ファイルの先頭行を使用します。<br>
-        SET句には、ファイルの2行目を使用します（Update文作成時）。<br>
+        ファイル名には、半角英字（a-z A-Z）、半角数字（0-9）、ダッシュ（-）、アンダースコア（_）を使用できます。 <br />
+        テーブル名には、ファイル名を使用します。<br />
+        フィールド名には、ファイルの先頭行を使用します。<br />
+        SET句には、ファイルの2行目を使用します（Update文作成時）。<br />
         Downloadボタンをクリックして作成したSQLをダウンロードできます。
       </p>
     </section>

@@ -42,13 +42,13 @@ export const useConfigStore = defineStore('config', () => {
       }) as Config
   )
 
-  watch(state, ()=> {
+  watch(state, () => {
     if (state.saveConfig) {
       Cookies.set('config', JSON.stringify(state))
     } else {
       Cookies.remove('config')
     }
-  });
+  })
 
   return { state, config, setting }
 })

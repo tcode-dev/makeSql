@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import NavItem from '@/components/nav/NavItem.vue'
+</script>
+
 <template>
   <nav class="ui secondary pointing menu">
     <NavItem path="/" label="Text" />
@@ -6,7 +10,3 @@
     <NavItem path="/about" label="About" />
   </nav>
 </template>
-
-<script setup lang="ts">
-import NavItem from '@/components/nav/NavItem.vue'
-</script>

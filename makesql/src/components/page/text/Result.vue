@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useTextStore } from '@/stores/textStore'
+
+const store = useTextStore()
+</script>
+
 <template>
   <form class="ui large form">
     <div class="field">
@@ -6,12 +12,6 @@
     </div>
   </form>
 </template>
-
-<script setup lang="ts">
-import { useTextStore } from '@/stores/textStore'
-
-const store = useTextStore()
-</script>
 
 <style scoped>
 .form {
