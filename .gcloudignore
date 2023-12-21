@@ -1,7 +1,0 @@
-.DS_Store
-.gcloudignore
-.git
-.gitignore
-dist
-node_modules
-README.md
