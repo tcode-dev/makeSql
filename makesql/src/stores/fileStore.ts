@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 interface Sql {
@@ -15,11 +15,6 @@ export const useFileStore = defineStore('file', () => {
     fileList: [],
     sqlList: []
   })
-  const fileSelect = computed(() => {
-    const len = state.value.fileList.length
-
-    return len > 0 ? `${len}件のファイルを選択中` : 'Choose file...'
-  })
   const addSql = (sql: Sql) => {
     state.value.sqlList.push(sql)
   }
@@ -30,5 +25,5 @@ export const useFileStore = defineStore('file', () => {
     state.value.sqlList = []
   }
 
-  return { state, fileSelect, addSql, setFileList, $reset }
+  return { state, addSql, setFileList, $reset }
 })

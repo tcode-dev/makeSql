@@ -23,15 +23,8 @@ const defaultState: State = {
 
 export const useConfigStore = defineStore('config', () => {
   const cookie = Cookies.get('config')
-  const initialData = cookie ? JSON.parse(cookie) : defaultState
-  const state = reactive<State>(initialData)
-  const setting = {
-    characterCode: state.characterCode,
-    delimiter: state.delimiter,
-    lettercase: state.lettercase,
-    bulk: state.bulk,
-    quotation: state.quotation
-  }
+  const initialState = cookie ? JSON.parse(cookie) : defaultState
+  const state = reactive<State>(initialState)
   const config = computed(
     () =>
       ({
@@ -50,5 +43,5 @@ export const useConfigStore = defineStore('config', () => {
     }
   })
 
-  return { state, config, setting }
+  return { state, config }
 })

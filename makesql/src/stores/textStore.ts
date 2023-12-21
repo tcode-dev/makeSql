@@ -10,18 +10,13 @@ interface State {
 
 export const useTextStore = defineStore('text', () => {
   const state = ref<State>({
-    tableName: 'testTableName',
-    updates: 'col1,col3\nupdate1,update3',
-    contents: 'col1,col2,col3\ndata1,data2,data3\ndata4,data5,data6',
+    tableName: '',
+    updates: '',
+    contents: '',
     sql: ''
   })
   const setSql = (sql: string) => {
-    state.value = {
-      tableName: state.value.tableName,
-      updates: state.value.updates,
-      contents: state.value.contents,
-      sql
-    }
+    state.value.sql = sql
   }
   return { state, setSql }
 })
