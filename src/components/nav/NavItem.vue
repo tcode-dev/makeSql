@@ -11,5 +11,5 @@ defineProps<Props>()
 </script>
 
 <template>
-  <RouterLink v-bind:to="{ path }" class="item" active-class="active">{{ label }}</RouterLink>
+  <RouterLink v-bind:to="path" class="item" active-class="active">{{ label }}</RouterLink>
 </template>
