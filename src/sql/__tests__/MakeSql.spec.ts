@@ -12,6 +12,18 @@ describe('MakeSql', () => {
         values: ['1,foo', '2,bar']
       })
     })
+
+    it('末尾の改行は空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'id,name\n1,foo\n2,bar\n', makeConfig())
+
+      expect(sql.getValue().values).toEqual(['1,foo', '2,bar'])
+    })
+
+    it('末尾に改行が複数あっても空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'id,name\n1,foo\n\n\n', makeConfig())
+
+      expect(sql.getValue().values).toEqual(['1,foo'])
+    })
   })
 
   describe('where', () => {

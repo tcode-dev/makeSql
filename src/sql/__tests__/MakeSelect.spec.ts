@@ -23,6 +23,12 @@ describe('MakeSelect', () => {
     expect(sql.make()).toBe("select * from users where id = '1' and name = 'foo';\n" + "select * from users where id = '2' and name = 'bar';")
   })
 
+  it('末尾に改行があっても余分な SELECT 文を作らない', () => {
+    const sql = new MakeSelect('users', 'id\n1\n', makeConfig({ bulk: false }))
+
+    expect(sql.make()).toBe("select * from users where id = '1';")
+  })
+
   it('uppercase ならキーワードを大文字にする', () => {
     const sql = new MakeSelect('users', 'id\n1', makeConfig({ bulk: false, lettercase: 'uppercase' }))
 

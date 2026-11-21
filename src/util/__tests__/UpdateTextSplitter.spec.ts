@@ -19,4 +19,11 @@ describe('UpdateTextSplitter', () => {
 
     expect(sql.make()).toBe("update users set name = 'baz' where name = 'foo';\nupdate users set name = 'baz' where name = 'bar';")
   })
+
+  it('ファイル末尾に改行があっても余分な UPDATE 文を作らない', () => {
+    const { updates, contents } = splitter.split('name\nbaz\nfoo\n')
+    const sql = new MakeUpdate('users', updates, contents, makeConfig({ bulk: false }))
+
+    expect(sql.make()).toBe("update users set name = 'baz' where name = 'foo';")
+  })
 })

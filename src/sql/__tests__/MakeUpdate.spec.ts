@@ -25,6 +25,12 @@ describe('MakeUpdate', () => {
     expect(sql.make()).toBe("update users set name = 'baz' where id = '1';")
   })
 
+  it('updates と contents の末尾に改行があっても余分な条件を作らない', () => {
+    const sql = new MakeUpdate('users', 'name\nbaz\n', 'id\n1\n2\n', makeConfig({ bulk: true }))
+
+    expect(sql.make()).toBe("update\nusers\nset name = 'baz'\nwhere\n(id = '1')\nor (id = '2');")
+  })
+
   it('uppercase かつ quotation 無効', () => {
     const sql = new MakeUpdate('users', 'age\n20', 'id\n1', makeConfig({ bulk: false, lettercase: 'uppercase', quotation: false }))
 

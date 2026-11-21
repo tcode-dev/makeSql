@@ -23,6 +23,12 @@ describe('MakeInsert', () => {
     expect(sql.make()).toBe('insert into users (id, name) values (1,foo);\ninsert into users (id, name) values (2,bar);')
   })
 
+  it('末尾に改行があっても空の VALUES を作らない', () => {
+    const sql = new MakeInsert('users', 'id,name\n1,foo\n', makeConfig({ bulk: true }))
+
+    expect(sql.make()).toBe("insert into users\n(id, name)\nvalues\n('1','foo')\n;")
+  })
+
   it('タブ区切りを扱える', () => {
     const sql = new MakeInsert('users', 'id\tname\n1\tfoo', makeConfig({ bulk: false, delimiter: 'tab' }))
 
