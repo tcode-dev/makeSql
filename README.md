@@ -9,35 +9,35 @@ https://makesql.tcode.dev
 ## Project Setup
 
 ```sh
-docker run --rm -it -v $(pwd):/app -w /app node:22-slim npm install
+docker run --rm -it -v $(pwd):/app -w /app node:26-slim npm install
 ```
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-docker run --rm -it -p 80:80 -v $(pwd):/app -w /app node:22-slim npm run dev
+docker run --rm -it -p 80:80 -v $(pwd):/app -w /app node:26-slim npm run dev
 ```
 
 ### Type-Check, Compile and Minify for Production
 
 ```sh
-docker run --rm -it -v $(pwd):/app -w /app node:22-slim npm run build
+docker run --rm -it -v $(pwd):/app -w /app node:26-slim npm run build
 ```
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
-docker run --rm -it -v $(pwd):/app -w /app node:22-slim npm run test:unit
+docker run --rm -it -v $(pwd):/app -w /app node:26-slim npm run test:unit
 ```
 
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
-docker run --rm -it -v $(pwd):/app -w /app node:22-slim npm run lint
+docker run --rm -it -v $(pwd):/app -w /app node:26-slim npm run lint
 ```
 
 ### Format
 
 ```sh
-docker run --rm -it -v $(pwd):/app -w /app node:22-slim npm run format
+docker run --rm -it -v $(pwd):/app -w /app node:26-slim npm run format
 ```
