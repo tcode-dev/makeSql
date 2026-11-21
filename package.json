@@ -2,6 +2,7 @@
   "name": "makesql",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite --host --port 80",
     "build": "run-p type-check \"build-only {@}\" --",
