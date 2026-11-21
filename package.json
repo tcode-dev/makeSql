@@ -17,10 +17,11 @@
     "@heroicons/vue": "^2.0.18",
     "@types/file-saver": "^2.0.7",
     "@types/js-cookie": "^3.0.6",
+    "@vue/devtools-api": "^8.2.1",
     "file-saver": "^2.0.5",
     "js-cookie": "^3.0.7",
     "jszip": "^3.10.1",
-    "pinia": "^2.1.7",
+    "pinia": "^4.1.0",
     "vue": "^3.5.44",
     "vue-router": "^4.2.5"
   },
