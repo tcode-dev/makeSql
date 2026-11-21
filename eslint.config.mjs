@@ -15,5 +15,13 @@ export default defineConfigWithVueTs(
   js.configs.recommended,
   pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
-  skipFormatting
+  skipFormatting,
+
+  {
+    name: 'app/rules',
+    rules: {
+      // コンポーネント名は Index.vue や Button.vue のような1単語の命名を採用しているため
+      'vue/multi-word-component-names': 'off'
+    }
+  }
 )
