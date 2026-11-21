@@ -6,7 +6,7 @@ const store = useTextStore()
 
 <template>
   <div class="field">
-    <label>更新情報</label>
-    <textarea rows="2" v-model="store.state.updates"></textarea>
+    <label for="updates">更新情報</label>
+    <textarea id="updates" rows="2" v-model="store.state.updates"></textarea>
   </div>
 </template>

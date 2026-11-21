@@ -1,14 +1,10 @@
 import type { Page } from '@playwright/test'
 
-// テキスト画面の入力欄は label と入力欄が for/id で関連付いていないため、
-// ラベルの文字を含む .field の中から入力欄を探す
-const field = (page: Page, label: string) => page.locator('.field', { has: page.getByText(label, { exact: true }) })
-
 export const textPage = (page: Page) => ({
-  tableName: field(page, 'テーブル名').locator('input'),
-  updates: field(page, '更新情報').locator('textarea'),
-  contents: field(page, 'テーブル情報').locator('textarea'),
-  sql: field(page, 'SQL').locator('textarea'),
+  tableName: page.getByLabel('テーブル名', { exact: true }),
+  updates: page.getByLabel('更新情報', { exact: true }),
+  contents: page.getByLabel('テーブル情報', { exact: true }),
+  sql: page.getByLabel('SQL', { exact: true }),
   button: (name: 'Select' | 'Insert' | 'Delete' | 'Update') => page.getByRole('button', { name, exact: true })
 })
 
