@@ -80,6 +80,28 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\nname = 'あ'\n;")
   })
 
+  // 開閉の表示は CDN から読み込む Semantic UI の CSS が active クラスに応じて切り替える。
+  // e2e テストでは外部への通信を遮断しているため、active クラスの付け外しを確認する
+  test('アコーディオンのタイトルをクリックすると開閉が切り替わる', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id\n1'))
+    await file.button('Select').click()
+    const accordion = file.accordion('users')
+
+    // 作成直後は開いている
+    await expect(accordion.title).toHaveClass(/\bactive\b/)
+    await expect(accordion.content).toHaveClass(/\bactive\b/)
+
+    await accordion.title.click()
+    await expect(accordion.title).not.toHaveClass(/\bactive\b/)
+    await expect(accordion.content).not.toHaveClass(/\bactive\b/)
+
+    await accordion.title.click()
+    await expect(accordion.title).toHaveClass(/\bactive\b/)
+    await expect(accordion.content).toHaveClass(/\bactive\b/)
+  })
+
   test('作成した SQL を zip でダウンロードできる', async ({ page }) => {
     const file = filePage(page)
 

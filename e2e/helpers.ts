@@ -20,7 +20,15 @@ export const filePage = (page: Page) => ({
   button: (name: 'Select' | 'Insert' | 'Delete' | 'Update' | 'Download') => page.getByRole('button', { name, exact: true }),
   // 結果はファイルごとのアコーディオンで、タイトルにテーブル名 (ファイル名) が表示される
   result: (tableName: string) => page.locator('.ui.accordion', { has: page.getByText(tableName, { exact: true }) }).locator('textarea'),
-  results: page.locator('.ui.accordion')
+  results: page.locator('.ui.accordion'),
+  accordion: (tableName: string) => {
+    const accordion = page.locator('.ui.accordion', { has: page.getByText(tableName, { exact: true }) })
+
+    return {
+      title: accordion.locator('.title'),
+      content: accordion.locator('.content')
+    }
+  }
 })
 
 // ナビゲーションで画面を移動する。page.goto で再読み込みすると Pinia の状態が消えるため
