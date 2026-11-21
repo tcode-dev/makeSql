@@ -30,6 +30,14 @@ docker compose run --rm app npm run build
 docker compose run --rm app npm run test:unit
 ```
 
+### Run End-to-End Tests with [Playwright](https://playwright.dev)
+
+```sh
+docker compose run --rm e2e
+```
+
+`@playwright/test` を更新するときは、`compose.yaml` の `e2e` サービスのイメージも同じバージョンに更新してください。
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
