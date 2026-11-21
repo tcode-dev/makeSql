@@ -16,7 +16,7 @@ const handleClick = () => {
   <div class="ui accordion">
     <a class="title" :class="active" @click="handleClick">{{ title }}</a>
     <div class="content" :class="active">
-      <textarea rows="5">{{ sql }}</textarea>
+      <textarea rows="5" :value="sql"></textarea>
     </div>
   </div>
 </template>

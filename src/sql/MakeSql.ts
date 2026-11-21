@@ -1,5 +1,3 @@
-import type { CharacterCode } from '@/const/ConfigConst'
-
 export type Config = {
   and: string
   bulk: boolean

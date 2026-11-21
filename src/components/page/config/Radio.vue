@@ -15,7 +15,7 @@ const list = Object.keys(ConfigConst[props.target]) as LabelGroup
 <template>
   <tr>
     <td scope="row">{{ target }}</td>
-    <td v-for="item in list">
+    <td v-for="item in list" :key="item">
       <div class="ui radio checkbox">
         <input type="radio" :name="item" :id="item" :value="item" v-model="store.state[target]" />
         <label :for="item">{{ LabelConst[item] }}</label>

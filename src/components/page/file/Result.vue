@@ -7,7 +7,7 @@ const store = useFileStore()
 
 <template>
   <form class="ui large form resultContainer">
-    <div v-for="item in store.state.sqlList" class="field">
+    <div v-for="(item, index) in store.state.sqlList" :key="index" class="field">
       <Accordion :title="item.name" :sql="item.sql" />
     </div>
   </form>
