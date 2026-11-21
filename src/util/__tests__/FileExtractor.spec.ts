@@ -37,14 +37,20 @@ describe('FileExtractor', () => {
     expect(name).toBe('my')
   })
 
-  // 既知の不具合: readAsText に ConfigConst のキー ('shiftJis') をそのまま渡しているため、
-  // 有効なエンコーディング名 ('Shift_JIS') と認識されず UTF-8 として読まれてしまう。
-  // 修正したら it.fails を it に戻す。
-  it.fails('Shift_JIS のファイルを読み込める', async () => {
+  it('Shift_JIS のファイルを読み込める', async () => {
     // 「あ」の Shift_JIS 表現
     const file = new File([new Uint8Array([0x82, 0xa0])], 'users.csv')
 
     const { text } = await extractor.extract(file, 'shiftJis')
+
+    expect(text).toBe('あ')
+  })
+
+  it('EUC-JP のファイルを読み込める', async () => {
+    // 「あ」の EUC-JP 表現
+    const file = new File([new Uint8Array([0xa4, 0xa2])], 'users.csv')
+
+    const { text } = await extractor.extract(file, 'eucJp')
 
     expect(text).toBe('あ')
   })
