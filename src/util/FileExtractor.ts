@@ -1,4 +1,4 @@
-import type { CharacterCode } from '@/const/ConfigConst'
+import { ConfigConst, type CharacterCode } from '@/const/ConfigConst'
 
 interface Data {
   name: string
@@ -21,7 +21,7 @@ export default class FileExtractor {
         resolve(data)
       }
 
-      reader.readAsText(file, characterCode)
+      reader.readAsText(file, ConfigConst.characterCode[characterCode])
     })
   }
 }

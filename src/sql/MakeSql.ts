@@ -1,5 +1,3 @@
-import type { CharacterCode } from '@/const/ConfigConst'
-
 export type Config = {
   and: string
   bulk: boolean
@@ -33,7 +31,8 @@ export default class MakeSql {
   }
 
   getData(data: string) {
-    const values = data.split('\n')
+    // 末尾の改行で空の行ができないよう取り除く
+    const values = data.replace(/\n+$/, '').split('\n')
     const fields = values.shift()!.split(this.config.delimiter)
 
     return { fields, values }
