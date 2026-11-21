@@ -6,7 +6,7 @@ const store = useTextStore()
 
 <template>
   <div class="field">
-    <label>テーブル名</label>
-    <input type="text" v-model="store.state.tableName" />
+    <label for="tableName">テーブル名</label>
+    <input id="tableName" type="text" v-model="store.state.tableName" />
   </div>
 </template>

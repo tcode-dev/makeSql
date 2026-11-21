@@ -7,8 +7,8 @@ const store = useTextStore()
 <template>
   <form class="ui large form">
     <div class="field">
-      <label>SQL</label>
-      <textarea v-model="store.state.sql"></textarea>
+      <label for="sql">SQL</label>
+      <textarea id="sql" v-model="store.state.sql"></textarea>
     </div>
   </form>
 </template>
