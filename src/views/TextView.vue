@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import SelectButton from '../components/page/text/SelectButton.vue'
-import InsertButton from '../components/page/text/InsertButton.vue'
-import DeleteButton from '../components/page/text/DeleteButton.vue'
-import UpdateButton from '../components/page/text/UpdateButton.vue'
+import SqlButton from '../components/page/text/SqlButton.vue'
 import TableName from '../components/page/text/TableName.vue'
 import Updates from '../components/page/text/Updates.vue'
 import Contents from '../components/page/text/Contents.vue'
@@ -14,10 +11,10 @@ import Title from '../components/title/Title.vue'
   <div>
     <Title>テキストからSQLを作成</Title>
     <div class="buttonContainer">
-      <SelectButton />
-      <InsertButton />
-      <DeleteButton />
-      <UpdateButton />
+      <SqlButton type="select" />
+      <SqlButton type="insert" />
+      <SqlButton type="delete" />
+      <SqlButton type="update" />
     </div>
     <div class="ui stackable equal width grid">
       <div class="column">
