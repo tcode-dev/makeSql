@@ -1,6 +1,6 @@
 name: Deploy
 
-# master への push（PR のマージを含む）でビルドして S3 にアップロードする。
+# master への push（PR のマージを含む）でビルドして S3 にアップロードし、本番サイトに対して E2E テストを実行する。
 # lint・テストは master のルールセットで、マージ前に CI が通っていることを必須にしているため、ここでは実行しない
 on:
   push:
@@ -45,7 +45,39 @@ jobs:
           --exclude "assets/*"
           --cache-control "no-cache"
       # CloudFront に残っている古いキャッシュを削除する（"/*" はパス 1 件として数えられる）
-      - run: >
-          aws cloudfront create-invalidation
+      - id: invalidation
+        run: >
+          echo "id=$(aws cloudfront create-invalidation
           --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"
           --paths "/*"
+          --query Invalidation.Id
+          --output text)" >> "$GITHUB_OUTPUT"
+      # 削除が終わるまで待ち、本番の E2E テストが古いキャッシュに対して実行されないようにする
+      - run: >
+          aws cloudfront wait invalidation-completed
+          --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"
+          --id "${{ steps.invalidation.outputs.id }}"
+
+  # デプロイした本番サイトに対して E2E テストを実行する。
+  # 失敗したときは GitHub Actions の通知 (ワークフローを実行したユーザーへのメールなど) で気づけるようにする
+  test-e2e-production:
+    needs: deploy
+    runs-on: ubuntu-latest
+    # ci.yml の test-e2e と同じイメージ。@playwright/test と同じバージョンにすること
+    container:
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
+      options: --ipc=host --init
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - run: npm ci
+      - run: npm run test:e2e
+        env:
+          BASE_URL: https://makesql.tcode.dev
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report-production
+          path: playwright-report/
+          retention-days: 7

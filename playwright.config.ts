@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const port = 4173
-const baseURL = `http://localhost:${port}`
+// BASE_URL を指定すると、そのサイト (デプロイ後の本番など) に対してテストする
+const baseURL = process.env.BASE_URL ?? `http://localhost:${port}`
 
 export default defineConfig({
   testDir: './e2e',
@@ -21,10 +22,13 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] }
     }
   ],
-  webServer: {
-    command: `npm run build-only && npm run preview -- --port ${port} --strictPort`,
-    url: baseURL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000
-  }
+  // BASE_URL を指定したときは、そのサイトに対してテストするのでサーバーを起動しない
+  webServer: process.env.BASE_URL
+    ? undefined
+    : {
+        command: `npm run build-only && npm run preview -- --port ${port} --strictPort`,
+        url: baseURL,
+        reuseExistingServer: !process.env.CI,
+        timeout: 120 * 1000
+      }
 })
