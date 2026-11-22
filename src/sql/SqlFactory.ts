@@ -28,6 +28,16 @@ export default class SqlFactory {
     this.config = config
   }
 
+  // テキスト画面で SQL を作るのに必要な入力がそろっているか
+  static canMakeFromText(type: SqlType, { tableName, updates, contents }: TextInput) {
+    if (!tableName || !contents) {
+      return false
+    }
+
+    // UPDATE は SET 句に使う更新情報も必要
+    return type !== 'update' || updates !== ''
+  }
+
   // テキスト画面用。updates は UPDATE のときだけ使う
   fromText(type: SqlType, { tableName, updates, contents }: TextInput) {
     switch (type) {

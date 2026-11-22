@@ -12,12 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 const textStore = useTextStore()
 const configStore = useConfigStore()
-const isDisabled = computed(() => {
-  const { tableName, contents, updates } = textStore.state
-
-  // UPDATE は SET 句に使う更新情報も必要
-  return !tableName || !contents || (props.type === 'update' && !updates)
-})
+const isDisabled = computed(() => !SqlFactory.canMakeFromText(props.type, textStore.state))
 const handleClick = () => {
   const factory = new SqlFactory(configStore.config)
 

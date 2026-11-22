@@ -11,6 +11,30 @@ const factory = new SqlFactory(config)
 const contents = 'id,name\n1,foo\n2,bar'
 
 describe('SqlFactory', () => {
+  describe('canMakeFromText', () => {
+    const input = { tableName: 'users', updates: '', contents: 'id\n1' }
+
+    it.each<SqlType>(['select', 'insert', 'delete'])('%s はテーブル名とテーブル情報があれば作れる', (type) => {
+      expect(SqlFactory.canMakeFromText(type, input)).toBe(true)
+    })
+
+    it.each<SqlType>(['select', 'insert', 'delete', 'update'])('%s はテーブル名がないと作れない', (type) => {
+      expect(SqlFactory.canMakeFromText(type, { ...input, tableName: '', updates: 'name\nbaz' })).toBe(false)
+    })
+
+    it.each<SqlType>(['select', 'insert', 'delete', 'update'])('%s はテーブル情報がないと作れない', (type) => {
+      expect(SqlFactory.canMakeFromText(type, { ...input, contents: '', updates: 'name\nbaz' })).toBe(false)
+    })
+
+    it('update は更新情報がないと作れない', () => {
+      expect(SqlFactory.canMakeFromText('update', input)).toBe(false)
+    })
+
+    it('update はテーブル名・テーブル情報・更新情報がそろえば作れる', () => {
+      expect(SqlFactory.canMakeFromText('update', { ...input, updates: 'name\nbaz' })).toBe(true)
+    })
+  })
+
   describe('fromText', () => {
     it.each<[SqlType, string]>([
       ['select', new MakeSelect('users', contents, config).make()],
