@@ -1,9 +1,11 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
+// SQL を作れなかったファイルは sql を空にし、error に理由を入れる
 export interface Sql {
   name: string
   sql: string
+  error?: string
 }
 interface State {
   fileList: File[]

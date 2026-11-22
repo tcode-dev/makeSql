@@ -77,6 +77,17 @@ describe('configStore', () => {
     })
   })
 
+  it('ブラウザを閉じても消えないよう、有効期限を付けて Cookie に保存する', async () => {
+    const set = vi.spyOn(Cookies, 'set')
+    const store = await loadStore()
+
+    store.state.saveConfig = true
+    await nextTick()
+
+    expect(set).toHaveBeenCalledWith('config', expect.any(String), { expires: 365 })
+    set.mockRestore()
+  })
+
   it('saveConfig を無効にすると Cookie を削除する', async () => {
     const store = await loadStore()
 
@@ -107,7 +118,7 @@ describe('configStore', () => {
     expect(store.state.characterCode).toBe('shiftJis')
     expect(store.config).toMatchObject({
       select: 'SELECT',
-      delimiter: /\s/,
+      delimiter: /\s+/,
       bulk: false,
       quotation: ''
     })

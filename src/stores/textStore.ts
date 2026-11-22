@@ -6,6 +6,7 @@ interface State {
   updates: string
   contents: string
   sql: string
+  error: string
 }
 
 export const useTextStore = defineStore('text', () => {
@@ -13,10 +14,18 @@ export const useTextStore = defineStore('text', () => {
     tableName: '',
     updates: '',
     contents: '',
-    sql: ''
+    sql: '',
+    error: ''
   })
   const setSql = (sql: string) => {
     state.value.sql = sql
+    state.value.error = ''
   }
-  return { state, setSql }
+  // SQL を作れなかったときは前回の SQL を残さず、理由を表示する
+  const setError = (error: string) => {
+    state.value.sql = ''
+    state.value.error = error
+  }
+
+  return { state, setSql, setError }
 })

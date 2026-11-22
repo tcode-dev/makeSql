@@ -1,3 +1,5 @@
+import InputError from '@/util/InputError'
+
 export type Config = {
   and: string
   bulk: boolean
@@ -30,10 +32,21 @@ export default class MakeSql {
     return this.getData(this.contents)
   }
 
+  // 1行目を列名、2行目以降を値として分ける。値の行がない場合や、列数が1行目と違う行がある場合はエラーにする
   getData(data: string) {
     // 末尾の改行で空の行ができないよう取り除く
     const values = data.replace(/\n+$/, '').split('\n')
     const fields = values.shift()!.split(this.config.delimiter)
+
+    if (values.length === 0) {
+      throw new InputError('値の行がありません。1行目に列名、2行目以降に値を入力してください。')
+    }
+
+    const invalidRow = values.find((row) => row.split(this.config.delimiter).length !== fields.length)
+
+    if (invalidRow !== undefined) {
+      throw new InputError(`列数が1行目 (${fields.length}列) と一致しない行があります: "${invalidRow}"`)
+    }
 
     return { fields, values }
   }

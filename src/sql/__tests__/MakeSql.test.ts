@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import MakeSql from '@/sql/MakeSql'
+import InputError from '@/util/InputError'
 import { makeConfig } from './helper'
 
 describe('MakeSql', () => {
@@ -23,6 +24,28 @@ describe('MakeSql', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n\n\n', makeConfig())
 
       expect(sql.getValue().values).toEqual(['1,foo'])
+    })
+
+    it('値の行がなければエラーにする', () => {
+      expect(() => new MakeSql('users', 'id,name', makeConfig()).getValue()).toThrow(InputError)
+      expect(() => new MakeSql('users', 'id,name\n', makeConfig()).getValue()).toThrow('値の行がありません')
+    })
+
+    it('列数が1行目より多い行があればエラーにする', () => {
+      const sql = new MakeSql('users', 'id\n1\n1,2', makeConfig())
+
+      expect(() => sql.getValue()).toThrow('列数が1行目 (1列) と一致しない行があります: "1,2"')
+    })
+
+    it('列数が1行目より少ない行があればエラーにする', () => {
+      const sql = new MakeSql('users', 'id,name\n1', makeConfig())
+
+      expect(() => sql.getValue()).toThrow(InputError)
+    })
+
+    it('途中の空行は空の値として扱い、列数が合わなければエラーにする', () => {
+      expect(new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue().values).toEqual(['1', '', '2'])
+      expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow(InputError)
     })
   })
 
@@ -53,6 +76,12 @@ describe('MakeSql', () => {
 
     it('スペース区切りを扱える', () => {
       const sql = new MakeSql('users', 'id name\n1 foo', makeConfig({ delimiter: 'space' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
+    })
+
+    it('スペース区切りでは連続した空白を1つの区切りとして扱う', () => {
+      const sql = new MakeSql('users', 'id  name\n1   foo', makeConfig({ delimiter: 'space' }))
 
       expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
     })

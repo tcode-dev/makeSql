@@ -70,4 +70,31 @@ test.describe('テキストから SQL を作成', () => {
 
     await expect(text.sql).toHaveValue("select *\nfrom users\nwhere\nid = '1'\n;")
   })
+
+  test('列数が1行目と合わない行があればエラーを表示し、直すと SQL を表示する', async ({ page }) => {
+    const text = textPage(page)
+
+    await text.tableName.fill('users')
+    await text.contents.fill('id\n1,2')
+    await text.button('Select').click()
+
+    await expect(text.error).toHaveText('列数が1行目 (1列) と一致しない行があります: "1,2"')
+    await expect(text.sql).toHaveValue('')
+
+    await text.contents.fill('id\n1')
+    await text.button('Select').click()
+
+    await expect(text.error).toHaveCount(0)
+    await expect(text.sql).toHaveValue("select *\nfrom users\nwhere\nid = '1'\n;")
+  })
+
+  test('値の行がなければエラーを表示する', async ({ page }) => {
+    const text = textPage(page)
+
+    await text.tableName.fill('users')
+    await text.contents.fill('id')
+    await text.button('Delete').click()
+
+    await expect(text.error).toContainText('値の行がありません')
+  })
 })

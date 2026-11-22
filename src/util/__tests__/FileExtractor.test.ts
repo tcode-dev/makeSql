@@ -1,8 +1,13 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import FileExtractor from '@/util/FileExtractor'
+import InputError from '@/util/InputError'
 
 describe('FileExtractor', () => {
   const extractor = new FileExtractor()
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
 
   it('拡張子を除いたファイル名と本文を返す', async () => {
     const file = new File(['id,name\n1,foo'], 'users.csv')
@@ -21,20 +26,43 @@ describe('FileExtractor', () => {
     expect(text).toBe('a\nb\nc\n')
   })
 
-  it('連続した2つの改行は1つにまとめる', async () => {
-    const file = new File(['a\n\nb'], 'users.csv')
+  it('LF が続く空行は残す', async () => {
+    const file = new File(['a\n\nb\r\n\r\nc'], 'users.csv')
 
     const { text } = await extractor.extract(file, 'utf8')
 
-    expect(text).toBe('a\nb')
+    expect(text).toBe('a\n\nb\n\nc')
   })
 
-  it('ファイル名に複数のドットがある場合は最初のドットより前を使う', async () => {
-    const file = new File(['id'], 'my.users.csv')
+  it('ファイル名に複数のドットがある場合は最後の拡張子だけを取り除く', async () => {
+    const file = new File(['id'], 'users.2024.csv')
 
     const { name } = await extractor.extract(file, 'utf8')
 
-    expect(name).toBe('my')
+    expect(name).toBe('users.2024')
+  })
+
+  it('拡張子がないファイル名はそのまま使う', async () => {
+    const { name } = await extractor.extract(new File(['id'], 'users'), 'utf8')
+
+    expect(name).toBe('users')
+  })
+
+  it('拡張子しかないファイル名はそのまま使う', async () => {
+    const { name } = await extractor.extract(new File(['id'], '.csv'), 'utf8')
+
+    expect(name).toBe('.csv')
+  })
+
+  it('ファイルを読み込めなければ InputError で失敗する', async () => {
+    vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
+      this.onerror?.(new ProgressEvent('error') as ProgressEvent<FileReader>)
+    })
+
+    const extracting = extractor.extract(new File(['id'], 'users.csv'), 'utf8')
+
+    await expect(extracting).rejects.toBeInstanceOf(InputError)
+    await expect(extracting).rejects.toThrow('ファイルを読み込めませんでした: users.csv')
   })
 
   it('Shift_JIS のファイルを読み込める', async () => {

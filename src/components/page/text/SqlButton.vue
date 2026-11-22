@@ -4,6 +4,7 @@ import { useConfigStore } from '@/stores/configStore'
 import { useTextStore } from '@/stores/textStore'
 import Button from '@/components/button/Button.vue'
 import SqlFactory, { SqlLabel, type SqlType } from '@/sql/SqlFactory'
+import InputError from '@/util/InputError'
 
 interface Props {
   type: SqlType
@@ -16,7 +17,17 @@ const isDisabled = computed(() => !SqlFactory.canMakeFromText(props.type, textSt
 const handleClick = () => {
   const factory = new SqlFactory(configStore.config)
 
-  textStore.setSql(factory.fromText(props.type, textStore.state))
+  try {
+    textStore.setSql(factory.fromText(props.type, textStore.state))
+  } catch (error) {
+    if (error instanceof InputError) {
+      textStore.setError(error.message)
+
+      return
+    }
+
+    throw error
+  }
 }
 </script>
 

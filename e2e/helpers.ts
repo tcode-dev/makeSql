@@ -5,6 +5,7 @@ export const textPage = (page: Page) => ({
   updates: page.getByLabel('更新情報', { exact: true }),
   contents: page.getByLabel('テーブル情報', { exact: true }),
   sql: page.getByLabel('SQL', { exact: true }),
+  error: page.getByRole('alert'),
   button: (name: 'Select' | 'Insert' | 'Delete' | 'Update') => page.getByRole('button', { name, exact: true })
 })
 
@@ -26,7 +27,8 @@ export const filePage = (page: Page) => ({
 
     return {
       title: accordion.locator('.title'),
-      content: accordion.locator('.content')
+      content: accordion.locator('.content'),
+      error: accordion.getByRole('alert')
     }
   }
 })

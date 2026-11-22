@@ -5,14 +5,19 @@ import JSZip from 'jszip'
 import { useFileStore } from '@/stores/fileStore'
 import Button from '@/components/button/Button.vue'
 import DateTime from '@/util/DateTime'
+import { uniqueNames } from '@/util/uniqueNames'
 
 const store = useFileStore()
+// SQL を作れなかったファイルは zip に入れない
+const sqlList = computed(() => store.state.sqlList.filter((item) => !item.error))
 const isDisabled = computed(() => {
-  return store.state.sqlList.length === 0
+  return sqlList.value.length === 0
 })
 const handleClick = () => {
-  const zip = store.state.sqlList.reduce((zip, item) => {
-    zip.file(`${item.name}.sql`, item.sql)
+  // users.csv と users.txt のように同じテーブル名になるファイルがあっても、zip 内で上書きしない
+  const fileNames = uniqueNames(sqlList.value.map((item) => item.name))
+  const zip = sqlList.value.reduce((zip, item, index) => {
+    zip.file(`${fileNames[index]}.sql`, item.sql)
 
     return zip
   }, new JSZip())
