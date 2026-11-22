@@ -13,10 +13,10 @@ const store = useConfigStore()
 
 <template>
   <tr>
-    <td scope="row">{{ target }}</td>
+    <td scope="row" :id="`${target}-label`">{{ target }}</td>
     <td colspan="3">
       <div class="ui checkbox">
-        <input type="checkbox" v-model="store.state[target]" />
+        <input type="checkbox" :aria-labelledby="`${target}-label`" v-model="store.state[target]" />
         <label></label>
       </div>
     </td>
