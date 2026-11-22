@@ -49,6 +49,12 @@ export default class SqlFactory {
         return new MakeDelete(tableName, contents, this.config).make()
       case 'update':
         return new MakeUpdate(tableName, updates, contents, this.config).make()
+      default: {
+        // SqlType に種類を追加して case を書き忘れると、ここで型エラーになる
+        const unknownType: never = type
+
+        throw new Error(`Unknown SQL type: ${unknownType}`)
+      }
     }
   }
 

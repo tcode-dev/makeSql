@@ -44,6 +44,10 @@ describe('SqlFactory', () => {
       expect(factory.fromText(type, { tableName: 'users', updates: '', contents })).toBe(expected)
     })
 
+    it('未知の種類ならエラーにする', () => {
+      expect(() => factory.fromText('upsert' as SqlType, { tableName: 'users', updates: '', contents })).toThrow('Unknown SQL type: upsert')
+    })
+
     it('update は updates を SET 句に使う', () => {
       expect(factory.fromText('update', { tableName: 'users', updates: 'name\nbaz', contents: 'id\n1' })).toBe("update users set name = 'baz' where id = '1';")
     })
