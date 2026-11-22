@@ -49,10 +49,21 @@ export default class MakeSql {
       return rowValue
         .split(this.config.delimiter)
         .map((colValue, colIndex) => {
-          return `${fields[colIndex]} = ${this.config.quotation}${colValue}${this.config.quotation}`
+          return `${fields[colIndex]} = ${this.quote(colValue)}`
         })
         .join(delimiter)
     })
+  }
+
+  // クォートで囲む場合は、値に含まれるクォートを二重にしてエスケープする
+  quote(value: string) {
+    const { quotation } = this.config
+
+    if (quotation === '') {
+      return value
+    }
+
+    return `${quotation}${value.replaceAll(quotation, quotation + quotation)}${quotation}`
   }
 
   bulk(combined: string[]) {

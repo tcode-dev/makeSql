@@ -14,7 +14,7 @@ export default class MakeInsert extends MakeSql {
     const fieldPhrase = `(${fields.join(', ')})`
     const valuePhrase = values
       .map((row) => {
-        return `(${this.config.quotation}${this.makeValues(row)}${this.config.quotation})`
+        return `(${this.makeValues(row)})`
       })
       .join('\n,')
 
@@ -27,12 +27,15 @@ export default class MakeInsert extends MakeSql {
 
     return values
       .map((row) => {
-        return `${this.config.insert} ${this.config.into} ${this.tableName} ${fieldPhrase} ${this.config.values} (${this.config.quotation}${this.makeValues(row)}${this.config.quotation});`
+        return `${this.config.insert} ${this.config.into} ${this.tableName} ${fieldPhrase} ${this.config.values} (${this.makeValues(row)});`
       })
       .join('\n')
   }
 
   makeValues(row: string) {
-    return row.split(this.config.delimiter).join(`${this.config.quotation},${this.config.quotation}`)
+    return row
+      .split(this.config.delimiter)
+      .map((value) => this.quote(value))
+      .join(',')
   }
 }
