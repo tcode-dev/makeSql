@@ -1,0 +1,51 @@
+name: Deploy
+
+# master への push（PR のマージを含む）でビルドして S3 にアップロードする。
+# lint・テストは master のルールセットで、マージ前に CI が通っていることを必須にしているため、ここでは実行しない
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Secret・Variable は Environment「production」に登録する。
+    # Environment を指定すると OIDC の sub が repo:tcode-dev/makeSql:environment:production になるので、
+    # IAM ロールの信頼ポリシーもこの値に合わせること
+    environment: production
+    # 連続でマージされた場合に、古いデプロイが新しいデプロイを上書きしないようにする
+    concurrency:
+      group: deploy
+      cancel-in-progress: false
+    permissions:
+      # OIDC で AWS の IAM ロールを引き受けるために必要
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ap-southeast-2
+      # ファイル名にハッシュが付くアセットは長くキャッシュさせる
+      - run: >
+          aws s3 sync dist/assets "s3://${{ vars.S3_BUCKET }}/assets"
+          --delete
+          --cache-control "public, max-age=31536000, immutable"
+      # index.html などは常に最新を取りに行かせる
+      - run: >
+          aws s3 sync dist "s3://${{ vars.S3_BUCKET }}"
+          --delete
+          --exclude "assets/*"
+          --cache-control "no-cache"
+      # CloudFront に残っている古いキャッシュを削除する（"/*" はパス 1 件として数えられる）
+      - run: >
+          aws cloudfront create-invalidation
+          --distribution-id "${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}"
+          --paths "/*"
