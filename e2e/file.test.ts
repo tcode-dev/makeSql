@@ -66,6 +66,47 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.results).toHaveCount(2)
   })
 
+  test('ファイル名にドットが複数あっても最後の拡張子だけを取り除いてテーブル名にする', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.2024.csv', 'id\n1'))
+    await file.button('Select').click()
+
+    await expect(file.result('users.2024')).toHaveValue("select *\nfrom users.2024\nwhere\nid = '1'\n;")
+  })
+
+  test('SQL を作れないファイルはエラーを表示し、他のファイルの結果は表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('empty.csv', 'id'), csv('broken.csv', 'id\n1,2')])
+    await file.button('Select').click()
+
+    await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\nid = '1'\n;")
+    await expect(file.accordion('empty.csv').error).toContainText('値の行がありません')
+    await expect(file.accordion('broken.csv').error).toHaveText('列数が1行目 (1列) と一致しない行があります: "1,2"')
+    await expect(file.button('Download')).toBeEnabled()
+  })
+
+  test('どのファイルからも SQL を作れなければ Download は押せない', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id'))
+    await file.button('Select').click()
+
+    await expect(file.accordion('users.csv').error).toBeVisible()
+    await expect(file.button('Download')).toBeDisabled()
+  })
+
+  test('Update は2行目と3行目以降がなければエラーを表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('header.csv', 'name'), csv('nowhere.csv', 'name\nbaz')])
+    await file.button('Update').click()
+
+    await expect(file.accordion('header.csv').error).toContainText('2行目に更新後の値')
+    await expect(file.accordion('nowhere.csv').error).toContainText('3行目以降に更新する行の条件')
+  })
+
   test('Insert で INSERT 文を作成する', async ({ page }) => {
     const file = filePage(page)
 
@@ -108,6 +149,26 @@ test.describe('ファイルから SQL を作成', () => {
 
   // 開閉の表示は CDN から読み込む Semantic UI の CSS が active クラスに応じて切り替える。
   // e2e テストでは外部への通信を遮断しているため、active クラスの付け外しを確認する
+  test('キーボードでアコーディオンを開閉できる', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id\n1'))
+    await file.button('Select').click()
+    const accordion = file.accordion('users')
+
+    await expect(accordion.title).toHaveAttribute('aria-expanded', 'true')
+    await accordion.title.focus()
+    await expect(accordion.title).toBeFocused()
+
+    await page.keyboard.press('Enter')
+    await expect(accordion.title).toHaveAttribute('aria-expanded', 'false')
+    await expect(accordion.content).not.toHaveClass(/\bactive\b/)
+
+    await page.keyboard.press('Space')
+    await expect(accordion.title).toHaveAttribute('aria-expanded', 'true')
+    await expect(accordion.content).toHaveClass(/\bactive\b/)
+  })
+
   test('アコーディオンのタイトルをクリックすると開閉が切り替わる', async ({ page }) => {
     const file = filePage(page)
 
@@ -149,5 +210,26 @@ test.describe('ファイルから SQL を作成', () => {
     expect(Object.keys(zip.files).sort()).toEqual(['items.sql', 'users.sql'])
     expect(await zip.file('users.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '1'\n;")
     expect(await zip.file('items.sql')!.async('string')).toBe("select *\nfrom items\nwhere\ncode = 'A'\n;")
+  })
+
+  test('同じテーブル名になるファイルがあっても zip 内で上書きしない', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('users.txt', 'id\n2')])
+    await file.button('Select').click()
+    await expect(file.results).toHaveCount(2)
+
+    const downloadPromise = page.waitForEvent('download')
+    await file.button('Download').click()
+    const download = await downloadPromise
+
+    const stream = await download.createReadStream()
+    const chunks: Buffer[] = []
+    for await (const chunk of stream) chunks.push(chunk as Buffer)
+    const zip = await JSZip.loadAsync(Buffer.concat(chunks))
+
+    expect(Object.keys(zip.files).sort()).toEqual(['users.sql', 'users_2.sql'])
+    expect(await zip.file('users.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '1'\n;")
+    expect(await zip.file('users_2.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '2'\n;")
   })
 })

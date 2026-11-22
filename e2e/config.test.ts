@@ -70,6 +70,18 @@ test.describe('設定', () => {
     await expect(config.checkbox('saveConfig')).toBeChecked()
   })
 
+  test('saveConfig の Cookie はブラウザを閉じても消えないよう有効期限を持つ', async ({ page, context }) => {
+    await configPage(page).checkbox('saveConfig').check()
+
+    const cookie = (await context.cookies()).find((c) => c.name === 'config')
+
+    // セッション Cookie の expires は -1 になる。1年後 (前後1日の誤差を許容) に切れることを確認する
+    const oneYear = 365 * 24 * 60 * 60
+    const now = Date.now() / 1000
+    expect(cookie?.expires).toBeGreaterThan(now + oneYear - 24 * 60 * 60)
+    expect(cookie?.expires).toBeLessThan(now + oneYear + 24 * 60 * 60)
+  })
+
   test('saveConfig が無効なら再読み込みすると初期設定に戻る', async ({ page }) => {
     const config = configPage(page)
 

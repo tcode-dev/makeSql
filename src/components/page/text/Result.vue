@@ -6,6 +6,7 @@ const store = useTextStore()
 
 <template>
   <form class="ui large form">
+    <div v-if="store.state.error" class="ui negative message" role="alert">{{ store.state.error }}</div>
     <div class="field">
       <label for="sql">SQL</label>
       <textarea id="sql" v-model="store.state.sql"></textarea>
@@ -16,9 +17,11 @@ const store = useTextStore()
 <style scoped>
 .form {
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .field {
-  height: 100%;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }

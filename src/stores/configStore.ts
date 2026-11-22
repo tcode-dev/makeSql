@@ -71,7 +71,8 @@ export const useConfigStore = defineStore('config', () => {
 
   watch(state, () => {
     if (state.saveConfig) {
-      Cookies.set('config', JSON.stringify(state))
+      // expires を指定しないとブラウザを閉じたときに消えるため、1年間保存する
+      Cookies.set('config', JSON.stringify(state), { expires: 365 })
     } else {
       Cookies.remove('config')
     }
