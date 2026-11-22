@@ -40,6 +40,32 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.result('items')).toHaveValue("delete\nfrom items\nwhere\ncode = 'A'\n;")
   })
 
+  test('結果は選択したファイルの順に並ぶ', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('items.csv', 'code\nA'), csv('orders.csv', 'no\n1')])
+    await file.button('Select').click()
+
+    await expect(file.results.locator('.title')).toHaveText(['users', 'items', 'orders'])
+  })
+
+  test('ボタンを続けて押すと最後に押したボタンの結果だけを表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('items.csv', 'code\nA')])
+    // ファイルの読み込みが終わる前に次のボタンを押した状態にするため、同じタスク内で続けてクリックする
+    // e2e の tsconfig には DOM の型がないため、ブラウザで実行するコードは文字列で渡す
+    await page.evaluate(`{
+      const button = (name) => [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === name)
+      button('Select').click()
+      button('Insert').click()
+    }`)
+
+    await expect(file.result('users')).toHaveValue("insert into users\n(id)\nvalues\n('1')\n;")
+    await expect(file.result('items')).toHaveValue("insert into items\n(code)\nvalues\n('A')\n;")
+    await expect(file.results).toHaveCount(2)
+  })
+
   test('Insert で INSERT 文を作成する', async ({ page }) => {
     const file = filePage(page)
 
