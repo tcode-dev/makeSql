@@ -28,6 +28,15 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\n(id = '1' and name = 'foo')\nor (id = '2' and name = 'bar')\n;")
   })
 
+  test('Excel などで保存した、ダブルクォートで囲んだ値のある CSV から SQL を作成する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', '"id","name","memo"\r\n"1","Doe, John","line1\r\nline2"\r\n'))
+    await file.button('Insert').click()
+
+    await expect(file.result('users')).toHaveValue("insert into users\n(id, name, memo)\nvalues\n('1','Doe, John','line1\nline2')\n;")
+  })
+
   test('複数のファイルからそれぞれ SQL を作成する', async ({ page }) => {
     const file = filePage(page)
 

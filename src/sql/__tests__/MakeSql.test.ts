@@ -10,20 +10,26 @@ describe('MakeSql', () => {
 
       expect(sql.getValue()).toEqual({
         fields: ['id', 'name'],
-        values: ['1,foo', '2,bar']
+        values: [
+          ['1', 'foo'],
+          ['2', 'bar']
+        ]
       })
     })
 
     it('末尾の改行は空の行として扱わない', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n2,bar\n', makeConfig())
 
-      expect(sql.getValue().values).toEqual(['1,foo', '2,bar'])
+      expect(sql.getValue().values).toEqual([
+        ['1', 'foo'],
+        ['2', 'bar']
+      ])
     })
 
     it('末尾に改行が複数あっても空の行として扱わない', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n\n\n', makeConfig())
 
-      expect(sql.getValue().values).toEqual(['1,foo'])
+      expect(sql.getValue().values).toEqual([['1', 'foo']])
     })
 
     it('値の行がなければエラーにする', () => {
@@ -57,7 +63,10 @@ describe('MakeSql', () => {
     it('カンマ区切りで空の値だけが並ぶ行は空の行として扱わない', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n,', makeConfig())
 
-      expect(sql.getValue().values).toEqual(['1,foo', ','])
+      expect(sql.getValue().values).toEqual([
+        ['1', 'foo'],
+        ['', '']
+      ])
     })
   })
 
@@ -108,6 +117,36 @@ describe('MakeSql', () => {
       const sql = new MakeSql('users', 'id\tname\n1\t', makeConfig({ delimiter: 'tab' }))
 
       expect(sql.where()).toEqual(["id = '1' and name = ''"])
+    })
+
+    it('ダブルクォートで囲んだ値の中のカンマは区切りとして扱わない', () => {
+      const sql = new MakeSql('users', '"id","name"\n"1","Doe, John"', makeConfig())
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'Doe, John'"])
+    })
+
+    it('ダブルクォートで囲んだ値の中の改行と "" を値として扱う', () => {
+      const sql = new MakeSql('users', 'id,memo\n1,"a ""b""\nc"', makeConfig())
+
+      expect(sql.where()).toEqual(["id = '1' and memo = 'a \"b\"\nc'"])
+    })
+
+    it('タブ区切りでもダブルクォートで囲んだ値の中のタブは区切りとして扱わない', () => {
+      const sql = new MakeSql('users', 'id\tname\n1\t"a\tb"', makeConfig({ delimiter: 'tab' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'a\tb'"])
+    })
+
+    it('値の途中のダブルクォートはそのまま値として扱う', () => {
+      const sql = new MakeSql('users', 'name\nO"Brien', makeConfig())
+
+      expect(sql.where()).toEqual(["name = 'O\"Brien'"])
+    })
+
+    it('閉じていないダブルクォートがあればエラーにする', () => {
+      const sql = new MakeSql('users', 'id\n"1', makeConfig())
+
+      expect(() => sql.getValue()).toThrow('ダブルクォート (") の使い方が正しくない値があります')
     })
 
     it('値に含まれるシングルクォートをエスケープする', () => {

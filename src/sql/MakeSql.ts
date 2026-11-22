@@ -1,5 +1,5 @@
-import { ConfigConst } from '@/const/ConfigConst'
 import InputError from '@/util/InputError'
+import { parseTable, serializeTable } from '@/util/table'
 
 export type Config = {
   and: string
@@ -36,23 +36,21 @@ export default class MakeSql {
   // 1行目を列名、2行目以降を値として分ける。値の行がない場合、途中に空の行がある場合、
   // 列数が1行目と違う行がある場合はエラーにする
   getData(data: string) {
-    // 末尾の改行で空の行ができないよう取り除く
-    const values = data.replace(/\n+$/, '').split('\n')
-    const fields = this.splitRow(values.shift()!)
+    const [fields = [], ...values] = parseTable(data, this.config.delimiter)
 
     if (values.length === 0) {
       throw new InputError('値の行がありません。1行目に列名、2行目以降に値を入力してください。')
     }
 
     // 空の行は空文字と一致する条件になり、意図しない行を削除・更新しかねないため、エラーにする
-    if (values.some((row) => this.normalizeRow(row) === '')) {
+    if (values.some((row) => row.length === 1 && row[0] === '')) {
       throw new InputError('空の行があります。値の行の間にある空の行を削除してください。')
     }
 
-    const invalidRow = values.find((row) => this.splitRow(row).length !== fields.length)
+    const invalidRow = values.find((row) => row.length !== fields.length)
 
     if (invalidRow !== undefined) {
-      throw new InputError(`列数が1行目 (${fields.length}列) と一致しない行があります: "${invalidRow}"`)
+      throw new InputError(`列数が1行目 (${fields.length}列) と一致しない行があります: "${serializeTable([invalidRow], this.config.delimiter)}"`)
     }
 
     return { fields, values }
@@ -64,20 +62,9 @@ export default class MakeSql {
     return this.combine(fields, values, ` ${this.config.and} `)
   }
 
-  // スペース区切りでは行頭・行末の空白で空の列ができないよう、先に取り除く。
-  // カンマ・タブ区切りでは行頭・行末の空の値にも意味があるため、そのまま使う
-  normalizeRow(row: string) {
-    return this.config.delimiter === ConfigConst.delimiter.space ? row.trim() : row
-  }
-
-  // 1行を列に分ける
-  splitRow(row: string) {
-    return this.normalizeRow(row).split(this.config.delimiter)
-  }
-
-  combine(fields: string[], values: string[], delimiter: string) {
+  combine(fields: string[], values: string[][], delimiter: string) {
     return values.map((rowValue) => {
-      return this.splitRow(rowValue)
+      return rowValue
         .map((colValue, colIndex) => {
           return `${fields[colIndex]} = ${this.quote(colValue)}`
         })

@@ -32,9 +32,7 @@ export default class MakeInsert extends MakeSql {
       .join('\n')
   }
 
-  makeValues(row: string) {
-    return this.splitRow(row)
-      .map((value) => this.quote(value))
-      .join(',')
+  makeValues(row: string[]) {
+    return row.map((value) => this.quote(value)).join(',')
   }
 }

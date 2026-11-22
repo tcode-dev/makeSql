@@ -8,7 +8,7 @@ export const ConfigConst = {
     comma: ',',
     // 空白が続いても空の列ができないよう、連続した空白を1つの区切りとして扱う
     space: /\s+/,
-    tab: /\t/
+    tab: '\t'
   },
   lettercase: {
     lowercase: {

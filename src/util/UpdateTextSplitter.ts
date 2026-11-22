@@ -1,4 +1,5 @@
 import InputError from '@/util/InputError'
+import { parseTable, serializeTable } from '@/util/table'
 
 interface SplitText {
   updates: string
@@ -6,11 +7,11 @@ interface SplitText {
 }
 
 // ファイル画面の UPDATE 用に、ファイルの内容を
-// SET に使う部分 (ヘッダーと1行目) と WHERE に使う部分 (ヘッダーと2行目以降) に分ける
+// SET に使う部分 (ヘッダーと1行目) と WHERE に使う部分 (ヘッダーと2行目以降) に分ける。
+// ダブルクォートで囲んだ値の中に改行があっても行を正しく分けられるよう、先に行と列に分けてから文字列に戻す
 export default class UpdateTextSplitter {
-  split(data: string): SplitText {
-    // 末尾の改行で空の行ができないよう取り除く
-    const [column, firstRow, ...rows] = data.replace(/\n+$/, '').split('\n')
+  split(data: string, delimiter: string | RegExp): SplitText {
+    const [column = [], firstRow, ...rows] = parseTable(data, delimiter)
 
     if (firstRow === undefined) {
       throw new InputError('UPDATE には、2行目に更新後の値、3行目以降に更新する行の条件が必要です。')
@@ -22,8 +23,8 @@ export default class UpdateTextSplitter {
     }
 
     return {
-      updates: `${column}\n${firstRow}`,
-      contents: `${column}\n${rows.join('\n')}`
+      updates: serializeTable([column, firstRow], delimiter),
+      contents: serializeTable([column, ...rows], delimiter)
     }
   }
 }
