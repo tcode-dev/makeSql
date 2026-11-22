@@ -17,19 +17,24 @@ const isDisabled = computed(() => {
   return fileStore.state.fileList.length === 0
 })
 const handleClick = () => {
-  fileStore.$reset()
-
   const fileExtractor = new FileExtractor()
   const factory = new SqlFactory(configStore.config)
+  const { characterCode } = configStore.state
+  const { fileList } = fileStore.state
 
-  fileStore.state.fileList.forEach((file) => {
-    fileExtractor.extract(file, configStore.state.characterCode).then((data) => {
-      fileStore.addSql({
-        name: data.name,
-        sql: factory.fromFile(props.type, data.name, data.text)
+  // 結果は読み込みが終わった順ではなく、選択したファイルの順に並べる
+  fileStore.makeSqlList(() =>
+    Promise.all(
+      fileList.map(async (file) => {
+        const data = await fileExtractor.extract(file, characterCode)
+
+        return {
+          name: data.name,
+          sql: factory.fromFile(props.type, data.name, data.text)
+        }
       })
-    })
-  })
+    )
+  )
 }
 </script>
 
