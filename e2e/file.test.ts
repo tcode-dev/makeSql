@@ -87,6 +87,29 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.button('Download')).toBeEnabled()
   })
 
+  test('テーブル名に使えない文字を含むファイル名はエラーを表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('my table.csv', 'id\n1')])
+    await file.button('Select').click()
+
+    await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\nid = '1'\n;")
+    await expect(file.accordion('my table.csv').error).toContainText('テーブル名 (ファイル名) には')
+  })
+
+  test('ファイルを選択し直すと前の結果を消す', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id\n1'))
+    await file.button('Select').click()
+    await expect(file.result('users')).toBeVisible()
+
+    await file.input.setInputFiles(csv('items.csv', 'code\nA'))
+
+    await expect(file.result('users')).toHaveCount(0)
+    await expect(file.button('Download')).toBeDisabled()
+  })
+
   test('どのファイルからも SQL を作れなければ Download は押せない', async ({ page }) => {
     const file = filePage(page)
 
