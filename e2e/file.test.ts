@@ -66,13 +66,13 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.results).toHaveCount(2)
   })
 
-  test('ファイル名にドットが複数あっても最後の拡張子だけを取り除いてテーブル名にする', async ({ page }) => {
+  test('拡張子を取り除いた後にもドットが残るファイル名はエラーを表示する', async ({ page }) => {
     const file = filePage(page)
 
-    await file.input.setInputFiles(csv('users.2024.csv', 'id\n1'))
+    await file.input.setInputFiles(csv('sales.users.csv', 'id\n1'))
     await file.button('Select').click()
 
-    await expect(file.result('users.2024')).toHaveValue("select *\nfrom users.2024\nwhere\nid = '1'\n;")
+    await expect(file.accordion('sales.users.csv').error).toContainText('"sales.users"')
   })
 
   test('SQL を作れないファイルはエラーを表示し、他のファイルの結果は表示する', async ({ page }) => {
