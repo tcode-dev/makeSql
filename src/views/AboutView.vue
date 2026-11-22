@@ -35,6 +35,45 @@ import Title from '@/components/title/Title.vue'
       </p>
     </section>
     <section>
+      <h3 class="ui header">設定</h3>
+      <p>backslashEscape を有効にすると、値に含まれる次の文字をバックスラッシュでエスケープします（例: C:\dir → 'C:\\dir'）。</p>
+      <table class="ui very basic collapsing table">
+        <thead>
+          <tr>
+            <th>文字</th>
+            <th>変換後</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>バックスラッシュ（\）</td>
+            <td>\\</td>
+          </tr>
+          <tr>
+            <td>NUL</td>
+            <td>\0</td>
+          </tr>
+          <tr>
+            <td>改行（LF）</td>
+            <td>\n</td>
+          </tr>
+          <tr>
+            <td>改行（CR）</td>
+            <td>\r</td>
+          </tr>
+          <tr>
+            <td>Ctrl+Z</td>
+            <td>\Z</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        シングルクォート（'）は、backslashEscape の設定にかかわらず '' に変換します。タブ・%・_ はエスケープしません。<br />
+        MySQL・MariaDB 用の設定です。PostgreSQL・SQL Server・Oracle・SQLite などではバックスラッシュが普通の文字として扱われ、値が変わってしまうため、無効のまま使ってください。<br />
+        quotation が無効のときは、シングルクォートを含めてエスケープしません。
+      </p>
+    </section>
+    <section>
       <h3 class="ui header">その他</h3>
       <p>動作環境: Mac、Google Chrome</p>
       <p>問い合わせ先: &#109;&#97;&#107;es&#113;&#108;&#64;&#103;&#109;&#97;&#105;l&#46;c&#111;m</p>

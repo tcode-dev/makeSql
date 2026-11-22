@@ -182,6 +182,37 @@ describe('MakeSql', () => {
       expect(() => sql.quote('')).toThrow(InputError)
     })
 
+    it('backslashEscape が無効ならバックスラッシュや改行はそのまま残す', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote('C:\\dir\\\na')).toBe("'C:\\dir\\\na'")
+    })
+
+    it('backslashEscape が有効なら \\・NUL・改行・CR・Ctrl+Z をバックスラッシュでエスケープする', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote('C:\\dir\\')).toBe("'C:\\\\dir\\\\'")
+      expect(sql.quote('a\0b\nc\rd\x1ae')).toBe("'a\\0b\\nc\\rd\\Ze'")
+    })
+
+    it('backslashEscape が有効でもシングルクォートは二重にし、タブ・%・_ はエスケープしない', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote("O'Brien\t100%_")).toBe("'O''Brien\t100%_'")
+    })
+
+    it('バックスラッシュの直後にシングルクォートがあっても、文字列が閉じなくならない', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote("\\'")).toBe("'\\\\'''")
+    })
+
+    it('quotation が無効なら backslashEscape が有効でも値をそのまま返す', () => {
+      const sql = new MakeSql('users', '', makeConfig({ quotation: false, backslashEscape: true }))
+
+      expect(sql.quote('C:\\dir')).toBe('C:\\dir')
+    })
+
     it('quotation が有効なら空の値は空文字列にする', () => {
       const sql = new MakeSql('users', '', makeConfig())
 

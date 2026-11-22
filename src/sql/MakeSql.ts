@@ -3,6 +3,7 @@ import { parseTable, serializeTable } from '@/util/table'
 
 export type Config = {
   and: string
+  backslashEscape: boolean
   bulk: boolean
   delete: string
   delimiter: string | RegExp
@@ -17,6 +18,18 @@ export type Config = {
   values: string
   where: string
 }
+
+// MySQL・MariaDB でバックスラッシュから始まるエスケープとして書く文字。mysql_real_escape_string() と同じ文字を対象にする。
+// \ はエスケープしないと次の文字と組み合わさって値が変わり、NUL・改行・Ctrl+Z はコピーやクライアントで扱いにくいため
+const BACKSLASH_ESCAPES: Record<string, string> = {
+  '\\': '\\\\',
+  '\0': '\\0',
+  '\n': '\\n',
+  '\r': '\\r',
+  '\x1a': '\\Z'
+}
+// eslint-disable-next-line no-control-regex -- NUL と Ctrl+Z をエスケープするため、制御文字を含める
+const BACKSLASH_ESCAPE_PATTERN = /[\\\0\n\r\x1a]/g
 
 export default class MakeSql {
   protected tableName: string
@@ -73,9 +86,10 @@ export default class MakeSql {
   }
 
   // クォートで囲む場合は、値に含まれるクォートを二重にしてエスケープする。
+  // backslashEscape が有効なら、MySQL・MariaDB 向けに \ や改行などもバックスラッシュでエスケープする。
   // クォートなしでは空の値を SQL に書けない (`name = ;` になる) ため、エラーにする
   quote(value: string) {
-    const { quotation } = this.config
+    const { quotation, backslashEscape } = this.config
 
     if (quotation === '') {
       if (value === '') {
@@ -85,7 +99,9 @@ export default class MakeSql {
       return value
     }
 
-    return `${quotation}${value.replaceAll(quotation, quotation + quotation)}${quotation}`
+    const escaped = backslashEscape ? value.replace(BACKSLASH_ESCAPE_PATTERN, (char) => BACKSLASH_ESCAPES[char]) : value
+
+    return `${quotation}${escaped.replaceAll(quotation, quotation + quotation)}${quotation}`
   }
 
   bulk(combined: string[]) {

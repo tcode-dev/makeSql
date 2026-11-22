@@ -27,6 +27,7 @@ describe('configStore', () => {
       lettercase: 'lowercase',
       bulk: true,
       quotation: true,
+      backslashEscape: false,
       saveConfig: false
     })
     expect(store.config).toEqual({
@@ -43,7 +44,8 @@ describe('configStore', () => {
       or: 'or',
       delimiter: ',',
       bulk: true,
-      quotation: "'"
+      quotation: "'",
+      backslashEscape: false
     })
   })
 
@@ -54,13 +56,15 @@ describe('configStore', () => {
     store.state.delimiter = 'tab'
     store.state.bulk = false
     store.state.quotation = false
+    store.state.backslashEscape = true
 
     expect(store.config).toMatchObject({
       select: 'SELECT',
       where: 'WHERE',
-      delimiter: /\t/,
+      delimiter: '\t',
       bulk: false,
-      quotation: ''
+      quotation: '',
+      backslashEscape: true
     })
   })
 
@@ -109,6 +113,7 @@ describe('configStore', () => {
         lettercase: 'uppercase',
         bulk: false,
         quotation: false,
+        backslashEscape: true,
         saveConfig: true
       })
     )
@@ -120,7 +125,8 @@ describe('configStore', () => {
       select: 'SELECT',
       delimiter: /\s+/,
       bulk: false,
-      quotation: ''
+      quotation: '',
+      backslashEscape: true
     })
   })
 
@@ -135,6 +141,7 @@ describe('configStore', () => {
       lettercase: 'lowercase',
       bulk: true,
       quotation: true,
+      backslashEscape: false,
       saveConfig: false
     })
   })
@@ -157,6 +164,7 @@ describe('configStore', () => {
         lettercase: 'foo',
         bulk: 'yes',
         quotation: false,
+        backslashEscape: 1,
         saveConfig: true
       })
     )
@@ -169,6 +177,7 @@ describe('configStore', () => {
       lettercase: 'lowercase',
       bulk: true,
       quotation: false,
+      backslashEscape: false,
       saveConfig: true
     })
     expect(store.config).toMatchObject({ select: 'select', delimiter: ',', quotation: '' })

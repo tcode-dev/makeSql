@@ -14,6 +14,7 @@ test.describe('設定', () => {
     await expect(config.radio('UTF-8')).toBeChecked()
     await expect(config.checkbox('bulk')).toBeChecked()
     await expect(config.checkbox('quotation')).toBeChecked()
+    await expect(config.checkbox('backslashEscape')).not.toBeChecked()
     await expect(config.checkbox('saveConfig')).not.toBeChecked()
   })
 
@@ -45,6 +46,18 @@ test.describe('設定', () => {
     await text.button('Select').click()
 
     await expect(text.sql).toHaveValue('SELECT * FROM users WHERE id = 1 AND name = foo;\nSELECT * FROM users WHERE id = 2 AND name = bar;')
+  })
+
+  test('backslashEscape の設定でバックスラッシュがエスケープされる', async ({ page }) => {
+    await configPage(page).checkbox('backslashEscape').check()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('files')
+    await text.contents.fill('path\nC:\\dir\\')
+    await text.button('Select').click()
+
+    await expect(text.sql).toHaveValue("select *\nfrom files\nwhere\npath = 'C:\\\\dir\\\\'\n;")
   })
 
   test('クォートなしの設定で空の値があればエラーを表示する', async ({ page }) => {
