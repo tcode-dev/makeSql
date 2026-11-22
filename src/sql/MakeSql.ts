@@ -1,10 +1,11 @@
+import { ConfigConst } from '@/const/ConfigConst'
 import InputError from '@/util/InputError'
 
 export type Config = {
   and: string
   bulk: boolean
   delete: string
-  delimiter: string
+  delimiter: string | RegExp
   from: string
   insert: string
   into: string
@@ -36,13 +37,13 @@ export default class MakeSql {
   getData(data: string) {
     // 末尾の改行で空の行ができないよう取り除く
     const values = data.replace(/\n+$/, '').split('\n')
-    const fields = values.shift()!.split(this.config.delimiter)
+    const fields = this.splitRow(values.shift()!)
 
     if (values.length === 0) {
       throw new InputError('値の行がありません。1行目に列名、2行目以降に値を入力してください。')
     }
 
-    const invalidRow = values.find((row) => row.split(this.config.delimiter).length !== fields.length)
+    const invalidRow = values.find((row) => this.splitRow(row).length !== fields.length)
 
     if (invalidRow !== undefined) {
       throw new InputError(`列数が1行目 (${fields.length}列) と一致しない行があります: "${invalidRow}"`)
@@ -57,10 +58,17 @@ export default class MakeSql {
     return this.combine(fields, values, ` ${this.config.and} `)
   }
 
-  combine(fields: string[], values: string[], delimiter: Config['delimiter']) {
+  // 1行を列に分ける。スペース区切りでは行頭・行末の空白で空の列ができないよう、先に取り除く。
+  // カンマ・タブ区切りでは行頭・行末の空の値にも意味があるため、そのまま分ける
+  splitRow(row: string) {
+    const target = this.config.delimiter === ConfigConst.delimiter.space ? row.trim() : row
+
+    return target.split(this.config.delimiter)
+  }
+
+  combine(fields: string[], values: string[], delimiter: string) {
     return values.map((rowValue) => {
-      return rowValue
-        .split(this.config.delimiter)
+      return this.splitRow(rowValue)
         .map((colValue, colIndex) => {
           return `${fields[colIndex]} = ${this.quote(colValue)}`
         })

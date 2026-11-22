@@ -33,8 +33,7 @@ export default class MakeInsert extends MakeSql {
   }
 
   makeValues(row: string) {
-    return row
-      .split(this.config.delimiter)
+    return this.splitRow(row)
       .map((value) => this.quote(value))
       .join(',')
   }

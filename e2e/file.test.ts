@@ -255,4 +255,23 @@ test.describe('ファイルから SQL を作成', () => {
     expect(await zip.file('users.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '1'\n;")
     expect(await zip.file('users_2.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '2'\n;")
   })
+
+  test('大文字と小文字だけが違うファイル名でも zip 内で別の名前にする', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('Users.csv', 'id\n1'), csv('users.csv', 'id\n2')])
+    await file.button('Select').click()
+    await expect(file.results).toHaveCount(2)
+
+    const downloadPromise = page.waitForEvent('download')
+    await file.button('Download').click()
+    const download = await downloadPromise
+
+    const stream = await download.createReadStream()
+    const chunks: Buffer[] = []
+    for await (const chunk of stream) chunks.push(chunk as Buffer)
+    const zip = await JSZip.loadAsync(Buffer.concat(chunks))
+
+    expect(Object.keys(zip.files).sort()).toEqual(['Users.sql', 'users_2.sql'])
+  })
 })

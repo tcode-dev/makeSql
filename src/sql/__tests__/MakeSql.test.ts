@@ -86,6 +86,18 @@ describe('MakeSql', () => {
       expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
     })
 
+    it('スペース区切りでは行頭・行末の空白を無視する', () => {
+      const sql = new MakeSql('users', ' id name \n 1 foo ', makeConfig({ delimiter: 'space' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
+    })
+
+    it('タブ区切りでは行末の空の値を残す', () => {
+      const sql = new MakeSql('users', 'id\tname\n1\t', makeConfig({ delimiter: 'tab' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = ''"])
+    })
+
     it('値に含まれるシングルクォートをエスケープする', () => {
       const sql = new MakeSql('users', "name\nO'Brien", makeConfig())
 

@@ -59,6 +59,18 @@ test.describe('設定', () => {
     await expect(text.sql).toHaveValue("insert into users\n(id, name)\nvalues\n('1','foo')\n;")
   })
 
+  test('スペース区切りでは行頭・行末の空白があっても SQL を作成できる', async ({ page }) => {
+    await configPage(page).radio('space').check()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('users')
+    await text.contents.fill(' id name \n1 foo ')
+    await text.button('Insert').click()
+
+    await expect(text.sql).toHaveValue("insert into users\n(id, name)\nvalues\n('1','foo')\n;")
+  })
+
   test('saveConfig が有効なら再読み込みしても設定が残る', async ({ page }) => {
     const config = configPage(page)
 
