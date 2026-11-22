@@ -33,7 +33,8 @@ export default class MakeSql {
     return this.getData(this.contents)
   }
 
-  // 1行目を列名、2行目以降を値として分ける。値の行がない場合や、列数が1行目と違う行がある場合はエラーにする
+  // 1行目を列名、2行目以降を値として分ける。値の行がない場合、途中に空の行がある場合、
+  // 列数が1行目と違う行がある場合はエラーにする
   getData(data: string) {
     // 末尾の改行で空の行ができないよう取り除く
     const values = data.replace(/\n+$/, '').split('\n')
@@ -41,6 +42,11 @@ export default class MakeSql {
 
     if (values.length === 0) {
       throw new InputError('値の行がありません。1行目に列名、2行目以降に値を入力してください。')
+    }
+
+    // 空の行は空文字と一致する条件になり、意図しない行を削除・更新しかねないため、エラーにする
+    if (values.some((row) => this.normalizeRow(row) === '')) {
+      throw new InputError('空の行があります。値の行の間にある空の行を削除してください。')
     }
 
     const invalidRow = values.find((row) => this.splitRow(row).length !== fields.length)
@@ -58,12 +64,15 @@ export default class MakeSql {
     return this.combine(fields, values, ` ${this.config.and} `)
   }
 
-  // 1行を列に分ける。スペース区切りでは行頭・行末の空白で空の列ができないよう、先に取り除く。
-  // カンマ・タブ区切りでは行頭・行末の空の値にも意味があるため、そのまま分ける
-  splitRow(row: string) {
-    const target = this.config.delimiter === ConfigConst.delimiter.space ? row.trim() : row
+  // スペース区切りでは行頭・行末の空白で空の列ができないよう、先に取り除く。
+  // カンマ・タブ区切りでは行頭・行末の空の値にも意味があるため、そのまま使う
+  normalizeRow(row: string) {
+    return this.config.delimiter === ConfigConst.delimiter.space ? row.trim() : row
+  }
 
-    return target.split(this.config.delimiter)
+  // 1行を列に分ける
+  splitRow(row: string) {
+    return this.normalizeRow(row).split(this.config.delimiter)
   }
 
   combine(fields: string[], values: string[], delimiter: string) {
@@ -76,11 +85,16 @@ export default class MakeSql {
     })
   }
 
-  // クォートで囲む場合は、値に含まれるクォートを二重にしてエスケープする
+  // クォートで囲む場合は、値に含まれるクォートを二重にしてエスケープする。
+  // クォートなしでは空の値を SQL に書けない (`name = ;` になる) ため、エラーにする
   quote(value: string) {
     const { quotation } = this.config
 
     if (quotation === '') {
+      if (value === '') {
+        throw new InputError('クォートなしの設定では空の値を使えません。値を入力するか、設定でクォートを有効にしてください。')
+      }
+
       return value
     }
 

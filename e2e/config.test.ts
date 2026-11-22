@@ -47,6 +47,18 @@ test.describe('設定', () => {
     await expect(text.sql).toHaveValue('SELECT * FROM users WHERE id = 1 AND name = foo;\nSELECT * FROM users WHERE id = 2 AND name = bar;')
   })
 
+  test('クォートなしの設定で空の値があればエラーを表示する', async ({ page }) => {
+    await configPage(page).checkbox('quotation').uncheck()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('users')
+    await text.contents.fill('id,name\n1,')
+    await text.button('Select').click()
+
+    await expect(text.error).toContainText('クォートなしの設定では空の値を使えません')
+  })
+
   test('タブ区切りの設定がテキスト画面の SQL に反映される', async ({ page }) => {
     await configPage(page).radio('tab').check()
 

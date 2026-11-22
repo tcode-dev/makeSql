@@ -43,9 +43,21 @@ describe('MakeSql', () => {
       expect(() => sql.getValue()).toThrow(InputError)
     })
 
-    it('途中の空行は空の値として扱い、列数が合わなければエラーにする', () => {
-      expect(new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue().values).toEqual(['1', '', '2'])
-      expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow(InputError)
+    it('途中に空の行があればエラーにする', () => {
+      expect(() => new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue()).toThrow('空の行があります')
+      expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow('空の行があります')
+    })
+
+    it('スペース区切りでは空白だけの行も空の行としてエラーにする', () => {
+      const sql = new MakeSql('users', 'id\n1\n   \n2', makeConfig({ delimiter: 'space' }))
+
+      expect(() => sql.getValue()).toThrow('空の行があります')
+    })
+
+    it('カンマ区切りで空の値だけが並ぶ行は空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'id,name\n1,foo\n,', makeConfig())
+
+      expect(sql.getValue().values).toEqual(['1,foo', ','])
     })
   })
 
@@ -123,6 +135,18 @@ describe('MakeSql', () => {
       const sql = new MakeSql('users', '', makeConfig({ quotation: false }))
 
       expect(sql.quote("O'Brien")).toBe("O'Brien")
+    })
+
+    it('quotation が無効で値が空ならエラーにする', () => {
+      const sql = new MakeSql('users', '', makeConfig({ quotation: false }))
+
+      expect(() => sql.quote('')).toThrow(InputError)
+    })
+
+    it('quotation が有効なら空の値は空文字列にする', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote('')).toBe("''")
     })
   })
 

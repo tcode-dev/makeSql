@@ -97,4 +97,15 @@ test.describe('テキストから SQL を作成', () => {
 
     await expect(text.error).toContainText('値の行がありません')
   })
+
+  test('値の行の間に空の行があればエラーを表示する', async ({ page }) => {
+    const text = textPage(page)
+
+    await text.tableName.fill('users')
+    await text.contents.fill('id\n1\n\n2')
+    await text.button('Delete').click()
+
+    await expect(text.error).toContainText('空の行があります')
+    await expect(text.sql).toHaveValue('')
+  })
 })
