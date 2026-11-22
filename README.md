@@ -6,6 +6,28 @@ https://makesql.tcode.dev
 
 ![makesql tcode dev s3-website-ap-southeast-2 amazonaws com_](https://github.com/tcode-dev/makeSql/assets/42083313/0c22fa12-0091-4397-8ba3-1588f4d7b283)
 
+## Environments
+
+* Node.js
+* TypeScript
+* Vue 3
+* Pinia
+* Vite
+* Vitest / Playwright
+* Docker
+
+## Development Flow
+
+* master は保護されており、PR で CI (lint・ユニットテスト・E2E) が通るとマージできます
+* master にマージすると本番 (https://makesql.tcode.dev) に自動でデプロイされます
+
+## Directory Structure
+
+* `src/views/` 画面
+* `src/sql/` SQL の生成
+* `src/stores/` 状態管理 (Pinia)
+* `e2e/` E2E テスト
+
 ## Project Setup
 
 ```sh
@@ -35,8 +57,6 @@ docker compose run --rm app npm run test:unit
 ```sh
 docker compose run --rm e2e
 ```
-
-`@playwright/test` を更新するときは、`compose.yaml` の `e2e` サービスのイメージも同じバージョンに更新してください。
 
 ### Lint with [ESLint](https://eslint.org/)
 
