@@ -3,7 +3,7 @@ import { nextTick } from 'vue'
 import { createPinia, setActivePinia } from 'pinia'
 import Cookies from 'js-cookie'
 
-// configStore はモジュール内の defaultState を reactive で直接書き換えるため、
+// configStore はモジュールの読み込み時に状態を持つため、
 // テストごとにモジュールを読み込み直して状態を初期化する
 const loadStore = async () => {
   vi.resetModules()
@@ -111,5 +111,64 @@ describe('configStore', () => {
       bulk: false,
       quotation: ''
     })
+  })
+
+  it('Cookie が JSON として壊れていれば初期値を使う', async () => {
+    Cookies.set('config', '{')
+
+    const store = await loadStore()
+
+    expect(store.state).toEqual({
+      characterCode: 'utf8',
+      delimiter: 'comma',
+      lettercase: 'lowercase',
+      bulk: true,
+      quotation: true,
+      saveConfig: false
+    })
+  })
+
+  it('Cookie の値がオブジェクトでなければ初期値を使う', async () => {
+    Cookies.set('config', 'null')
+
+    const store = await loadStore()
+
+    expect(store.state.lettercase).toBe('lowercase')
+    expect(store.config.select).toBe('select')
+  })
+
+  it('Cookie の不正な項目だけ初期値に置き換える', async () => {
+    Cookies.set(
+      'config',
+      JSON.stringify({
+        characterCode: 'sjis',
+        delimiter: 'toString',
+        lettercase: 'foo',
+        bulk: 'yes',
+        quotation: false,
+        saveConfig: true
+      })
+    )
+
+    const store = await loadStore()
+
+    expect(store.state).toEqual({
+      characterCode: 'utf8',
+      delimiter: 'comma',
+      lettercase: 'lowercase',
+      bulk: true,
+      quotation: false,
+      saveConfig: true
+    })
+    expect(store.config).toMatchObject({ select: 'select', delimiter: ',', quotation: '' })
+  })
+
+  it('Cookie に項目が足りなければ初期値で補う', async () => {
+    Cookies.set('config', JSON.stringify({ lettercase: 'uppercase', saveConfig: true }))
+
+    const store = await loadStore()
+
+    expect(store.state).toMatchObject({ lettercase: 'uppercase', delimiter: 'comma', bulk: true })
+    expect(store.config.select).toBe('SELECT')
   })
 })

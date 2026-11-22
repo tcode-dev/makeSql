@@ -56,6 +56,33 @@ describe('MakeSql', () => {
 
       expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
     })
+
+    it('値に含まれるシングルクォートをエスケープする', () => {
+      const sql = new MakeSql('users', "name\nO'Brien", makeConfig())
+
+      expect(sql.where()).toEqual(["name = 'O''Brien'"])
+    })
+  })
+
+  describe('quote', () => {
+    it('値をクォートで囲む', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote('foo')).toBe("'foo'")
+    })
+
+    it('値に含まれるシングルクォートを二重にしてエスケープする', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote("O'Brien")).toBe("'O''Brien'")
+      expect(sql.quote("'; drop table users; --")).toBe("'''; drop table users; --'")
+    })
+
+    it('quotation が無効なら値をそのまま返す', () => {
+      const sql = new MakeSql('users', '', makeConfig({ quotation: false }))
+
+      expect(sql.quote("O'Brien")).toBe("O'Brien")
+    })
   })
 
   describe('bulk', () => {

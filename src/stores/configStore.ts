@@ -21,10 +21,44 @@ const defaultState: State = {
   saveConfig: false
 }
 
-export const useConfigStore = defineStore('config', () => {
+const isKeyOf = <T extends object>(obj: T, key: unknown): key is keyof T => typeof key === 'string' && Object.hasOwn(obj, key)
+
+// Cookie の値は壊れていたり古い形式だったりする可能性があるため、
+// 項目ごとに検証し、不正な項目は初期値を使う
+const loadState = (): State => {
   const cookie = Cookies.get('config')
-  const initialState = cookie ? JSON.parse(cookie) : defaultState
-  const state = reactive<State>(initialState)
+  const state = { ...defaultState }
+
+  if (!cookie) {
+    return state
+  }
+
+  let saved: unknown
+
+  try {
+    saved = JSON.parse(cookie)
+  } catch {
+    return state
+  }
+
+  if (typeof saved !== 'object' || saved === null) {
+    return state
+  }
+
+  const { characterCode, delimiter, lettercase, bulk, quotation, saveConfig } = saved as Record<string, unknown>
+
+  if (isKeyOf(ConfigConst.characterCode, characterCode)) state.characterCode = characterCode
+  if (isKeyOf(ConfigConst.delimiter, delimiter)) state.delimiter = delimiter
+  if (isKeyOf(ConfigConst.lettercase, lettercase)) state.lettercase = lettercase
+  if (typeof bulk === 'boolean') state.bulk = bulk
+  if (typeof quotation === 'boolean') state.quotation = quotation
+  if (typeof saveConfig === 'boolean') state.saveConfig = saveConfig
+
+  return state
+}
+
+export const useConfigStore = defineStore('config', () => {
+  const state = reactive<State>(loadState())
   const config = computed(
     () =>
       ({

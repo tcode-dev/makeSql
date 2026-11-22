@@ -40,4 +40,16 @@ describe('MakeInsert', () => {
 
     expect(sql.make()).toBe("INSERT INTO users (id) VALUES ('1');")
   })
+
+  it('値に含まれるシングルクォートを二重にしてエスケープする', () => {
+    const sql = new MakeInsert('users', "id,name\n1,O'Brien", makeConfig({ bulk: false }))
+
+    expect(sql.make()).toBe("insert into users (id, name) values ('1','O''Brien');")
+  })
+
+  it('quotation が無効ならシングルクォートをエスケープしない', () => {
+    const sql = new MakeInsert('users', "name\nO'Brien", makeConfig({ bulk: false, quotation: false }))
+
+    expect(sql.make()).toBe("insert into users (name) values (O'Brien);")
+  })
 })
