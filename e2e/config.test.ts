@@ -17,6 +17,20 @@ test.describe('設定', () => {
     await expect(config.checkbox('saveConfig')).not.toBeChecked()
   })
 
+  test('ラジオボタンは矢印キーで同じ設定の選択肢を移動できる', async ({ page }) => {
+    const config = configPage(page)
+
+    await config.radio('comma').focus()
+    await page.keyboard.press('ArrowRight')
+
+    await expect(config.radio('space')).toBeChecked()
+    await expect(config.radio('space')).toBeFocused()
+    await expect(config.radio('comma')).not.toBeChecked()
+    // 他の設定の選択は変わらない
+    await expect(config.radio('lowercase')).toBeChecked()
+    await expect(config.radio('UTF-8')).toBeChecked()
+  })
+
   test('大文字・1行ずつ・クォートなしの設定がテキスト画面の SQL に反映される', async ({ page }) => {
     const config = configPage(page)
 
