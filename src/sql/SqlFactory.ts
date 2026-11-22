@@ -61,7 +61,7 @@ export default class SqlFactory {
   // ファイル画面用。UPDATE のときはファイルの2行目を SET 句、3行目以降を WHERE 句に使う
   fromFile(type: SqlType, tableName: string, text: string) {
     if (type === 'update') {
-      const { updates, contents } = new UpdateTextSplitter().split(text)
+      const { updates, contents } = new UpdateTextSplitter().split(text, this.config.delimiter)
 
       return this.fromText(type, { tableName, updates, contents })
     }

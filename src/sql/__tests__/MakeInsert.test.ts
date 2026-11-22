@@ -23,6 +23,12 @@ describe('MakeInsert', () => {
     expect(sql.make()).toBe('insert into users (id, name) values (1,foo);\ninsert into users (id, name) values (2,bar);')
   })
 
+  it('スペース区切りでは行頭・行末の空白で空の値を作らない', () => {
+    const sql = new MakeInsert('users', 'id name\n 1 foo ', makeConfig({ delimiter: 'space' }))
+
+    expect(sql.make()).toBe("insert into users\n(id, name)\nvalues\n('1','foo')\n;")
+  })
+
   it('末尾に改行があっても空の VALUES を作らない', () => {
     const sql = new MakeInsert('users', 'id,name\n1,foo\n', makeConfig({ bulk: true }))
 

@@ -13,7 +13,7 @@ export const configPage = (page: Page) => ({
   // ラジオボタンは label と input が for/id で関連付いている
   radio: (label: string) => page.getByLabel(label, { exact: true }),
   // チェックボックスは aria-labelledby で設定名のセルを名前にしている
-  checkbox: (name: 'bulk' | 'quotation' | 'saveConfig') => page.getByRole('checkbox', { name, exact: true })
+  checkbox: (name: 'bulk' | 'quotation' | 'backslashEscape' | 'saveConfig') => page.getByRole('checkbox', { name, exact: true })
 })
 
 export const filePage = (page: Page) => ({

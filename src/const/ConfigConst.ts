@@ -8,7 +8,7 @@ export const ConfigConst = {
     comma: ',',
     // 空白が続いても空の列ができないよう、連続した空白を1つの区切りとして扱う
     space: /\s+/,
-    tab: /\t/
+    tab: '\t'
   },
   lettercase: {
     lowercase: {
@@ -71,5 +71,6 @@ export type Lettercase = keyof TypeOfConfigConst['lettercase']
 export type LabelGroup = CharacterCode[] | Delimiter[] | Lettercase[]
 export type Bulk = 'bulk'
 export type Quotation = 'quotation'
+export type BackslashEscape = 'backslashEscape'
 export type SaveConfig = 'saveConfig'
-export type SingleConfig = Bulk | Quotation | SaveConfig
+export type SingleConfig = Bulk | Quotation | BackslashEscape | SaveConfig

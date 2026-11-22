@@ -10,6 +10,7 @@ interface State {
   delimiter: Delimiter
   bulk: boolean
   quotation: boolean
+  backslashEscape: boolean
   saveConfig: boolean
 }
 const defaultState: State = {
@@ -18,6 +19,7 @@ const defaultState: State = {
   lettercase: 'lowercase',
   bulk: true,
   quotation: true,
+  backslashEscape: false,
   saveConfig: false
 }
 
@@ -45,13 +47,14 @@ const loadState = (): State => {
     return state
   }
 
-  const { characterCode, delimiter, lettercase, bulk, quotation, saveConfig } = saved as Record<string, unknown>
+  const { characterCode, delimiter, lettercase, bulk, quotation, backslashEscape, saveConfig } = saved as Record<string, unknown>
 
   if (isKeyOf(ConfigConst.characterCode, characterCode)) state.characterCode = characterCode
   if (isKeyOf(ConfigConst.delimiter, delimiter)) state.delimiter = delimiter
   if (isKeyOf(ConfigConst.lettercase, lettercase)) state.lettercase = lettercase
   if (typeof bulk === 'boolean') state.bulk = bulk
   if (typeof quotation === 'boolean') state.quotation = quotation
+  if (typeof backslashEscape === 'boolean') state.backslashEscape = backslashEscape
   if (typeof saveConfig === 'boolean') state.saveConfig = saveConfig
 
   return state
@@ -65,7 +68,8 @@ export const useConfigStore = defineStore('config', () => {
         ...ConfigConst['lettercase'][state.lettercase],
         delimiter: ConfigConst['delimiter'][state.delimiter],
         bulk: state.bulk,
-        quotation: state.quotation ? "'" : ''
+        quotation: state.quotation ? "'" : '',
+        backslashEscape: state.backslashEscape
       }) as Config
   )
 

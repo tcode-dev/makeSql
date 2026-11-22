@@ -28,6 +28,15 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\n(id = '1' and name = 'foo')\nor (id = '2' and name = 'bar')\n;")
   })
 
+  test('Excel などで保存した、ダブルクォートで囲んだ値のある CSV から SQL を作成する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', '"id","name","memo"\r\n"1","Doe, John","line1\r\nline2"\r\n'))
+    await file.button('Insert').click()
+
+    await expect(file.result('users')).toHaveValue("insert into users\n(id, name, memo)\nvalues\n('1','Doe, John','line1\nline2')\n;")
+  })
+
   test('複数のファイルからそれぞれ SQL を作成する', async ({ page }) => {
     const file = filePage(page)
 
@@ -66,13 +75,13 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.results).toHaveCount(2)
   })
 
-  test('ファイル名にドットが複数あっても最後の拡張子だけを取り除いてテーブル名にする', async ({ page }) => {
+  test('拡張子を取り除いた後にもドットが残るファイル名はエラーを表示する', async ({ page }) => {
     const file = filePage(page)
 
-    await file.input.setInputFiles(csv('users.2024.csv', 'id\n1'))
+    await file.input.setInputFiles(csv('sales.users.csv', 'id\n1'))
     await file.button('Select').click()
 
-    await expect(file.result('users.2024')).toHaveValue("select *\nfrom users.2024\nwhere\nid = '1'\n;")
+    await expect(file.accordion('sales.users.csv').error).toContainText('"sales.users"')
   })
 
   test('SQL を作れないファイルはエラーを表示し、他のファイルの結果は表示する', async ({ page }) => {
@@ -85,6 +94,29 @@ test.describe('ファイルから SQL を作成', () => {
     await expect(file.accordion('empty.csv').error).toContainText('値の行がありません')
     await expect(file.accordion('broken.csv').error).toHaveText('列数が1行目 (1列) と一致しない行があります: "1,2"')
     await expect(file.button('Download')).toBeEnabled()
+  })
+
+  test('テーブル名に使えない文字を含むファイル名はエラーを表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('users.csv', 'id\n1'), csv('my table.csv', 'id\n1')])
+    await file.button('Select').click()
+
+    await expect(file.result('users')).toHaveValue("select *\nfrom users\nwhere\nid = '1'\n;")
+    await expect(file.accordion('my table.csv').error).toContainText('テーブル名 (ファイル名) には')
+  })
+
+  test('ファイルを選択し直すと前の結果を消す', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id\n1'))
+    await file.button('Select').click()
+    await expect(file.result('users')).toBeVisible()
+
+    await file.input.setInputFiles(csv('items.csv', 'code\nA'))
+
+    await expect(file.result('users')).toHaveCount(0)
+    await expect(file.button('Download')).toBeDisabled()
   })
 
   test('どのファイルからも SQL を作れなければ Download は押せない', async ({ page }) => {
@@ -231,5 +263,24 @@ test.describe('ファイルから SQL を作成', () => {
     expect(Object.keys(zip.files).sort()).toEqual(['users.sql', 'users_2.sql'])
     expect(await zip.file('users.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '1'\n;")
     expect(await zip.file('users_2.sql')!.async('string')).toBe("select *\nfrom users\nwhere\nid = '2'\n;")
+  })
+
+  test('大文字と小文字だけが違うファイル名でも zip 内で別の名前にする', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles([csv('Users.csv', 'id\n1'), csv('users.csv', 'id\n2')])
+    await file.button('Select').click()
+    await expect(file.results).toHaveCount(2)
+
+    const downloadPromise = page.waitForEvent('download')
+    await file.button('Download').click()
+    const download = await downloadPromise
+
+    const stream = await download.createReadStream()
+    const chunks: Buffer[] = []
+    for await (const chunk of stream) chunks.push(chunk as Buffer)
+    const zip = await JSZip.loadAsync(Buffer.concat(chunks))
+
+    expect(Object.keys(zip.files).sort()).toEqual(['Users.sql', 'users_2.sql'])
   })
 })

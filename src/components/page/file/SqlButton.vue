@@ -6,6 +6,7 @@ import Button from '@/components/button/Button.vue'
 import SqlFactory, { SqlLabel, type SqlType } from '@/sql/SqlFactory'
 import FileExtractor from '@/util/FileExtractor'
 import InputError from '@/util/InputError'
+import { validateTableName } from '@/util/validateTableName'
 
 interface Props {
   type: SqlType
@@ -31,6 +32,8 @@ const handleClick = () => {
         try {
           const data = await fileExtractor.extract(file, characterCode)
 
+          validateTableName(data.name)
+
           return {
             name: data.name,
             sql: factory.fromFile(props.type, data.name, data.text)
@@ -40,7 +43,10 @@ const handleClick = () => {
             return { name: file.name, sql: '', error: error.message }
           }
 
-          throw error
+          // 想定外のエラーでも全件の結果が消えないよう、そのファイルだけエラーとして表示する
+          console.error(error)
+
+          return { name: file.name, sql: '', error: `SQL を作成できませんでした: ${file.name}` }
         }
       })
     )

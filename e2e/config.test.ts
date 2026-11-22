@@ -14,6 +14,7 @@ test.describe('設定', () => {
     await expect(config.radio('UTF-8')).toBeChecked()
     await expect(config.checkbox('bulk')).toBeChecked()
     await expect(config.checkbox('quotation')).toBeChecked()
+    await expect(config.checkbox('backslashEscape')).not.toBeChecked()
     await expect(config.checkbox('saveConfig')).not.toBeChecked()
   })
 
@@ -47,6 +48,30 @@ test.describe('設定', () => {
     await expect(text.sql).toHaveValue('SELECT * FROM users WHERE id = 1 AND name = foo;\nSELECT * FROM users WHERE id = 2 AND name = bar;')
   })
 
+  test('backslashEscape の設定でバックスラッシュがエスケープされる', async ({ page }) => {
+    await configPage(page).checkbox('backslashEscape').check()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('files')
+    await text.contents.fill('path\nC:\\dir\\')
+    await text.button('Select').click()
+
+    await expect(text.sql).toHaveValue("select *\nfrom files\nwhere\npath = 'C:\\\\dir\\\\'\n;")
+  })
+
+  test('クォートなしの設定で空の値があればエラーを表示する', async ({ page }) => {
+    await configPage(page).checkbox('quotation').uncheck()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('users')
+    await text.contents.fill('id,name\n1,')
+    await text.button('Select').click()
+
+    await expect(text.error).toContainText('クォートなしの設定では空の値を使えません')
+  })
+
   test('タブ区切りの設定がテキスト画面の SQL に反映される', async ({ page }) => {
     await configPage(page).radio('tab').check()
 
@@ -54,6 +79,18 @@ test.describe('設定', () => {
     const text = textPage(page)
     await text.tableName.fill('users')
     await text.contents.fill('id\tname\n1\tfoo')
+    await text.button('Insert').click()
+
+    await expect(text.sql).toHaveValue("insert into users\n(id, name)\nvalues\n('1','foo')\n;")
+  })
+
+  test('スペース区切りでは行頭・行末の空白があっても SQL を作成できる', async ({ page }) => {
+    await configPage(page).radio('space').check()
+
+    await navigate(page, 'Text')
+    const text = textPage(page)
+    await text.tableName.fill('users')
+    await text.contents.fill(' id name \n1 foo ')
     await text.button('Insert').click()
 
     await expect(text.sql).toHaveValue("insert into users\n(id, name)\nvalues\n('1','foo')\n;")

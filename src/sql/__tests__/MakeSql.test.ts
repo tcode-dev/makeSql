@@ -10,20 +10,26 @@ describe('MakeSql', () => {
 
       expect(sql.getValue()).toEqual({
         fields: ['id', 'name'],
-        values: ['1,foo', '2,bar']
+        values: [
+          ['1', 'foo'],
+          ['2', 'bar']
+        ]
       })
     })
 
     it('末尾の改行は空の行として扱わない', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n2,bar\n', makeConfig())
 
-      expect(sql.getValue().values).toEqual(['1,foo', '2,bar'])
+      expect(sql.getValue().values).toEqual([
+        ['1', 'foo'],
+        ['2', 'bar']
+      ])
     })
 
     it('末尾に改行が複数あっても空の行として扱わない', () => {
       const sql = new MakeSql('users', 'id,name\n1,foo\n\n\n', makeConfig())
 
-      expect(sql.getValue().values).toEqual(['1,foo'])
+      expect(sql.getValue().values).toEqual([['1', 'foo']])
     })
 
     it('値の行がなければエラーにする', () => {
@@ -43,9 +49,24 @@ describe('MakeSql', () => {
       expect(() => sql.getValue()).toThrow(InputError)
     })
 
-    it('途中の空行は空の値として扱い、列数が合わなければエラーにする', () => {
-      expect(new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue().values).toEqual(['1', '', '2'])
-      expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow(InputError)
+    it('途中に空の行があればエラーにする', () => {
+      expect(() => new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue()).toThrow('空の行があります')
+      expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow('空の行があります')
+    })
+
+    it('スペース区切りでは空白だけの行も空の行としてエラーにする', () => {
+      const sql = new MakeSql('users', 'id\n1\n   \n2', makeConfig({ delimiter: 'space' }))
+
+      expect(() => sql.getValue()).toThrow('空の行があります')
+    })
+
+    it('カンマ区切りで空の値だけが並ぶ行は空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'id,name\n1,foo\n,', makeConfig())
+
+      expect(sql.getValue().values).toEqual([
+        ['1', 'foo'],
+        ['', '']
+      ])
     })
   })
 
@@ -86,6 +107,48 @@ describe('MakeSql', () => {
       expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
     })
 
+    it('スペース区切りでは行頭・行末の空白を無視する', () => {
+      const sql = new MakeSql('users', ' id name \n 1 foo ', makeConfig({ delimiter: 'space' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'foo'"])
+    })
+
+    it('タブ区切りでは行末の空の値を残す', () => {
+      const sql = new MakeSql('users', 'id\tname\n1\t', makeConfig({ delimiter: 'tab' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = ''"])
+    })
+
+    it('ダブルクォートで囲んだ値の中のカンマは区切りとして扱わない', () => {
+      const sql = new MakeSql('users', '"id","name"\n"1","Doe, John"', makeConfig())
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'Doe, John'"])
+    })
+
+    it('ダブルクォートで囲んだ値の中の改行と "" を値として扱う', () => {
+      const sql = new MakeSql('users', 'id,memo\n1,"a ""b""\nc"', makeConfig())
+
+      expect(sql.where()).toEqual(["id = '1' and memo = 'a \"b\"\nc'"])
+    })
+
+    it('タブ区切りでもダブルクォートで囲んだ値の中のタブは区切りとして扱わない', () => {
+      const sql = new MakeSql('users', 'id\tname\n1\t"a\tb"', makeConfig({ delimiter: 'tab' }))
+
+      expect(sql.where()).toEqual(["id = '1' and name = 'a\tb'"])
+    })
+
+    it('値の途中のダブルクォートはそのまま値として扱う', () => {
+      const sql = new MakeSql('users', 'name\nO"Brien', makeConfig())
+
+      expect(sql.where()).toEqual(["name = 'O\"Brien'"])
+    })
+
+    it('閉じていないダブルクォートがあればエラーにする', () => {
+      const sql = new MakeSql('users', 'id\n"1', makeConfig())
+
+      expect(() => sql.getValue()).toThrow('ダブルクォート (") の使い方が正しくない値があります')
+    })
+
     it('値に含まれるシングルクォートをエスケープする', () => {
       const sql = new MakeSql('users', "name\nO'Brien", makeConfig())
 
@@ -111,6 +174,49 @@ describe('MakeSql', () => {
       const sql = new MakeSql('users', '', makeConfig({ quotation: false }))
 
       expect(sql.quote("O'Brien")).toBe("O'Brien")
+    })
+
+    it('quotation が無効で値が空ならエラーにする', () => {
+      const sql = new MakeSql('users', '', makeConfig({ quotation: false }))
+
+      expect(() => sql.quote('')).toThrow(InputError)
+    })
+
+    it('backslashEscape が無効ならバックスラッシュや改行はそのまま残す', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote('C:\\dir\\\na')).toBe("'C:\\dir\\\na'")
+    })
+
+    it('backslashEscape が有効なら \\・NUL・改行・CR・Ctrl+Z をバックスラッシュでエスケープする', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote('C:\\dir\\')).toBe("'C:\\\\dir\\\\'")
+      expect(sql.quote('a\0b\nc\rd\x1ae')).toBe("'a\\0b\\nc\\rd\\Ze'")
+    })
+
+    it('backslashEscape が有効でもシングルクォートは二重にし、タブ・%・_ はエスケープしない', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote("O'Brien\t100%_")).toBe("'O''Brien\t100%_'")
+    })
+
+    it('バックスラッシュの直後にシングルクォートがあっても、文字列が閉じなくならない', () => {
+      const sql = new MakeSql('users', '', makeConfig({ backslashEscape: true }))
+
+      expect(sql.quote("\\'")).toBe("'\\\\'''")
+    })
+
+    it('quotation が無効なら backslashEscape が有効でも値をそのまま返す', () => {
+      const sql = new MakeSql('users', '', makeConfig({ quotation: false, backslashEscape: true }))
+
+      expect(sql.quote('C:\\dir')).toBe('C:\\dir')
+    })
+
+    it('quotation が有効なら空の値は空文字列にする', () => {
+      const sql = new MakeSql('users', '', makeConfig())
+
+      expect(sql.quote('')).toBe("''")
     })
   })
 

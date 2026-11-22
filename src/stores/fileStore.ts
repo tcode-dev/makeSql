@@ -33,8 +33,11 @@ export const useFileStore = defineStore('file', () => {
       state.value.sqlList = sqlList
     }
   }
+  // 選択し直したファイルと合わない結果を表示・ダウンロードしないよう、前の結果と作成中の処理を捨てる
   const setFileList = (fileList: File[]) => {
+    latestRequest++
     state.value.fileList = fileList
+    state.value.sqlList = []
   }
   const $reset = () => {
     latestRequest++

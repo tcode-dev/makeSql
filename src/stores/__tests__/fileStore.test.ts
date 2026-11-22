@@ -58,6 +58,22 @@ describe('fileStore', () => {
     expect(store.state.sqlList).toEqual(insertSql)
   })
 
+  it('ファイルを選択し直すと前の結果を消し、作成中の処理の結果も反映しない', async () => {
+    const store = useFileStore()
+    const select = deferred()
+
+    await store.makeSqlList(async () => insertSql)
+    const making = store.makeSqlList(() => select.promise)
+
+    store.setFileList([])
+    expect(store.state.sqlList).toEqual([])
+
+    select.resolve(selectSql)
+    await making
+
+    expect(store.state.sqlList).toEqual([])
+  })
+
   it('$reset の後に前の作成処理が終わっても結果を反映しない', async () => {
     const store = useFileStore()
     const select = deferred()
