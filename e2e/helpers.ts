@@ -11,8 +11,8 @@ export const textPage = (page: Page) => ({
 export const configPage = (page: Page) => ({
   // ラジオボタンは label と input が for/id で関連付いている
   radio: (label: string) => page.getByLabel(label, { exact: true }),
-  // チェックボックスの label は空のため、設定名のセルがある行から探す
-  checkbox: (name: 'bulk' | 'quotation' | 'saveConfig') => page.locator('tr', { has: page.getByRole('cell', { name, exact: true }) }).getByRole('checkbox')
+  // チェックボックスは aria-labelledby で設定名のセルを名前にしている
+  checkbox: (name: 'bulk' | 'quotation' | 'saveConfig') => page.getByRole('checkbox', { name, exact: true })
 })
 
 export const filePage = (page: Page) => ({
