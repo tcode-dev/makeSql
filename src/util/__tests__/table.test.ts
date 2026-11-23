@@ -14,6 +14,21 @@ describe('parseTable', () => {
     expect(parseTable('id\n1\n\n', ',')).toEqual([['id'], ['1']])
   })
 
+  it('末尾の空白だけの行は空の行として扱わない', () => {
+    expect(parseTable('id,name\n1,foo\n  \n\t\n', ',')).toEqual([
+      ['id', 'name'],
+      ['1', 'foo']
+    ])
+    expect(parseTable('id name\n1 foo\n  ', /\s+/)).toEqual([
+      ['id', 'name'],
+      ['1', 'foo']
+    ])
+  })
+
+  it('最後の行の末尾の空白は値として残す', () => {
+    expect(parseTable('id\n1  ', ',')).toEqual([['id'], ['1  ']])
+  })
+
   it('途中の空の行は列のない行として残す', () => {
     expect(parseTable('id\n1\n\n2', ',')).toEqual([['id'], ['1'], [], ['2']])
     expect(parseTable('id\n1\n   \n2', /\s+/)).toEqual([['id'], ['1'], [], ['2']])

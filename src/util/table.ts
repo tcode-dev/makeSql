@@ -1,11 +1,12 @@
 import Papa from 'papaparse'
 import InputError from '@/util/InputError'
 
-// 入力を行と列に分ける。末尾の改行は空の行として扱わない。
-// 空の行は列のない行 ([]) にして、ダブルクォートで囲んだ空の値だけの行 ([''])と区別する。
+// 入力を行と列に分ける。末尾の改行と、末尾の空白 (スペース・タブ) だけの行は空の行として扱わない。
+// 空の行は列のない行 ([]) にして、ダブルクォートで囲んだ空の値だけの行 (['']) と区別する。
 // カンマ・タブ区切りは CSV の形式として読み、ダブルクォートで囲んだ値の中の区切り文字や改行も値として扱う
 export const parseTable = (text: string, delimiter: string | RegExp): string[][] => {
-  const trimmed = text.replace(/\n+$/, '')
+  // 表計算ソフトやエディタからコピーすると末尾に空白だけの行が混ざりやすいため、末尾の改行と一緒に取り除く
+  const trimmed = text.replace(/(\n[ \t]*)+$/, '')
 
   if (typeof delimiter !== 'string') {
     // スペース区切りは CSV の形式ではないため、行ごとに分ける。
