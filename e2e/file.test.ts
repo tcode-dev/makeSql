@@ -244,6 +244,24 @@ test.describe('ファイルから SQL を作成', () => {
     expect(await zip.file('items.sql')!.async('string')).toBe("select *\nfrom items\nwhere\ncode = 'A'\n;")
   })
 
+  test('zip を保存できなければエラーを表示する', async ({ page }) => {
+    const file = filePage(page)
+
+    await file.input.setInputFiles(csv('users.csv', 'id\n1'))
+    await file.button('Select').click()
+    await expect(file.results).toHaveCount(1)
+
+    // ダウンロード用の URL を作れない状況にして、保存に失敗させる
+    await page.evaluate(() => {
+      URL.createObjectURL = () => {
+        throw new Error('createObjectURL failed')
+      }
+    })
+    await file.button('Download').click()
+
+    await expect(page.getByRole('alert')).toHaveText('zip ファイルを作成できませんでした。もう一度 Download をクリックしてください。')
+  })
+
   test('同じテーブル名になるファイルがあっても zip 内で上書きしない', async ({ page }) => {
     const file = filePage(page)
 

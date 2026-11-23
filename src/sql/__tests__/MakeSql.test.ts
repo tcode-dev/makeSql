@@ -49,6 +49,12 @@ describe('MakeSql', () => {
       expect(() => sql.getValue()).toThrow(InputError)
     })
 
+    it('末尾の空白だけの行は空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'id,name\n1,foo\n  \n', makeConfig())
+
+      expect(sql.getValue().values).toEqual([['1', 'foo']])
+    })
+
     it('途中に空の行があればエラーにする', () => {
       expect(() => new MakeSql('users', 'id\n1\n\n2', makeConfig()).getValue()).toThrow('空の行があります')
       expect(() => new MakeSql('users', 'id,name\n1,foo\n\n2,bar', makeConfig()).getValue()).toThrow('空の行があります')
@@ -67,6 +73,12 @@ describe('MakeSql', () => {
         ['1', 'foo'],
         ['', '']
       ])
+    })
+
+    it('1列の空の値はダブルクォートで囲めば空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'name\nfoo\n""', makeConfig())
+
+      expect(sql.getValue().values).toEqual([['foo'], ['']])
     })
   })
 
