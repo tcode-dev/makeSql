@@ -58,4 +58,4 @@ docker compose run --rm e2e npx playwright test e2e/text.test.ts
 * `.github/workflows/ci.yml` の `test-e2e` ジョブ
 * `.github/workflows/deploy.yml` の `test-e2e-production` ジョブ
 
-Node のバージョン (現在 26) も `compose.yaml` の `app` サービスと各ワークフローの `setup-node` で揃えている。
+Node のバージョン (現在 26) も `compose.yaml` の `app` サービスと各ワークフローの `setup-node` で揃えている。E2E のジョブも Playwright イメージの Node ではなく `setup-node` のバージョンで動く (ローカルの `e2e` サービスはイメージの Node で動く)。
