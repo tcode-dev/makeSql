@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# 同じブランチに続けて push したときは、古い実行を取り消す
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
