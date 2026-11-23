@@ -18,7 +18,7 @@ https://makesql.tcode.dev
 
 ## Development Flow
 
-* master は保護されており、PR で CI (lint・ユニットテスト・E2E) が通るとマージできます
+* master は保護されており、PR で CI (lint・型チェック・ユニットテスト・E2E) が通るとマージできます
 * master にマージすると本番 (https://makesql.tcode.dev) に自動でデプロイされます
 
 ## Directory Structure
