@@ -46,8 +46,9 @@ docker compose run --rm e2e npx playwright test e2e/text.test.ts
 
 ## CI / デプロイ
 
-* `ci.yml`: master 以外への push で lint (`npx eslint .`、修正なし)・ユニットテスト・E2E を実行する。master はルールセットで CI 通過をマージ条件にしている。
+* `ci.yml`: master 以外への push で lint (`npx eslint .`、修正なし)・型チェック (`npm run type-check`)・ユニットテスト・E2E を実行する。master はルールセットで CI 通過をマージ条件にしている。
 * `deploy.yml`: master への push でビルドして S3 に同期 (`assets/` は長期キャッシュ、それ以外は no-cache)、CloudFront のキャッシュを削除し、完了後に本番サイトに対して E2E を実行する。
+* ワークフローの Action は SHA で固定し (`@<SHA> # v<version>`)、`.github/dependabot.yml` で週1回まとめて更新する。
 
 ## Playwright のバージョン
 
@@ -57,4 +58,4 @@ docker compose run --rm e2e npx playwright test e2e/text.test.ts
 * `.github/workflows/ci.yml` の `test-e2e` ジョブ
 * `.github/workflows/deploy.yml` の `test-e2e-production` ジョブ
 
-Node のバージョン (現在 26) も `compose.yaml` の `app` サービスと各ワークフローの `setup-node` で揃えている。
+Node のバージョン (現在 26) も `compose.yaml` の `app` サービスと各ワークフローの `setup-node` で揃えている。E2E のジョブも Playwright イメージの Node ではなく `setup-node` のバージョンで動く (ローカルの `e2e` サービスはイメージの Node で動く)。

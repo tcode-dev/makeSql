@@ -5,12 +5,22 @@ on:
   push:
     branches-ignore: [master]
 
+# リポジトリの設定に関わらず、GITHUB_TOKEN は読み取りだけにする
+permissions:
+  contents: read
+
+# 同じブランチに続けて push したときは、古い実行を取り消す
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           # compose.yaml の app サービスと同じバージョン
           node-version: 26
@@ -19,11 +29,25 @@ jobs:
       # npm run lint は --fix 付きのため、CI では修正せずにチェックだけ行う
       - run: npx eslint .
 
+  # E2E テストのビルド (build-only) では型チェックを行わないため、別に実行する
+  type-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - run: npm run type-check
+
   test-unit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 26
           cache: npm
@@ -32,15 +56,21 @@ jobs:
 
   test-e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     # compose.yaml の e2e サービスと同じイメージ。@playwright/test と同じバージョンにすること
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble
       options: --ipc=host --init
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # イメージの Node ではなく、ほかのジョブと同じバージョンに揃える。npm のキャッシュも効かせる
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          cache: npm
       - run: npm ci
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: failure()
         with:
           name: playwright-report
