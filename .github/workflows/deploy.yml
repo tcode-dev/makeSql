@@ -33,7 +33,8 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ap-southeast-2
-      # ファイル名にハッシュが付くアセットは長くキャッシュさせる
+      # ファイル名にハッシュが付くアセットは長くキャッシュさせる。
+      # 古いバージョンのファイルは削除する。デプロイ前に開いた画面で読み込めなかったときは、main.ts で再読み込みして最新のバージョンにする
       - run: >
           aws s3 sync dist/assets "s3://${{ vars.S3_BUCKET }}/assets"
           --delete
