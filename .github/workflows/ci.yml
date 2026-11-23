@@ -5,6 +5,10 @@ on:
   push:
     branches-ignore: [master]
 
+# リポジトリの設定に関わらず、GITHUB_TOKEN は読み取りだけにする
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
