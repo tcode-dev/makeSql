@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # ワークフローの Action は SHA で固定しているため、Dependabot で更新する
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      github-actions:
+        patterns:
+          - '*'

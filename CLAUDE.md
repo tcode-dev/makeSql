@@ -48,6 +48,7 @@ docker compose run --rm e2e npx playwright test e2e/text.test.ts
 
 * `ci.yml`: master 以外への push で lint (`npx eslint .`、修正なし)・型チェック (`npm run type-check`)・ユニットテスト・E2E を実行する。master はルールセットで CI 通過をマージ条件にしている。
 * `deploy.yml`: master への push でビルドして S3 に同期 (`assets/` は長期キャッシュ、それ以外は no-cache)、CloudFront のキャッシュを削除し、完了後に本番サイトに対して E2E を実行する。
+* ワークフローの Action は SHA で固定し (`@<SHA> # v<version>`)、`.github/dependabot.yml` で週1回まとめて更新する。
 
 ## Playwright のバージョン
 
