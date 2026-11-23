@@ -6,6 +6,12 @@ on:
   push:
     branches: [master]
 
+# 連続でマージされた場合に、古いデプロイが新しいデプロイを上書きしないようにする。
+# 本番の E2E テストの実行中に次のデプロイが始まらないよう、ジョブではなくワークフロー全体で直列にする
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,10 +19,6 @@ jobs:
     # Environment を指定すると OIDC の sub が repo:tcode-dev/makeSql:environment:production になるので、
     # IAM ロールの信頼ポリシーもこの値に合わせること
     environment: production
-    # 連続でマージされた場合に、古いデプロイが新しいデプロイを上書きしないようにする
-    concurrency:
-      group: deploy
-      cancel-in-progress: false
     permissions:
       # OIDC で AWS の IAM ロールを引き受けるために必要
       id-token: write
