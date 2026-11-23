@@ -68,6 +68,12 @@ describe('MakeSql', () => {
         ['', '']
       ])
     })
+
+    it('1列の空の値はダブルクォートで囲めば空の行として扱わない', () => {
+      const sql = new MakeSql('users', 'name\nfoo\n""', makeConfig())
+
+      expect(sql.getValue().values).toEqual([['foo'], ['']])
+    })
   })
 
   describe('where', () => {

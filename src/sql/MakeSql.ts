@@ -56,7 +56,7 @@ export default class MakeSql {
     }
 
     // 空の行は空文字と一致する条件になり、意図しない行を削除・更新しかねないため、エラーにする
-    if (values.some((row) => row.length === 1 && row[0] === '')) {
+    if (values.some((row) => row.length === 0)) {
       throw new InputError('空の行があります。値の行の間にある空の行を削除してください。')
     }
 

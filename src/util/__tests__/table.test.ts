@@ -14,8 +14,17 @@ describe('parseTable', () => {
     expect(parseTable('id\n1\n\n', ',')).toEqual([['id'], ['1']])
   })
 
-  it('途中の空の行は1列の空の値として残す', () => {
-    expect(parseTable('id\n1\n\n2', ',')).toEqual([['id'], ['1'], [''], ['2']])
+  it('途中の空の行は列のない行として残す', () => {
+    expect(parseTable('id\n1\n\n2', ',')).toEqual([['id'], ['1'], [], ['2']])
+    expect(parseTable('id\n1\n   \n2', /\s+/)).toEqual([['id'], ['1'], [], ['2']])
+  })
+
+  it('ダブルクォートで囲んだ空の値だけの行は空の行と区別する', () => {
+    expect(parseTable('id\n""\n\n2', ',')).toEqual([['id'], [''], [], ['2']])
+  })
+
+  it('ダブルクォートで囲んだ値の中の空の行は値として扱う', () => {
+    expect(parseTable('id\n"a\n\nb"\n2', ',')).toEqual([['id'], ['a\n\nb'], ['2']])
   })
 
   it('スペース区切りは行頭・行末の空白を取り除いてから分ける', () => {
@@ -32,8 +41,8 @@ describe('parseTable', () => {
 })
 
 describe('serializeTable', () => {
-  it.each([',', '\t'])('区切り文字 "%s" で戻した文字列を読み直すと、途中の空の行も含めて同じ行と列になる', (delimiter) => {
-    const rows = [['id', 'memo'], ['1', `a${delimiter}b`], [''], ['2', 'say "hi"\nbye']]
+  it.each([',', '\t'])('区切り文字 "%s" で戻した文字列を読み直すと、途中の空の行や空の値だけの行も含めて同じ行と列になる', (delimiter) => {
+    const rows = [['id', 'memo'], ['1', `a${delimiter}b`], [], [''], ['2', 'say "hi"\nbye']]
 
     expect(parseTable(serializeTable(rows, delimiter), delimiter)).toEqual(rows)
   })

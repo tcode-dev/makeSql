@@ -35,6 +35,13 @@ describe('UpdateTextSplitter', () => {
     expect(sql.make()).toBe("update users set id = '1', memo = 'new\nmemo' where id = '2' and memo = 'old\nmemo';")
   })
 
+  it('1列の空の値をダブルクォートで囲めば、分けたあとも空の値として使える', () => {
+    const { updates, contents } = splitter.split('name\n""\nfoo', ',')
+    const sql = new MakeUpdate('users', updates, contents, makeConfig({ bulk: false }))
+
+    expect(sql.make()).toBe("update users set name = '' where name = 'foo';")
+  })
+
   it('スペース区切りでも分けられる', () => {
     expect(splitter.split('id name\nbaz qux\n1 foo', /\s+/)).toEqual({
       updates: 'id name\nbaz qux',
